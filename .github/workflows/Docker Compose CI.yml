@@ -30,7 +30,7 @@ jobs:
         context: .
         file: ./docker/docker-compose.yml
         push: true
-        tags: user/app:latest
+        tags: fireflyiii/core:latest
 
     - name: Test
       run: docker-compose up
