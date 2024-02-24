@@ -3,7 +3,7 @@
 set -e
 
 times=15
-while ! curl -sSL 'http://localhost:8080/register' 2>&1 \
+while ! curl -sSL 'http://localhost/register' 2>&1 \
              | grep '<html' >/dev/null; do
     echo 'Waiting for the Firefly'
     sleep 10
