@@ -39,6 +39,3 @@ build/
 .DS_Store
 /src/test/resources/local.properties
 /.idea/
-
-### project ###
-local.properties
