@@ -44,12 +44,10 @@ public abstract class BaseTest {
 
     @BeforeSuite
     void setUp() {
-        if (ProjectProperties.isServerRun()) {
                 startDriver();
                 getPage();
                 firstLogin();
                 stopDriver();
-        }
     }
 
 
