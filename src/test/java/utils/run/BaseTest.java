@@ -44,10 +44,15 @@ public abstract class BaseTest {
 
     @BeforeSuite
     void setUp() {
-                startDriver();
-                getPage();
-                firstLogin();
-                stopDriver();
+        try {
+            startDriver();
+            getPage();
+            firstLogin();
+            stopDriver();
+        }catch (Exception e){
+            closeDriver();
+            throw new RuntimeException(e);
+        }
     }
 
 
