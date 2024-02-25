@@ -1,10 +1,12 @@
 package utils.run;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.ITestResult;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.Listeners;
 import utils.log.ExceptionListener;
 
@@ -37,6 +39,28 @@ public abstract class BaseTest {
         BaseUtils.log("Login successful");
         FireflyUtils.login(driver);
     }
+
+    private void firstLogin() {
+        BaseUtils.log("Register successful");
+        FireflyUtils.firstLogin(driver);
+    }
+
+    @BeforeSuite
+    protected void setUp() {
+        if (ProjectProperties.isServerRun()) {
+            try {
+                startDriver();
+                getPage();
+                firstLogin();
+                stopDriver();
+            }
+            catch (Exception e) {
+                closeDriver();
+                throw new RuntimeException(e);
+            }
+        }
+    }
+
 
     @BeforeMethod
     protected void beforeMethod(Method method) {
