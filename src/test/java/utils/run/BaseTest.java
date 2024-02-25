@@ -46,7 +46,7 @@ public abstract class BaseTest {
     }
 
     @BeforeSuite
-    protected void setUp() {
+    void setUp() {
         if (ProjectProperties.isServerRun()) {
             try {
                 startDriver();
