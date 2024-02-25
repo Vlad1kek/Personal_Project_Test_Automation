@@ -32,7 +32,7 @@ jobs:
       - name: Maven test
         run: mvn test
         env:
-          CHROME_OPTIONS: --remote-allow-origins=*;--disable-gpu;--no-sandbox;--disable-dev-shm-usage;--headless=new;--window-size=1920,1080
+          BROWSER_OPTIONS: --remote-allow-origins=*;--disable-gpu;--no-sandbox;--disable-dev-shm-usage;--headless=new;--window-size=1920,1080
           CI_RUN: true
 
       - name: Attach screenshots and reports
