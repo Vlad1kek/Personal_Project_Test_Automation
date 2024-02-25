@@ -48,7 +48,7 @@ public abstract class BaseTest {
                 startDriver();
                 getPage();
                 firstLogin();
-                stopDriver();
+                closeDriver();
         }
     }
 
