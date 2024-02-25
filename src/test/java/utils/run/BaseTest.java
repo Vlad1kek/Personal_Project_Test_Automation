@@ -42,13 +42,13 @@ public abstract class BaseTest {
         FireflyUtils.firstLogin(driver);
     }
 
-    @BeforeTest
+    @BeforeSuite
     void setUp() {
         if (ProjectProperties.isServerRun()) {
                 startDriver();
                 getPage();
                 firstLogin();
-                closeDriver();
+                driver.quit();
         }
     }
 
