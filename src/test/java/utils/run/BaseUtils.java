@@ -15,12 +15,7 @@ import java.util.stream.Collectors;
 
 public class BaseUtils {
 
-    static WebDriver createDriver() {
-        WebDriver driver = new ChromeDriver(ProjectProperties.chromeOptions);
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
 
-        return driver;
-    }
 
     public static void log(String str) {
         System.out.println(str);

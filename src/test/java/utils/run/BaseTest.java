@@ -24,7 +24,7 @@ public abstract class BaseTest {
     private void startDriver() {
         BaseUtils.log("Browser open");
 
-        driver = BaseUtils.createDriver();
+        driver = ProjectProperties.createDriver();
     }
 
     private void getPage() {

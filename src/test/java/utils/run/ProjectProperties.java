@@ -1,11 +1,14 @@
 package utils.run;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import utils.log.LogUtils;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.time.Duration;
 import java.util.Properties;
 
 
@@ -58,6 +61,10 @@ public final class ProjectProperties {
         return String.format("http://%s:%s/",
                 properties.getProperty(PROP_HOST),
                 properties.getProperty(PROP_PORT));
+    }
+
+    static WebDriver createDriver() {
+        return new ChromeDriver(chromeOptions);
     }
 
     static String getUserName() {
