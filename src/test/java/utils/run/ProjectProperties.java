@@ -6,6 +6,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import utils.log.LogUtils;
 
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.time.Duration;
@@ -18,9 +19,9 @@ public final class ProjectProperties {
     private static final String PROP_PORT = "port";
     private static final String PROP_ADMIN_USERNAME = "admin.username";
     private static final String PROP_ADMIN_PAS = "admin.password";
-    private static final String ENV_CHROME_OPTIONS = "CHROME_OPTIONS";
-    private static final String ENV_APP_OPTIONS = "APP_OPTIONS";
-    private static final String PROP_CHROME_OPTIONS = ENV_CHROME_OPTIONS.toLowerCase();
+    private static final String ENV_WEB_OPTIONS = "WEB_OPTIONS";
+    private static final String ENV_BROWSER_OPTIONS = "BROWSER_OPTIONS";
+    private static final String PROP_CHROME_OPTIONS = ENV_WEB_OPTIONS.toLowerCase();
 
     private static Properties properties;
 
@@ -28,26 +29,26 @@ public final class ProjectProperties {
         if (properties == null) {
             properties = new Properties();
             if (isServerRun()) {
-                properties.setProperty(PROP_CHROME_OPTIONS, System.getenv(ENV_CHROME_OPTIONS));
-
-                if (System.getenv(ENV_APP_OPTIONS) != null) {
-                    for (String option : System.getenv(ENV_APP_OPTIONS).split(";")) {
-                        String[] optionArr = option.split("=");
-                        properties.setProperty (optionArr[0], optionArr[1]);
+                if (System.getenv(ENV_BROWSER_OPTIONS) != null) {
+                    for (String option : System.getenv(ENV_BROWSER_OPTIONS).split(";")) {
+                        String[] webOptionArr = option.split("=");
+                        properties.setProperty(webOptionArr[0], webOptionArr[1]);
+                    }
+                }
+                if (System.getenv(ENV_WEB_OPTIONS) != null) {
+                    for (String option : System.getenv(ENV_WEB_OPTIONS).split(";")) {
+                        String[] webOptionArr = option.split("=");
+                        properties.setProperty(webOptionArr[0], webOptionArr[1]);
                     }
                 }
             } else {
                 try {
-                    InputStream inputStream = ProjectProperties.class.getClassLoader().getResourceAsStream("local.properties");
-                    if (inputStream == null) {
-                        System.out.println("ERROR: The \u001B[31mlocal.properties\u001B[0m file not found in src/test/resources/ directory.");
-                        System.out.println("You need to create it from local.properties.TEMPLATE file.");
-                        System.exit(1);
-                    }
-                    properties.load(inputStream);
+                    FileInputStream fileInputStream = new FileInputStream("./src/test/resources/local.properties");
+                    properties.load(fileInputStream);
                 } catch (IOException e) {
-                    LogUtils.logInfo("ERROR: The \u001B[31mlocal.properties\u001B[0m file not found.");
+                    LogUtils.logError("ERROR: The \u001B[31mconfig.properties\u001B[0m file not found.");
                     LogUtils.logInfo("You need to create it from config.properties.TEMPLATE file.");
+                    System.exit(1);
                 }
             }
         }
