@@ -24,10 +24,6 @@ public final class ProjectProperties {
 
     private static Properties properties;
 
-    static boolean isServerRun() {
-        return System.getenv("CI_RUN") != null;
-    }
-
     private static void initProperties() {
         if (properties == null) {
             properties = new Properties();
@@ -57,22 +53,8 @@ public final class ProjectProperties {
         }
     }
 
-    static String getUrl() {
-        return String.format("http://%s:%s/",
-                properties.getProperty(PROP_HOST),
-                properties.getProperty(PROP_PORT));
-    }
-
-    static WebDriver createDriver() {
-        return new ChromeDriver(chromeOptions);
-    }
-
-    static String getUserName() {
-        return properties.getProperty(PROP_ADMIN_USERNAME);
-    }
-
-    static String getPassword() {
-        return properties.getProperty(PROP_ADMIN_PAS);
+    static boolean isServerRun() {
+        return System.getenv("CI_RUN") != null;
     }
 
     static final ChromeOptions chromeOptions;
@@ -90,4 +72,23 @@ public final class ProjectProperties {
 
         WebDriverManager.chromedriver().setup();
     }
+
+    static String getUrl() {
+        return String.format("http://%s:%s/",
+                properties.getProperty(PROP_HOST),
+                properties.getProperty(PROP_PORT));
+    }
+
+    static WebDriver createDriver() {
+        return new ChromeDriver(ProjectProperties.chromeOptions);
+    }
+
+    static String getUserName() {
+        return properties.getProperty(PROP_ADMIN_USERNAME);
+    }
+
+    static String getPassword() {
+        return properties.getProperty(PROP_ADMIN_PAS);
+    }
+
 }
