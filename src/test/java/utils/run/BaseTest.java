@@ -48,7 +48,7 @@ public abstract class BaseTest {
                 startDriver();
                 getPage();
                 firstLogin();
-                driver.quit();
+                stopDriver();
         }
     }
 
@@ -90,10 +90,7 @@ public abstract class BaseTest {
         if (ProjectProperties.isServerRun() && !testResult.isSuccess()) {
             BaseUtils.captureScreenFile(driver, method.getName(), this.getClass().getName());
         }
-
-        if (!testResult.isSuccess()) {
             stopDriver();
-        }
 
         BaseUtils.logf("Execution time is %o sec\n\n", (testResult.getEndMillis() - testResult.getStartMillis()) / 1000);
     }
