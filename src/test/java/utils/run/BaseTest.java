@@ -22,9 +22,9 @@ public abstract class BaseTest {
     }
 
     private void startDriver() {
-        BaseUtils.log("Browser open");
-
         driver = ProjectProperties.createDriver();
+
+        BaseUtils.log("Browser open");
     }
 
     private void getPage() {
