@@ -4,10 +4,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.ITestResult;
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.BeforeSuite;
-import org.testng.annotations.Listeners;
+import org.testng.annotations.*;
 import utils.log.ExceptionListener;
 
 import java.lang.reflect.Method;
@@ -45,25 +42,19 @@ public abstract class BaseTest {
         FireflyUtils.firstLogin(driver);
     }
 
-    @BeforeSuite
+    @BeforeTest
     void setUp() {
         if (ProjectProperties.isServerRun()) {
-            try {
                 startDriver();
                 getPage();
                 firstLogin();
                 stopDriver();
-            }
-            catch (Exception e) {
-                closeDriver();
-                throw new RuntimeException(e);
-            }
         }
     }
 
 
     @BeforeMethod
-    void beforeMethod(Method method) {
+    protected void beforeMethod(Method method) {
         BaseUtils.logf("Run %s.%s", this.getClass().getName(), method.getName());
         try {
             startDriver();
@@ -95,7 +86,7 @@ public abstract class BaseTest {
     }
 
     @AfterMethod
-    void afterMethod(Method method, ITestResult testResult) {
+    protected void afterMethod(Method method, ITestResult testResult) {
         if (ProjectProperties.isServerRun() && !testResult.isSuccess()) {
             BaseUtils.captureScreenFile(driver, method.getName(), this.getClass().getName());
         }
