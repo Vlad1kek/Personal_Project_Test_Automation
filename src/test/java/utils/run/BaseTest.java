@@ -22,9 +22,8 @@ public abstract class BaseTest {
     }
 
     private void startDriver() {
-        driver = ProjectProperties.createDriver();
-
         BaseUtils.log("Browser open");
+        driver = ProjectProperties.createDriver();
     }
 
     private void getPage() {
@@ -45,15 +44,11 @@ public abstract class BaseTest {
     @BeforeMethod
     protected void beforeMethod(Method method) {
         BaseUtils.logf("Run %s.%s", this.getClass().getName(), method.getName());
-        try {
+
             startDriver();
             getPage();
             loginPage();
-        }
-        catch (Exception e){
-            closeDriver();
-            throw new RuntimeException(e);
-        }
+
     }
 
     private void closeDriver() {
