@@ -42,20 +42,6 @@ public abstract class BaseTest {
         FireflyUtils.firstLogin(driver);
     }
 
-    @BeforeSuite
-    void setUp() {
-        try {
-            startDriver();
-            getPage();
-            firstLogin();
-            stopDriver();
-        }catch (Exception e){
-            closeDriver();
-            throw new RuntimeException(e);
-        }
-    }
-
-
     @BeforeMethod
     protected void beforeMethod(Method method) {
         BaseUtils.logf("Run %s.%s", this.getClass().getName(), method.getName());
