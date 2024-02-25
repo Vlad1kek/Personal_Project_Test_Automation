@@ -63,11 +63,12 @@ public final class ProjectProperties {
         initProperties();
 
         chromeOptions = new ChromeOptions();
-        String options = properties.getProperty(PROP_CHROME_OPTIONS);
+        String options = System.getProperty(PROP_CHROME_OPTIONS);
+        if (options == null) {
+            options = properties.getProperty(PROP_CHROME_OPTIONS);
+        }
         if (options != null) {
-            for (String argument : options.split(";")) {
-                chromeOptions.addArguments(argument);
-            }
+            chromeOptions.addArguments(options.split(";"));
         }
 
         WebDriverManager.chromedriver().setup();
