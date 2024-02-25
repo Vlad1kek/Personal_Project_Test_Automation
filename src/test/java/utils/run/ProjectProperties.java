@@ -32,8 +32,8 @@ public final class ProjectProperties {
 
                 if (System.getenv(ENV_APP_OPTIONS) != null) {
                     for (String option : System.getenv(ENV_APP_OPTIONS).split(";")) {
-                        String[] webOptionArr = option.split("=");
-                        properties.setProperty (webOptionArr[0], webOptionArr[1]);
+                        String[] optionArr = option.split("=");
+                        properties.setProperty (optionArr[0], optionArr[1]);
                     }
                 }
             } else {
@@ -42,12 +42,12 @@ public final class ProjectProperties {
                     if (inputStream == null) {
                         System.out.println("ERROR: The \u001B[31mlocal.properties\u001B[0m file not found in src/test/resources/ directory.");
                         System.out.println("You need to create it from local.properties.TEMPLATE file.");
+                        System.exit(1);
                     }
                     properties.load(inputStream);
                 } catch (IOException e) {
                     LogUtils.logInfo("ERROR: The \u001B[31mlocal.properties\u001B[0m file not found.");
                     LogUtils.logInfo("You need to create it from config.properties.TEMPLATE file.");
-                    System.exit(1);
                 }
             }
         }
