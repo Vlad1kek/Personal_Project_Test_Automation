@@ -8,6 +8,10 @@ public class FireflyUtils {
     static void login(WebDriver driver) {
         driver.findElement(By.name("email")).sendKeys(ProjectProperties.getUserName());
         driver.findElement(By.name("password")).sendKeys(ProjectProperties.getPassword());
+        submit(driver);
+    }
+
+    static void submit(WebDriver driver) {
         driver.findElement(By.cssSelector("button[type='submit']")).click();
     }
 
@@ -15,5 +19,11 @@ public class FireflyUtils {
         BaseUtils.get(driver);
 
         driver.findElement(By.className("logout-link")).click();
+    }
+
+    static void firstLogin(WebDriver driver) {
+        login(driver);
+        driver.findElement(By.name("password_confirmation")).sendKeys(ProjectProperties.getPassword());
+        submit(driver);
     }
 }
