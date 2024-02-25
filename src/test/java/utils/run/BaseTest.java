@@ -63,7 +63,7 @@ public abstract class BaseTest {
 
 
     @BeforeMethod
-    protected void beforeMethod(Method method) {
+    void beforeMethod(Method method) {
         BaseUtils.logf("Run %s.%s", this.getClass().getName(), method.getName());
         try {
             startDriver();
@@ -95,7 +95,7 @@ public abstract class BaseTest {
     }
 
     @AfterMethod
-    protected void afterMethod(Method method, ITestResult testResult) {
+    void afterMethod(Method method, ITestResult testResult) {
         if (ProjectProperties.isServerRun() && !testResult.isSuccess()) {
             BaseUtils.captureScreenFile(driver, method.getName(), this.getClass().getName());
         }
