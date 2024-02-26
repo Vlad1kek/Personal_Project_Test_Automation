@@ -26,10 +26,6 @@ public class BaseUtils {
         System.out.println();
     }
 
-    static void get(WebDriver driver) {
-        driver.get(ProjectProperties.getUrl());
-    }
-
     static File captureScreenFile(WebDriver driver, String methodName, String className) {
         File file = ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
         try {
