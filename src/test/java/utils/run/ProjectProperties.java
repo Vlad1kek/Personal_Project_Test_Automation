@@ -75,10 +75,6 @@ public final class ProjectProperties {
         return driver;
     }
 
-    public static void get(WebDriver driver) {
-        driver.get("http://localhost");
-    }
-
     static String getUserName() {
         return properties.getProperty(PROP_ADMIN_USERNAME);
     }

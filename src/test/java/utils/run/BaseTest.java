@@ -1,6 +1,5 @@
 package utils.run;
 
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.ITestResult;
@@ -29,7 +28,7 @@ public abstract class BaseTest {
 
     private void getPage() {
         BaseUtils.log("Open Web page");
-        ProjectProperties.get(driver);
+        BaseUtils.get(driver);
     }
 
     private void loginPage() {
@@ -43,10 +42,12 @@ public abstract class BaseTest {
     }
     @BeforeSuite
     protected void setUp() {
-        startDriver();
-        getPage();
-        firstLogin();
-        stopDriver();
+        if (ProjectProperties.isServerRun()) {
+            startDriver();
+            getPage();
+            firstLogin();
+            stopDriver();
+        }
     }
 
     @BeforeMethod

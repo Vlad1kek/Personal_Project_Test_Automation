@@ -4,19 +4,14 @@ import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
 
 import java.io.File;
 import java.io.IOException;
-import java.time.Duration;
 import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public class BaseUtils {
-
-
-
     public static void log(String str) {
         System.out.println(str);
     }
@@ -24,6 +19,10 @@ public class BaseUtils {
     public static void logf(String str, Object... arr) {
         System.out.printf(str, arr);
         System.out.println();
+    }
+
+    public static void get(WebDriver driver) {
+        driver.get("http://localhost");
     }
 
     static File captureScreenFile(WebDriver driver, String methodName, String className) {
