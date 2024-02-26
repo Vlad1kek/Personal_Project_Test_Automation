@@ -19,7 +19,7 @@ public final class ProjectProperties {
     private static final String ENV_BROWSER_OPTIONS = "BROWSER_OPTIONS";
     private static final String ENV_WEB_OPTIONS = "WEB_OPTIONS";
 
-    private static final String PROP_CHROME_OPTIONS = PREFIX_PROP + ENV_BROWSER_OPTIONS.toLowerCase();
+    private static final String PROP_BROWSER_OPTIONS = PREFIX_PROP + ENV_BROWSER_OPTIONS.toLowerCase();
 
     private static Properties properties;
 
@@ -27,12 +27,8 @@ public final class ProjectProperties {
         if (properties == null) {
             properties = new Properties();
             if (isServerRun()) {
-                if (System.getenv(ENV_BROWSER_OPTIONS) != null) {
-                    for (String option : System.getenv(ENV_BROWSER_OPTIONS).split(";")) {
-                        String[] browserOptionArr = option.split("=");
-                        properties.setProperty(browserOptionArr[0], browserOptionArr[1]);
-                    }
-                }
+                properties.setProperty(PROP_BROWSER_OPTIONS, System.getenv(ENV_BROWSER_OPTIONS));
+
                 if (System.getenv(ENV_WEB_OPTIONS) != null) {
                     for (String option : System.getenv(ENV_WEB_OPTIONS).split(";")) {
                         String[] optionArr = option.split("=");
@@ -58,7 +54,7 @@ public final class ProjectProperties {
         initProperties();
 
         chromeOptions = new ChromeOptions();
-        String options = properties.getProperty(PROP_CHROME_OPTIONS);
+        String options = properties.getProperty(PROP_BROWSER_OPTIONS);
         if (options != null) {
             for (String argument : options.split(";")) {
                 chromeOptions.addArguments(argument);
