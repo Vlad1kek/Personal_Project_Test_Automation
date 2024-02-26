@@ -13,7 +13,6 @@ import java.util.Properties;
 
 public final class ProjectProperties {
     static final String PREFIX_PROP = "default.";
-    private static final String PROP_PORT = PREFIX_PROP + "port";
     private static final String PROP_ADMIN_USERNAME = PREFIX_PROP + "admin.username";
     private static final String PROP_ADMIN_PAS = PREFIX_PROP + "admin.password";
     private static final String ENV_CHROME_OPTIONS = "CHROME_OPTIONS";
@@ -29,8 +28,8 @@ public final class ProjectProperties {
             if (isServerRun()) {
                 properties.setProperty(PROP_CHROME_OPTIONS, System.getenv(ENV_CHROME_OPTIONS));
 
-                for (String option : System.getenv(ENV_APP_OPTIONS).split(";")) {
-                    if (option.contains("=")) {
+                if (System.getenv(ENV_APP_OPTIONS) != null) {
+                    for (String option : System.getenv(ENV_APP_OPTIONS).split(";")) {
                         String[] optionArr = option.split("=");
                         properties.setProperty(PREFIX_PROP + optionArr[0], optionArr[1]);
                     }
@@ -78,7 +77,7 @@ public final class ProjectProperties {
     }
 
     public static void get(WebDriver driver) {
-        driver.get(String.format("http://localhost:%s", properties.getProperty(PROP_PORT)));
+        driver.get(String.format("http://localhost"));
     }
 
     static String getUserName() {
