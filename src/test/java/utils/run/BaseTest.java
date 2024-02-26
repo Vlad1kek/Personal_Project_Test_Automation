@@ -41,6 +41,13 @@ public abstract class BaseTest {
         BaseUtils.log("Register successful");
         FireflyUtils.firstLogin(driver);
     }
+    @BeforeSuite
+    protected void setUp() {
+        startDriver();
+        getPage();
+        firstLogin();
+        stopDriver();
+    }
 
     @BeforeMethod
     protected void beforeMethod(Method method) {
