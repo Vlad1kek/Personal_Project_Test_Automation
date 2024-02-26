@@ -4,24 +4,14 @@ import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
 
 import java.io.File;
 import java.io.IOException;
-import java.time.Duration;
 import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public class BaseUtils {
-
-    static WebDriver createDriver() {
-        WebDriver driver = new ChromeDriver(ProjectProperties.chromeOptions);
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
-
-        return driver;
-    }
-
     public static void log(String str) {
         System.out.println(str);
     }
@@ -31,8 +21,8 @@ public class BaseUtils {
         System.out.println();
     }
 
-    static void get(WebDriver driver) {
-        driver.get(ProjectProperties.getUrl());
+    public static void get(WebDriver driver) {
+        driver.get("http://localhost");
     }
 
     static File captureScreenFile(WebDriver driver, String methodName, String className) {
@@ -42,6 +32,7 @@ public class BaseUtils {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
         return file;
     }
 

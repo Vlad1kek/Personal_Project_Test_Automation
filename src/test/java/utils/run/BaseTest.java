@@ -3,9 +3,7 @@ package utils.run;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.ITestResult;
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.Listeners;
+import org.testng.annotations.*;
 import utils.log.ExceptionListener;
 
 import java.lang.reflect.Method;
@@ -25,7 +23,7 @@ public abstract class BaseTest {
     private void startDriver() {
         BaseUtils.log("Browser open");
 
-        driver = BaseUtils.createDriver();
+        driver = ProjectProperties.createDriver();
     }
 
     private void getPage() {
@@ -38,17 +36,35 @@ public abstract class BaseTest {
         FireflyUtils.login(driver);
     }
 
+    private void firstLogin() {
+        BaseUtils.log("Register successful");
+        FireflyUtils.firstLogin(driver);
+    }
+
+    @BeforeSuite
+    protected void setUp() {
+        if (ProjectProperties.isServerRun()) {
+            startDriver();
+            getPage();
+            firstLogin();
+            stopDriver();
+        }
+    }
+
     @BeforeMethod
     protected void beforeMethod(Method method) {
         BaseUtils.logf("Run %s.%s", this.getClass().getName(), method.getName());
         try {
-            startDriver();
-            getPage();
-            loginPage();
-        }
-        catch (Exception e){
-            closeDriver();
-            throw new RuntimeException(e);
+            if (method.getAnnotation(Test.class).dependsOnMethods().length == 0) {
+                startDriver();
+                getPage();
+                loginPage();
+            } else {
+                getPage();
+            }
+        } catch (Exception e) {
+            stopDriver();
+            throw e;
         }
     }
 
@@ -75,10 +91,7 @@ public abstract class BaseTest {
         if (ProjectProperties.isServerRun() && !testResult.isSuccess()) {
             BaseUtils.captureScreenFile(driver, method.getName(), this.getClass().getName());
         }
-
-        if (!testResult.isSuccess()) {
             stopDriver();
-        }
 
         BaseUtils.logf("Execution time is %o sec\n\n", (testResult.getEndMillis() - testResult.getStartMillis()) / 1000);
     }
