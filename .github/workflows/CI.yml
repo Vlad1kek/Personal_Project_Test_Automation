@@ -29,10 +29,12 @@ jobs:
       - name: Wait for the Firefly
         run: ./.github/wait-for-firefly.sh
 
+
       - name: Maven test
         run: mvn test
         env:
-          BROWSER_OPTIONS: --remote-allow-origins=*;--disable-gpu;--no-sandbox;--disable-dev-shm-usage;--headless=new;--window-size=1920,1080
+          CHROME_OPTIONS: --disable-gpu;--no-sandbox;--disable-dev-shm-usage;--headless=new;--window-size=1920,1080
+          APP_OPTIONS: host=localhost;port=;admin.username=${{ secrets.ADMIN_USERNAME }};admin.password=${{ secrets.ADMIN_PASSWORD }}
           CI_RUN: true
 
       - name: Attach screenshots and reports
