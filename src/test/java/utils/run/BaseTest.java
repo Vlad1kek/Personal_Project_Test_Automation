@@ -22,8 +22,8 @@ public abstract class BaseTest {
 
     private void startDriver() {
         BaseUtils.log("Browser open");
-        driver = ProjectProperties.createDriver();
 
+        driver = ProjectProperties.createDriver();
     }
 
     private void getPage() {
@@ -40,6 +40,7 @@ public abstract class BaseTest {
         BaseUtils.log("Register successful");
         FireflyUtils.firstLogin(driver);
     }
+
     @BeforeSuite
     protected void setUp() {
         if (ProjectProperties.isServerRun()) {

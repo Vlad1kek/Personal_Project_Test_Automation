@@ -78,5 +78,4 @@ public final class ProjectProperties {
     static String getPassword() {
         return properties.getProperty(PROP_ADMIN_PAS);
     }
-
 }

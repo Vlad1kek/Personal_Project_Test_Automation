@@ -20,6 +20,7 @@ public class FireflyUtils {
         driver.findElement(By.name("email")).sendKeys(ProjectProperties.getUserName());
         driver.findElement(By.name("password")).sendKeys(ProjectProperties.getPassword());
     }
+
     static void submit(WebDriver driver) {
         driver.findElement(By.cssSelector("button[type='submit']")).click();
     }
