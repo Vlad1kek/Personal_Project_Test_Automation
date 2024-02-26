@@ -30,9 +30,12 @@ public final class ProjectProperties {
                 properties.setProperty(PROP_CHROME_OPTIONS, System.getenv(ENV_CHROME_OPTIONS));
 
                 for (String option : System.getenv(ENV_APP_OPTIONS).split(";")) {
-                    String[] optionArr = option.split("=");
-                    properties.setProperty(PREFIX_PROP + optionArr[0], optionArr[1]);
+                    if (option.contains("=")) {
+                        String[] optionArr = option.split("=");
+                        properties.setProperty(PREFIX_PROP + optionArr[0], optionArr[1]);
+                    }
                 }
+
             } else {
                 try {
                     InputStream inputStream = BaseUtils.class.getClassLoader().getResourceAsStream("local.properties");
