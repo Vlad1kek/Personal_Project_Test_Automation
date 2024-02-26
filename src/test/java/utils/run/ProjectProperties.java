@@ -18,7 +18,6 @@ public final class ProjectProperties {
     private static final String PROP_ADMIN_PAS = PREFIX_PROP + "admin.password";
     private static final String ENV_BROWSER_OPTIONS = "BROWSER_OPTIONS";
     private static final String ENV_WEB_OPTIONS = "WEB_OPTIONS";
-
     private static final String PROP_BROWSER_OPTIONS = PREFIX_PROP + ENV_BROWSER_OPTIONS.toLowerCase();
 
     private static Properties properties;
@@ -69,9 +68,7 @@ public final class ProjectProperties {
     }
 
     static WebDriver createDriver() {
-        WebDriver driver = new ChromeDriver(chromeOptions);
-
-        return driver;
+        return new ChromeDriver(chromeOptions);
     }
 
     static String getUserName() {
