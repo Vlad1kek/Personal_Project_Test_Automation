@@ -10,7 +10,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class BaseModel {
-
     private final WebDriver driver;
     private final Map<Integer, WebDriverWait> waitMap = new HashMap<>();
     private Actions action;
