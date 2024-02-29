@@ -24,7 +24,6 @@ public class BaseModel {
         return driver;
     }
 
-
     protected WebDriverWait getWait(int seconds) {
         return waitMap.computeIfAbsent(seconds, duration -> new WebDriverWait(driver, Duration.ofSeconds(duration)));
     }
