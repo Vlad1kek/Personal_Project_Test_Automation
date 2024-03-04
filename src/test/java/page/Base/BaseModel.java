@@ -3,16 +3,24 @@ package page.Base;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.Wait;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
-import java.util.HashMap;
-import java.util.Map;
 
 public class BaseModel {
     private final WebDriver driver;
-    private final Map<Integer, WebDriverWait> waitMap = new HashMap<>();
     private Actions action;
+
+    protected Wait<WebDriver> wait = new WebDriverWait(getDriver(), Duration.ofSeconds(2));
+
+    public Wait<WebDriver> getWait() {
+        if (wait == null) {
+            wait = new WebDriverWait(getDriver(), Duration.ofSeconds(2));
+        }
+
+        return wait;
+    }
 
     public BaseModel(WebDriver driver) {
         this.driver = driver;
@@ -21,10 +29,6 @@ public class BaseModel {
 
     protected WebDriver getDriver() {
         return driver;
-    }
-
-    protected WebDriverWait getWait(int seconds) {
-        return waitMap.computeIfAbsent(seconds, duration -> new WebDriverWait(driver, Duration.ofSeconds(duration)));
     }
 
     protected Actions getAction() {

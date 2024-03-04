@@ -16,12 +16,28 @@ public class BudgetsTest extends BaseTest {
         final String name = "NewTestBudgets123";
 
         List<String> nameBudget = new HomePage(getDriver())
-                .clickBudgets()
+                .goBudgets()
                 .clickCreateBudgets()
                 .setName(name)
                 .submit()
                 .getBudgetsNamesText();
 
         Assert.assertTrue(nameBudget.contains(name), "Budget name does not exist");
+    }
+
+    @Description("Add Budget Amount FI-T6")
+    @Test
+    public void testAddBudgetAmount() {
+        final String amount = "734";
+
+        String leftToSpend = new HomePage(getDriver())
+                .goBudgets()
+                .setBudgetAmount(amount)
+                .goHomePage()
+                .getLeftToSpendNumber();
+
+        System.out.println(leftToSpend);
+
+        Assert.assertEquals(leftToSpend, "€" + amount + ".00");
     }
 }
