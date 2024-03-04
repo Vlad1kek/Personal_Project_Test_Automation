@@ -27,17 +27,15 @@ public class BudgetsTest extends BaseTest {
 
 
     @Description("Add Budget Amount FI-T6")
-    @Test
+    @Test(priority = 2)
     public void testAddBudgetAmount() {
         final String amount = "734";
 
         String leftToSpend = new HomePage(getDriver())
                 .goBudgets()
                 .setBudgetAmount(amount)
-                .goHomePage()
-                .getLeftToSpendNumber();
-
-        System.out.println(leftToSpend);
+                .clickBudgetNameInList("NewTestBudgets123")
+                .getAmountText();
 
         Assert.assertEquals(leftToSpend, "€" + amount + ".00");
     }

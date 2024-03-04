@@ -1,5 +1,6 @@
 package page.Budgets;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -19,6 +20,9 @@ public class BudgetsPage extends BasePage {
     @FindBy(xpath = "//input[@type='number']")
     private WebElement budgetAmount;
 
+    @FindBy(xpath = "//a[contains(text(), 'NewTestBudgets123')]")
+    private WebElement budgetLink;
+
     public BudgetsPage(WebDriver driver) {
         super(driver);
     }
@@ -33,16 +37,20 @@ public class BudgetsPage extends BasePage {
         return budgetsList.stream().map(WebElement::getText).toList();
     }
 
-    public BasePage setBudgetAmount(String amountNumber) {
+    public BudgetsPage setBudgetAmount(String amountNumber) {
         getAction().click(budgetAmount)
                 .doubleClick(budgetAmount)
                 .sendKeys(Keys.DELETE)
                 .sendKeys(amountNumber)
+                .sendKeys(Keys.ENTER)
                 .perform();
-//        budgetAmount.clear();
-//        budgetAmount.sendKeys(amountNumber);
 
         return this;
     }
 
+    public BudgetsTransactionsPage clickBudgetNameInList(String name) {
+        getDriver().findElement(By.xpath("//a[contains(text(), '" + name + "')]")).click();
+
+        return new BudgetsTransactionsPage(getDriver());
+    }
 }

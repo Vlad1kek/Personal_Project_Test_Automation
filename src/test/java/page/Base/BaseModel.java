@@ -10,9 +10,10 @@ import java.time.Duration;
 
 public class BaseModel {
     private final WebDriver driver;
+
     private Actions action;
 
-    protected Wait<WebDriver> wait = new WebDriverWait(getDriver(), Duration.ofSeconds(2));
+    private Wait<WebDriver> wait = new WebDriverWait(getDriver(), Duration.ofSeconds(2));
 
     public Wait<WebDriver> getWait() {
         if (wait == null) {

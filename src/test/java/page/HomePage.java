@@ -15,7 +15,6 @@ public class HomePage extends BasePage {
     }
 
     public String getLeftToSpendNumber() {
-        getWait().until(d -> boxLeftToSpendNumber.isDisplayed());
 
         return boxLeftToSpendNumber.getText();
     }
