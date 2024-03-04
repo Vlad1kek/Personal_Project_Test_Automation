@@ -11,7 +11,7 @@ import java.util.List;
 public class BudgetsTest extends BaseTest {
 
     @Description("Create Budgets FI-T5")
-    @Test
+    @Test(priority = 1)
     public void testCreateFirstBudgets() {
         final String name = "NewTestBudgets123";
 
@@ -24,6 +24,7 @@ public class BudgetsTest extends BaseTest {
 
         Assert.assertTrue(nameBudget.contains(name), "Budget name does not exist");
     }
+
 
     @Description("Add Budget Amount FI-T6")
     @Test
