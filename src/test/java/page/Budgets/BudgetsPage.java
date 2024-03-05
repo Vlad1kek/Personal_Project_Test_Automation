@@ -44,7 +44,7 @@ public class BudgetsPage extends BasePage {
                 .sendKeys(Keys.ENTER)
                 .doubleClick(budgetAmount)
                 .sendKeys(amountNumber)
-                .pause(2000)
+                .pause(500)
                 .perform();
 
         return this;

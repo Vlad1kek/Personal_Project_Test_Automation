@@ -15,6 +15,7 @@ public class BudgetsTransactionsPage extends BasePage {
     }
 
     public String getAmountText() {
+        getWait().until(driver -> amountText.isDisplayed());
         return amountText.getText();
     }
 }
