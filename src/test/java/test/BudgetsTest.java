@@ -9,19 +9,32 @@ import utils.run.BaseTest;
 import java.util.List;
 
 public class BudgetsTest extends BaseTest {
+    static final String NAME_BUDGET = "NewTestBudgets123";
 
     @Description("Create Budgets FI-T5")
-    @Test
+    @Test(priority = 1)
     public void testCreateFirstBudgets() {
-        final String name = "NewTestBudgets123";
-
         List<String> nameBudget = new HomePage(getDriver())
-                .clickBudgets()
+                .goBudgets()
                 .clickCreateBudgets()
-                .setName(name)
+                .setName(NAME_BUDGET)
                 .submit()
                 .getBudgetsNamesText();
 
-        Assert.assertTrue(nameBudget.contains(name), "Budget name does not exist");
+        Assert.assertTrue(nameBudget.contains(NAME_BUDGET), "Budget name does not exist");
+    }
+
+
+    @Description("Add Budget Amount FI-T6")
+    @Test(priority = 2)
+    public void testAddBudgetAmount() {
+        final String amount = "222.33";
+
+        String actualAmount = new HomePage(getDriver())
+                .goBudgets()
+                .setBudgetAmount(amount)
+                .getBudgetedAmountText();
+
+        Assert.assertEquals(actualAmount, "€" + amount);
     }
 }

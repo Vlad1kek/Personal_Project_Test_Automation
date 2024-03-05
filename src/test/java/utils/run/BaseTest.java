@@ -1,20 +1,20 @@
 package utils.run;
 
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.ui.Wait;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.ITestResult;
 import org.testng.annotations.*;
 import utils.log.ExceptionListener;
 
 import java.lang.reflect.Method;
-import java.util.HashMap;
-import java.util.Map;
+import java.time.Duration;
 
 @Listeners({OrderTest.class, ExceptionListener.class,})
 public abstract class BaseTest {
 
     private WebDriver driver;
-    private Map<Integer, WebDriverWait> waitMap = new HashMap<>();
+    private WebDriverWait wait;
 
     protected WebDriver getDriver() {
         return driver;
@@ -41,12 +41,18 @@ public abstract class BaseTest {
         FireflyUtils.firstLogin(driver);
     }
 
+    private void createBank() {
+        BaseUtils.log("Getting started");
+        FireflyUtils.createBank(driver);
+    }
+
     @BeforeSuite
     protected void setUp() {
         if (ProjectProperties.isServerRun()) {
             startDriver();
             getPage();
             firstLogin();
+            createBank();
             stopDriver();
         }
     }
@@ -72,8 +78,8 @@ public abstract class BaseTest {
         if (driver != null) {
             driver.quit();
 
-            waitMap = new HashMap<>();
             driver = null;
+            wait = null;
             BaseUtils.log("Browser closed");
         }
     }

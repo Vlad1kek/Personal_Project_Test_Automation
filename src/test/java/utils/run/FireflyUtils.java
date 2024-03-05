@@ -3,6 +3,8 @@ package utils.run;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
+import java.time.Duration;
+
 public class FireflyUtils {
 
     static void login(WebDriver driver) {
@@ -29,5 +31,13 @@ public class FireflyUtils {
         BaseUtils.get(driver);
 
         driver.findElement(By.className("logout-link")).click();
+    }
+
+    static void createBank(WebDriver driver) {
+        driver.findElement(By.id("ffInput_bank_name")).sendKeys("TestBankName123");
+        driver.findElement(By.cssSelector("input[id='bank_balance']")).sendKeys("1000");
+        driver.findElement(By.cssSelector("input[type='submit']")).click();
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(2));
+        driver.findElement(By.cssSelector("a[class$='introjs-skipbutton']")).click();
     }
 }

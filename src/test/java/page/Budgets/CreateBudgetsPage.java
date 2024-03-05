@@ -6,6 +6,8 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import page.Base.BasePage;
 
+import java.time.Duration;
+
 public class CreateBudgetsPage extends BasePage {
     @FindBy(id = "ffInput_name")
     private WebElement inputName;
@@ -29,6 +31,7 @@ public class CreateBudgetsPage extends BasePage {
     public BudgetsPage submit() {
         buttonSubmit.click();
 
+        getDriver().manage().timeouts().implicitlyWait(Duration.ofSeconds(2));
         if (getDriver().findElements(By.className("introjs-overlay")).size() > 0) {
             buttonSkip.click();
         }
