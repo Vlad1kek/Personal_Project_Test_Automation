@@ -6,6 +6,8 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import page.Base.BasePage;
 
+import java.time.Duration;
+
 public class BudgetsTransactionsPage extends BasePage {
 
     @FindBy(className = "money-positive")
@@ -16,7 +18,9 @@ public class BudgetsTransactionsPage extends BasePage {
     }
 
     public String getAmountText() {
+        getDriver().manage().timeouts().implicitlyWait(Duration.ofSeconds(2));
         getDriver().navigate().refresh();
-        return getWait().until(ExpectedConditions.visibilityOf(amountText)).getText();
+
+        return amountText.getText();
     }
 }
