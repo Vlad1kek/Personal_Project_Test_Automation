@@ -35,6 +35,8 @@ public class FireflyUtils {
         driver.findElement(By.id("ffInput_bank_name")).sendKeys("TestBankName123");
         driver.findElement(By.cssSelector("input[id='bank_balance']")).sendKeys("1000");
         driver.findElement(By.cssSelector("input[type='submit']")).click();
-        driver.findElement(By.className("introjs-skipbutton")).click();
+        if (driver.findElements(By.className("introjs-overlay")).size() > 0) {
+            driver.findElement(By.className("introjs-skipbutton")).click();
+        }
     }
 }
