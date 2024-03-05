@@ -18,9 +18,6 @@ public class BudgetsTransactionsPage extends BasePage {
     }
 
     public String getAmountText() {
-        getDriver().manage().timeouts().implicitlyWait(Duration.ofSeconds(2));
-        getDriver().navigate().refresh();
-
-        return amountText.getText();
+        return getWait().until(ExpectedConditions.visibilityOf(amountText)).getText();
     }
 }
