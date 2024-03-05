@@ -34,5 +34,6 @@ public class FireflyUtils {
     static void createBank(WebDriver driver) {
         driver.findElement(By.id("ffInput_bank_name")).sendKeys("TestBankName123");
         driver.findElement(By.id("bank_balance")).sendKeys("1000");
+        submit(driver);
     }
 }
