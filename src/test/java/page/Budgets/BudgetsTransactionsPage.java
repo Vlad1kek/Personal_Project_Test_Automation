@@ -3,9 +3,8 @@ package page.Budgets;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import page.Base.BasePage;
-
-import java.time.Duration;
 
 public class BudgetsTransactionsPage extends BasePage {
 
@@ -17,8 +16,6 @@ public class BudgetsTransactionsPage extends BasePage {
     }
 
     public String getAmountText() {
-        getDriver().manage().timeouts().implicitlyWait(Duration.ofSeconds(2));
-
-        return amountText.getText();
+        return getWait().until(ExpectedConditions.visibilityOf(amountText)).getText();
     }
 }
