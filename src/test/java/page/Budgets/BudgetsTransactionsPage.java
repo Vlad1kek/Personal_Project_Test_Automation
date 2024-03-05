@@ -16,6 +16,7 @@ public class BudgetsTransactionsPage extends BasePage {
     }
 
     public String getAmountText() {
+        getDriver().navigate().refresh();
         return getWait().until(ExpectedConditions.visibilityOf(amountText)).getText();
     }
 }
