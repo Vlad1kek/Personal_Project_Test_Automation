@@ -40,10 +40,8 @@ public class BudgetsPage extends BasePage {
     public BudgetsPage setBudgetAmount(String amountNumber) {
         getAction().click(budgetAmount)
                 .doubleClick(budgetAmount)
-                .sendKeys("1")
-                .sendKeys(Keys.ENTER)
-                .doubleClick(budgetAmount)
                 .sendKeys(amountNumber)
+                .sendKeys(Keys.ENTER)
                 .pause(500)
                 .perform();
 

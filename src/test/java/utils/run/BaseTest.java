@@ -14,7 +14,7 @@ import java.time.Duration;
 public abstract class BaseTest {
 
     private WebDriver driver;
-    private Wait<WebDriver> wait = new WebDriverWait(getDriver(), Duration.ofSeconds(2));
+    private WebDriverWait wait;
 
     protected WebDriver getDriver() {
         return driver;
@@ -78,8 +78,8 @@ public abstract class BaseTest {
         if (driver != null) {
             driver.quit();
 
-            wait = null;
             driver = null;
+            wait = null;
             BaseUtils.log("Browser closed");
         }
     }

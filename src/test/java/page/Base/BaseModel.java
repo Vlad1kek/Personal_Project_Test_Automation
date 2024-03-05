@@ -3,7 +3,6 @@ package page.Base;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.Wait;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
@@ -13,9 +12,9 @@ public class BaseModel {
 
     private Actions action;
 
-    private Wait<WebDriver> wait = new WebDriverWait(getDriver(), Duration.ofSeconds(2));
+    private WebDriverWait wait;
 
-    public Wait<WebDriver> getWait() {
+    public WebDriverWait getWait() {
         if (wait == null) {
             wait = new WebDriverWait(getDriver(), Duration.ofSeconds(2));
         }

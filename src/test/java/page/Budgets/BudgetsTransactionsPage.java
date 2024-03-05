@@ -5,6 +5,8 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import page.Base.BasePage;
 
+import java.time.Duration;
+
 public class BudgetsTransactionsPage extends BasePage {
 
     @FindBy(className = "money-positive")
@@ -15,7 +17,8 @@ public class BudgetsTransactionsPage extends BasePage {
     }
 
     public String getAmountText() {
-        getWait().until(driver -> amountText.isDisplayed());
+        getDriver().manage().timeouts().implicitlyWait(Duration.ofSeconds(2));
+
         return amountText.getText();
     }
 }
