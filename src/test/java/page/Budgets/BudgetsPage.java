@@ -42,11 +42,14 @@ public class BudgetsPage extends BasePage {
 
     public BudgetsPage setBudgetAmount(String amountNumber) {
         getAction().click(budgetAmount)
-                .doubleClick(budgetAmount)
+                .keyDown(Keys.CONTROL)
+                .sendKeys("a")
+                .keyUp(Keys.CONTROL)
                 .sendKeys(amountNumber)
                 .sendKeys(Keys.ENTER)
                 .pause(500)
                 .perform();
+
 
         return this;
     }

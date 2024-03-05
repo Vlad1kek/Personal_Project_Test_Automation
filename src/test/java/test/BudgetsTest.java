@@ -28,7 +28,7 @@ public class BudgetsTest extends BaseTest {
     @Description("Add Budget Amount FI-T6")
     @Test(priority = 2)
     public void testAddBudgetAmount() {
-        final String amount = "734.33";
+        final String amount = "222.33";
 
         String actualAmount = new HomePage(getDriver())
                 .goBudgets()
