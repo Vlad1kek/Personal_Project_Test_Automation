@@ -33,8 +33,7 @@ public class BudgetsTest extends BaseTest {
         String actualAmount = new HomePage(getDriver())
                 .goBudgets()
                 .setBudgetAmount(amount)
-                .goHomePage()
-                .getLeftToSpendNumber();
+                .getBudgetedAmountText();
 
         Assert.assertEquals(actualAmount, "€" + amount);
     }

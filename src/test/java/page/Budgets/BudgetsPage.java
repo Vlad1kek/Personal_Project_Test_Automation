@@ -23,6 +23,9 @@ public class BudgetsPage extends BasePage {
     @FindBy(xpath = "//a[contains(text(), 'NewTestBudgets123')]")
     private WebElement budgetLink;
 
+    @FindBy(css = "span[class$='budgeted_amount']")
+    private WebElement budgetedAmountText;
+
     public BudgetsPage(WebDriver driver) {
         super(driver);
     }
@@ -40,12 +43,9 @@ public class BudgetsPage extends BasePage {
     public BudgetsPage setBudgetAmount(String amountNumber) {
         getAction().click(budgetAmount)
                 .doubleClick(budgetAmount)
-                .sendKeys("1")
-                .sendKeys(Keys.ENTER)
-                .doubleClick(budgetAmount)
                 .sendKeys(amountNumber)
                 .sendKeys(Keys.ENTER)
-                .pause(1000)
+                .pause(500)
                 .perform();
 
         return this;
@@ -55,5 +55,9 @@ public class BudgetsPage extends BasePage {
         getDriver().findElement(By.xpath("//a[contains(text(), '" + name + "')]")).click();
 
         return new BudgetsTransactionsPage(getDriver());
+    }
+
+    public String getBudgetedAmountText() {
+        return budgetedAmountText.getText();
     }
 }
