@@ -5,6 +5,7 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 import page.HomePage;
 import utils.run.BaseTest;
+import utils.run.TestUtils;
 
 import java.util.List;
 
@@ -48,5 +49,17 @@ public class BudgetsTest extends BaseTest {
                 .getBudgetedAmountText();
 
         Assert.assertEquals(actualAmount, "€0.00");
+    }
+
+    @Description("Budgets correct month and year FI-T8")
+    @Test(priority = 2)
+    public void testBudgetsCorrectMonthAndYear() {
+        final String localDate = TestUtils.getMonthYear();
+
+        String budgetsPageDate = new HomePage(getDriver())
+                .goBudgets()
+                .getValueBudgetsMonthYear();
+
+        Assert.assertEquals(budgetsPageDate, localDate);
     }
 }
