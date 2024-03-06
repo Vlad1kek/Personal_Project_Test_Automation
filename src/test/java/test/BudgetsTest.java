@@ -9,7 +9,7 @@ import utils.run.BaseTest;
 import java.util.List;
 
 public class BudgetsTest extends BaseTest {
-    static final String NAME_BUDGET = "NewTestBudgets123";
+    private static final String NAME_BUDGET = "NewTestBudgets123";
 
     @Description("Create Budgets FI-T5")
     @Test(priority = 1)
@@ -24,10 +24,9 @@ public class BudgetsTest extends BaseTest {
         Assert.assertTrue(nameBudget.contains(NAME_BUDGET), "Budget name does not exist");
     }
 
-
-    @Description("Add Budget Amount FI-T6")
+    @Description("Add budget valid amount FI-T6")
     @Test(priority = 2)
-    public void testAddBudgetAmount() {
+    public void testAddBudgetValidAmount() {
         final String amount = "222.33";
 
         String actualAmount = new HomePage(getDriver())
@@ -36,5 +35,18 @@ public class BudgetsTest extends BaseTest {
                 .getBudgetedAmountText();
 
         Assert.assertEquals(actualAmount, "€" + amount);
+    }
+
+    @Description("Add budget invalid amount FI-T7")
+    @Test(priority = 3)
+    public void testAddBudgetInvalidAmount() {
+        final String amount = "abCD";
+
+        String actualAmount = new HomePage(getDriver())
+                .goBudgets()
+                .setBudgetAmount(amount)
+                .getBudgetedAmountText();
+
+        Assert.assertEquals(actualAmount, "€0.00");
     }
 }
