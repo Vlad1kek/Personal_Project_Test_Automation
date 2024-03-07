@@ -62,4 +62,21 @@ public class BudgetsTest extends BaseTest {
 
         Assert.assertEquals(budgetsPageDate, localDate);
     }
+
+    @Description("Create Budgets with fixed amount FI-T9")
+    @Test(priority = 4)
+    public void testCreateBudgetsWithFixedAmount() {
+        final String amount = "789";
+
+        String calendarAttribute = new HomePage(getDriver())
+                .goBudgets()
+                .clickCreateBudgets()
+                .setName(NAME_BUDGET + "1")
+                .setAFixedAmountEveryPeriod()
+                .setAutoBudgetAmount(amount)
+                .submit()
+                .getCalendarCheckTitle(NAME_BUDGET + "1");
+
+        Assert.assertEquals(calendarAttribute, "This budget will be set periodically");
+    }
 }
