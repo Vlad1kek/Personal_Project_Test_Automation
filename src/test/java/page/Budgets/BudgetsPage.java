@@ -26,7 +26,7 @@ public class BudgetsPage extends BasePage {
     @FindBy(css = "span[class$='budgeted_amount']")
     private WebElement budgetedAmountText;
 
-    @FindBy (xpath = "//div[starts-with(@class, 'col-lg-8')]/div/a[2]")
+    @FindBy(xpath = "//div[starts-with(@class, 'col-lg-8')]/div/a[2]")
     private WebElement valueBudgetsMonthYear;
 
     public BudgetsPage(WebDriver driver) {
@@ -69,5 +69,10 @@ public class BudgetsPage extends BasePage {
 
     public String getValueBudgetsMonthYear() {
         return valueBudgetsMonthYear.getText();
+    }
+
+    public String getCalendarCheckTitle(String nameBudget) {
+       return getDriver().findElement(By.xpath("//td[contains(@data-value,'" + nameBudget + "')]/span"))
+                .getAttribute("title");
     }
 }

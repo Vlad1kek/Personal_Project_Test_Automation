@@ -4,11 +4,13 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.ui.Select;
 import page.Base.BasePage;
 
 import java.time.Duration;
 
 public class CreateBudgetsPage extends BasePage {
+
     @FindBy(id = "ffInput_name")
     private WebElement inputName;
 
@@ -17,6 +19,12 @@ public class CreateBudgetsPage extends BasePage {
 
     @FindBy(className = "introjs-skipbutton")
     private WebElement buttonSkip;
+
+    @FindBy(id = "ffInput_auto_budget_type")
+    private WebElement optionAutoBudget;
+
+    @FindBy(id = "ffInput_auto_budget_amount")
+    private  WebElement autoBudgetAmount;
 
     public CreateBudgetsPage(WebDriver driver) {
         super(driver);
@@ -37,5 +45,20 @@ public class CreateBudgetsPage extends BasePage {
         }
 
         return new BudgetsPage(getDriver());
+    }
+
+    public CreateBudgetsPage setAFixedAmountEveryPeriod()  {
+        Select select = new Select(optionAutoBudget);
+        select.selectByValue("1");
+
+        return this;
+    }
+
+    public CreateBudgetsPage setAutoBudgetAmount(String amount) {
+        getAction().click(autoBudgetAmount)
+                .sendKeys(amount)
+                .perform();
+
+        return this;
     }
 }
