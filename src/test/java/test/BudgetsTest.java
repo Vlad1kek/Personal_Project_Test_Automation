@@ -79,4 +79,21 @@ public class BudgetsTest extends BaseTest {
 
         Assert.assertEquals(calendarAttribute, "This budget will be set periodically");
     }
+
+    @Description("Create Budgets add an amount every period FI-T10")
+    @Test(priority = 4)
+    public void testCreateBudgetsAddAnAmountEveryPeriod() {
+        final String amount = "333";
+
+        String calendarAttribute = new HomePage(getDriver())
+                .goBudgets()
+                .clickCreateBudgets()
+                .setName(NAME_BUDGET + "2")
+                .setAddAnAmountEveryPeriod()
+                .setAutoBudgetAmount(amount)
+                .submit()
+                .getCalendarCheckTitle(NAME_BUDGET + "2");
+
+        Assert.assertEquals(calendarAttribute, "The budget amount will increase periodically");
+    }
 }
