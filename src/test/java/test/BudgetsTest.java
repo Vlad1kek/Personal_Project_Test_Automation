@@ -96,4 +96,23 @@ public class BudgetsTest extends BaseTest {
 
         Assert.assertEquals(calendarAttribute, "The budget amount will increase periodically");
     }
+
+
+    @Description("Create Budgets and correct for overspending FI-T11")
+    @Test(priority = 4)
+    public void testCreateBudgetsAndCorrectForOverspending() {
+        final String amount = "125";
+
+        String calendarAttribute = new HomePage(getDriver())
+                .goBudgets()
+                .clickCreateBudgets()
+                .setName(NAME_BUDGET + "3")
+                .setCorrectForOverspending()
+                .setAutoBudgetAmount(amount)
+                .submit()
+                .getCalendarCheckTitle(NAME_BUDGET + "3");
+
+        Assert.assertEquals(calendarAttribute,
+                "The budget amount will increase periodically and will correct for overspending");
+    }
 }

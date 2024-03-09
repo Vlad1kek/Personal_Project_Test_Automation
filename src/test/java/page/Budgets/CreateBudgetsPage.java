@@ -61,6 +61,13 @@ public class CreateBudgetsPage extends BasePage {
         return this;
     }
 
+    public CreateBudgetsPage setCorrectForOverspending()  {
+        Select select = new Select(optionAutoBudget);
+        select.selectByValue("3");
+
+        return this;
+    }
+
     public CreateBudgetsPage setAutoBudgetAmount(String amount) {
         getAction().click(autoBudgetAmount)
                 .sendKeys(amount)
