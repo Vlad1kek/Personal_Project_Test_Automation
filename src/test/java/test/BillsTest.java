@@ -8,7 +8,7 @@ import utils.run.BaseTest;
 import java.util.List;
 
 public class BillsTest extends BaseTest {
-    private static final String BILLS_NAME = "NewTestBills48";
+    private static final String BILLS_NAME = "NewTestBills22";
 
     @Test
     public void CreateNewBills() {
@@ -19,8 +19,8 @@ public class BillsTest extends BaseTest {
                 .setMinimumAmount(3)
                 .setMaximumAmount(5)
                 .submit()
+                .goBill()
                 .getBillsNamesList();
-        System.out.println(nameBill);
 
         Assert.assertTrue(nameBill.contains(BILLS_NAME));
     }

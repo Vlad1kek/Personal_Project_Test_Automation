@@ -40,9 +40,9 @@ public class CreateBillsPage extends BasePage {
         return this;
     }
 
-    public BillsPage submit() {
+    public RulesBillsPage submit() {
         buttonSubmit.click();
 
-        return new BillsPage(getDriver());
+        return new RulesBillsPage(getDriver());
     }
 }
