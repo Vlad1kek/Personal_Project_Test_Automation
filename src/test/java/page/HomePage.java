@@ -4,7 +4,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import page.Base.BasePage;
+import page.base.BasePage;
 
 public class HomePage extends BasePage {
 
@@ -16,7 +16,6 @@ public class HomePage extends BasePage {
     }
 
     public String getLeftToSpendNumber() {
-
         return getWait().until(ExpectedConditions.visibilityOf(boxLeftToSpendNumber)).getText();
     }
 }

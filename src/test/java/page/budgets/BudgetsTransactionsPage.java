@@ -1,12 +1,10 @@
-package page.Budgets;
+package page.budgets;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import page.Base.BasePage;
-
-import java.time.Duration;
+import page.base.BasePage;
 
 public class BudgetsTransactionsPage extends BasePage {
 

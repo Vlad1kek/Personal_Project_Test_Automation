@@ -1,9 +1,10 @@
-package page.Base;
+package page.base;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import page.Budgets.BudgetsPage;
+import page.bills.BillsPage;
+import page.budgets.BudgetsPage;
 import page.HomePage;
 
 public class BasePage extends BaseModel {
@@ -15,6 +16,9 @@ public class BasePage extends BaseModel {
 
     @FindBy(className = "logo-lg")
     private WebElement logoFirefly;
+
+    @FindBy(css = "a[href$='/bills']")
+    private WebElement billsSidePanel;
 
     public BasePage(WebDriver driver) {
         super(driver);
@@ -34,5 +38,11 @@ public class BasePage extends BaseModel {
         logoFirefly.click();
 
         return new HomePage(getDriver());
+    }
+
+    public BillsPage goBill() {
+        billsSidePanel.click();
+
+        return new BillsPage(getDriver());
     }
 }

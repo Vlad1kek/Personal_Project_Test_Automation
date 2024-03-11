@@ -1,4 +1,4 @@
-package page.Base;
+package page.base;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.interactions.Actions;
@@ -9,9 +9,7 @@ import java.time.Duration;
 
 public class BaseModel {
     private final WebDriver driver;
-
     private Actions action;
-
     private WebDriverWait wait;
 
     public WebDriverWait getWait() {
