@@ -4,7 +4,6 @@ import jdk.jfr.Description;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import page.HomePage;
-import page.bills.BillsPage;
 import utils.run.BaseTest;
 import utils.run.TestUtils;
 
@@ -14,7 +13,7 @@ public class BillsTest extends BaseTest {
     private static final String BILLS_NAME = "NewTestBills22";
 
     @Description("Create new bills FI-T12")
-    @Test
+    @Test(priority = 1)
     public void CreateNewBills() {
         List<String> nameBill = new HomePage(getDriver())
                 .goBill()
@@ -30,7 +29,7 @@ public class BillsTest extends BaseTest {
     }
 
     @Description("Checking the date Bills repeats monthly FI-T13")
-    @Test
+    @Test(priority = 2)
     public void CheckingTheDateBillsRepeatsMonthly() {
         String currentDate = TestUtils.getCurrentDate();
 
