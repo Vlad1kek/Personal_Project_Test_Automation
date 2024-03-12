@@ -38,4 +38,18 @@ public class BillsPage extends BasePage {
     public List<String> getBillsNamesList() {
         return billsList.stream().map(WebElement::getText).toList();
     }
+
+    public EditBillPage clickPencil(String name) {
+        getDriver().findElement(By.xpath("//tr[@data-name='" + name + "']/td[2]/div/a[1]")).click();
+
+        return new EditBillPage(getDriver());
+    }
+
+    public String getNextExpectedMatch(String name) {
+        return getDriver().findElement(By.xpath("//tr[@data-name='NewTestBills22']/td[7]")).getText();
+    }
+
+    public String getRepeats(String name) {
+        return getDriver().findElement(By.xpath("//tr[@data-name='NewTestBills22']/td[8]")).getText();
+    }
 }

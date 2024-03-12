@@ -12,17 +12,17 @@ public class BaseModel {
     private Actions action;
     private WebDriverWait wait;
 
+    public BaseModel(WebDriver driver) {
+        this.driver = driver;
+        PageFactory.initElements(driver, this);
+    }
+
     public WebDriverWait getWait() {
         if (wait == null) {
             wait = new WebDriverWait(getDriver(), Duration.ofSeconds(2));
         }
 
         return wait;
-    }
-
-    public BaseModel(WebDriver driver) {
-        this.driver = driver;
-        PageFactory.initElements(driver, this);
     }
 
     protected WebDriver getDriver() {
