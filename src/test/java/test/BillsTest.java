@@ -14,7 +14,7 @@ public class BillsTest extends BaseTest {
 
     @Description("Create new bills FI-T12")
     @Test(priority = 1)
-    public void CreateNewBills() {
+    public void testCreateNewBills() {
         List<String> nameBill = new HomePage(getDriver())
                 .goBill()
                 .clickCreateBill()
@@ -30,11 +30,25 @@ public class BillsTest extends BaseTest {
 
     @Description("Checking the date Bills repeats monthly FI-T13")
     @Test(priority = 2)
-    public void CheckingTheDateBillsRepeatsMonthly() {
+    public void testCheckingTheDateBillsRepeatsMonthly() {
         String currentDate = TestUtils.getCurrentDate();
 
-        String nextExpectedMatch = new HomePage(getDriver())
+        List<String> nextExpectedMatch = new HomePage(getDriver())
                 .goBill()
+                .getNextExpectedMatch(BILLS_NAME);
+
+        Assert.assertEquals(nextExpectedMatch, currentDate);
+    }
+
+    @Test
+    public void testSetBillToRepeatWeekly() {
+        List<String> currentDate = TestUtils.getWeeklyDates();
+
+        List<String> nextExpectedMatch = new HomePage(getDriver())
+                .goBill()
+                .clickPencil(BILLS_NAME)
+                .setRepeatsWeekly()
+                .clickSubmit()
                 .getNextExpectedMatch(BILLS_NAME);
 
         Assert.assertEquals(nextExpectedMatch, currentDate);
