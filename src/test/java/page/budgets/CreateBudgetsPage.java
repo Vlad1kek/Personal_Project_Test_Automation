@@ -24,7 +24,7 @@ public class CreateBudgetsPage extends BasePage {
     private WebElement optionAutoBudget;
 
     @FindBy(id = "ffInput_auto_budget_amount")
-    private  WebElement autoBudgetAmount;
+    private WebElement autoBudgetAmount;
 
     public CreateBudgetsPage(WebDriver driver) {
         super(driver);

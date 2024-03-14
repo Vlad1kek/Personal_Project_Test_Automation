@@ -45,11 +45,14 @@ public class BillsPage extends BasePage {
         return new EditBillPage(getDriver());
     }
 
-    public String getNextExpectedMatch(String name) {
-        return getDriver().findElement(By.xpath("//tr[@data-name='NewTestBills22']/td[7]")).getText();
+    public List<String> getNextExpectedMatch(String name) {
+        List<WebElement> list = getDriver().findElements(By.xpath("//tr[@data-name='" + name + "']/td[7]"))
+                .stream().toList();
+
+        return list.stream().map(WebElement::getText).toList();
     }
 
     public String getRepeats(String name) {
-        return getDriver().findElement(By.xpath("//tr[@data-name='NewTestBills22']/td[8]")).getText();
+        return getDriver().findElement(By.xpath("//tr[@data-name='" + name + "']/td[8]")).getText();
     }
 }
