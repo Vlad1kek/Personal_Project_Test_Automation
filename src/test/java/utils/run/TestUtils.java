@@ -59,4 +59,17 @@ public class TestUtils {
 
         return Collections.singletonList(String.join("\n", dates));
     }
+
+    public static List<String> getDailyDatesList() {
+        Calendar calendar = Calendar.getInstance();
+        List<String> dates = new ArrayList<>();
+
+        int currentMonth = calendar.get(Calendar.MONTH);
+        while (calendar.get(Calendar.MONTH) == currentMonth && dates.size() < 13) {
+            dates.add(getDate(calendar));
+            calendar.add(Calendar.DAY_OF_MONTH, 1);
+        }
+
+        return Collections.singletonList(String.join("\n", dates));
+    }
 }

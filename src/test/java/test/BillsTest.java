@@ -54,4 +54,19 @@ public class BillsTest extends BaseTest {
 
         Assert.assertEquals(nextExpectedMatch, weeklyDatesList);
     }
+
+    @Description("Set Bill to repeat daily FI-T15")
+    @Test(priority = 3)
+    public void testSetBillToRepeatDaily() {
+        List<String> dailyDatestList = TestUtils.getDailyDatesList();
+
+        List<String> nextExpectedMatch = new HomePage(getDriver())
+                .goBill()
+                .clickPencil(BILLS_NAME)
+                .setRepeatsDaily()
+                .clickSubmit()
+                .getNextExpectedMatch(BILLS_NAME);
+
+        Assert.assertEquals(nextExpectedMatch, dailyDatestList);
+    }
 }
