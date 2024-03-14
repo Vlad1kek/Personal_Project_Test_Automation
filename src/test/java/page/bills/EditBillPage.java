@@ -23,6 +23,12 @@ public class EditBillPage extends BasePage {
         return this;
     }
 
+    public EditBillPage setRepeatsDaily() {
+        new Select(optionsRepeats).selectByValue("daily");
+
+        return this;
+    }
+
     public BillsPage clickSubmit() {
         submit.click();
 
