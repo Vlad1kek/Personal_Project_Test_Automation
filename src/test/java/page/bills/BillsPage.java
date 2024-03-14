@@ -46,7 +46,8 @@ public class BillsPage extends BasePage {
     }
 
     public List<String> getNextExpectedMatch(String name) {
-        List<WebElement> list = getDriver().findElements(By.xpath("//tr[@data-name='" + name + "']/td[7]")).stream().toList();
+        List<WebElement> list = getDriver().findElements(By.xpath("//tr[@data-name='" + name + "']/td[7]"))
+                .stream().toList();
 
         return list.stream().map(WebElement::getText).toList();
     }
