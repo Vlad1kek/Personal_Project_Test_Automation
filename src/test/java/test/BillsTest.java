@@ -8,10 +8,11 @@ import utils.run.BaseTest;
 import utils.run.TestUtils;
 
 import java.util.List;
-import java.util.ListIterator;
 
 public class BillsTest extends BaseTest {
     private static final String BILLS_NAME = "NewTestBills22";
+    private static final int MINIMUM_AMOUNT = 300;
+    private static final int MAXIMUM_AMOUNT = 500;
 
     @Description("Create new bills FI-T12")
     @Test(priority = 1)
@@ -20,8 +21,8 @@ public class BillsTest extends BaseTest {
                 .goBill()
                 .clickCreateBill()
                 .setName(BILLS_NAME)
-                .setMinimumAmount(300)
-                .setMaximumAmount(500)
+                .setMinimumAmount(MINIMUM_AMOUNT)
+                .setMaximumAmount(MAXIMUM_AMOUNT)
                 .submit()
                 .goBill()
                 .getBillsNamesList();
@@ -114,5 +115,20 @@ public class BillsTest extends BaseTest {
                 .getNextExpectedMatch(BILLS_NAME);
 
         Assert.assertEquals(nextExpectedMatch, currentDate);
+    }
+
+    @Description("Set Bill to repeat yearly And check expected monthly costs FI-T19")
+    @Test(priority = 3)
+    public void testSetBillToRepeatYearlyAndCheckExpectedMonthlyCosts() {
+        String expectedMonthlyCosts = TestUtils.getExpectedMonthlyCostsYearly(MINIMUM_AMOUNT, MAXIMUM_AMOUNT);
+
+        String monthlyCosts = new HomePage(getDriver())
+                .goBill()
+                .clickPencil(BILLS_NAME)
+                .setRepeatsYearly()
+                .clickSubmit()
+                .getMonthlyCosts();
+
+        Assert.assertEquals(monthlyCosts, expectedMonthlyCosts);
     }
 }
