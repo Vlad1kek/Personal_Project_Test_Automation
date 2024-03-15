@@ -72,7 +72,7 @@ public class BillsTest extends BaseTest {
     }
 
     @Description("Set Bill to repeat yearly FI-T16")
-    @Test
+    @Test(priority = 3)
     public void testSetBillToRepeatYearlyAndCheckNextExpectedMatch() {
         List<String> currentDate = TestUtils.getCurrentDateList();
 
