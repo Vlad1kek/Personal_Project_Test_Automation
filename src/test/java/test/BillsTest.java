@@ -100,4 +100,19 @@ public class BillsTest extends BaseTest {
 
         Assert.assertEquals(nextExpectedMatch, currentDate);
     }
+
+    @Description("Set Bill to repeat quarterly And check next expected match FI-T18")
+    @Test(priority = 3)
+    public void testSetBillToRepeatQuarterlyAndCheckNextExpectedMatch() {
+        List<String> currentDate = TestUtils.getCurrentDateList();
+
+        List<String> nextExpectedMatch = new HomePage(getDriver())
+                .goBill()
+                .clickPencil(BILLS_NAME)
+                .setRepeatsQuarterly()
+                .clickSubmit()
+                .getNextExpectedMatch(BILLS_NAME);
+
+        Assert.assertEquals(nextExpectedMatch, currentDate);
+    }
 }

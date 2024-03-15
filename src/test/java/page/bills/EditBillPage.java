@@ -41,6 +41,12 @@ public class EditBillPage extends BasePage {
         return this;
     }
 
+    public EditBillPage setRepeatsQuarterly() {
+        new Select(optionsRepeats).selectByValue("quarterly");
+
+        return this;
+    }
+
     public BillsPage clickSubmit() {
         submit.click();
 
