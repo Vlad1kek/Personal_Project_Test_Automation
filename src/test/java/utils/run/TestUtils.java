@@ -72,4 +72,11 @@ public class TestUtils {
 
         return Collections.singletonList(String.join("\n", dates));
     }
+
+    public static String getExpectedMonthlyCostsYearly(int min, int max) {
+        double sum;
+        sum = (double) (min + max) / 2 / 12;
+
+        return "€" + String.format("%.2f", sum);
+    }
 }

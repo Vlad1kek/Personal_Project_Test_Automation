@@ -20,6 +20,9 @@ public class BillsPage extends BasePage {
     @FindBy(className = "introjs-skipbutton")
     private WebElement buttonSkip;
 
+    @FindBy(xpath = "//tbody/tr[4]/td[4]")
+    private WebElement expectedMonthlyCosts;
+
     public BillsPage(WebDriver driver) {
         super(driver);
     }
@@ -50,6 +53,10 @@ public class BillsPage extends BasePage {
                 .stream().toList();
 
         return list.stream().map(WebElement::getText).toList();
+    }
+
+    public String getMonthlyCosts() {
+       return expectedMonthlyCosts.getText();
     }
 
     public String getRepeats(String name) {
