@@ -131,4 +131,19 @@ public class BillsTest extends BaseTest {
 
         Assert.assertEquals(monthlyCosts, expectedMonthlyCosts);
     }
+
+    @Description("Set Bill to repeat half-year And check expected monthly costs FI-T20")
+    @Test(priority = 3)
+    public void testSetBillToRepeatHalfYearAndCheckExpectedMonthlyCosts() {
+        String expectedHalfYear = TestUtils.getExpectedMonthlyCostsHalfYear(MINIMUM_AMOUNT, MAXIMUM_AMOUNT);
+
+        String monthlyCosts = new HomePage(getDriver())
+                .goBill()
+                .clickPencil(BILLS_NAME)
+                .setRepeatsHalfYear()
+                .clickSubmit()
+                .getMonthlyCosts();
+
+        Assert.assertEquals(monthlyCosts, expectedHalfYear);
+    }
 }
