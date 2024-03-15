@@ -79,4 +79,11 @@ public class TestUtils {
 
         return "€" + String.format("%.2f", sum);
     }
+
+    public static String getExpectedMonthlyCostsHalfYear(int min, int max) {
+        double sum;
+        sum = (double) (min + max) / 2 / 6;
+
+        return "€" + String.format("%.2f", sum);
+    }
 }
