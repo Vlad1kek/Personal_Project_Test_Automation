@@ -8,6 +8,7 @@ import utils.run.BaseTest;
 import utils.run.TestUtils;
 
 import java.util.List;
+import java.util.ListIterator;
 
 public class BillsTest extends BaseTest {
     private static final String BILLS_NAME = "NewTestBills22";
@@ -19,8 +20,8 @@ public class BillsTest extends BaseTest {
                 .goBill()
                 .clickCreateBill()
                 .setName(BILLS_NAME)
-                .setMinimumAmount(3)
-                .setMaximumAmount(5)
+                .setMinimumAmount(300)
+                .setMaximumAmount(500)
                 .submit()
                 .goBill()
                 .getBillsNamesList();
@@ -30,7 +31,7 @@ public class BillsTest extends BaseTest {
 
     @Description("Checking the date Bills repeats monthly FI-T13")
     @Test(priority = 2)
-    public void testCheckingTheDateBillsRepeatsMonthly() {
+    public void testCheckingTheDateBillsRepeatsMonthlyAndCheckNextExpectedMatch() {
         List<String> currentDate = TestUtils.getCurrentDateList();
 
         List<String> nextExpectedMatch = new HomePage(getDriver())
@@ -42,7 +43,7 @@ public class BillsTest extends BaseTest {
 
     @Description("Set Bill to repeat weekly FI-T14")
     @Test(priority = 3)
-    public void testSetBillToRepeatWeekly() {
+    public void testSetBillToRepeatWeeklyAndCheckNextExpectedMatch() {
         List<String> weeklyDatesList = TestUtils.getWeeklyDatesList();
 
         List<String> nextExpectedMatch = new HomePage(getDriver())
@@ -57,7 +58,7 @@ public class BillsTest extends BaseTest {
 
     @Description("Set Bill to repeat daily FI-T15")
     @Test(priority = 3)
-    public void testSetBillToRepeatDaily() {
+    public void testSetBillToRepeatDailyAndCheckNextExpectedMatch() {
         List<String> dailyDatestList = TestUtils.getDailyDatesList();
 
         List<String> nextExpectedMatch = new HomePage(getDriver())
@@ -68,5 +69,20 @@ public class BillsTest extends BaseTest {
                 .getNextExpectedMatch(BILLS_NAME);
 
         Assert.assertEquals(nextExpectedMatch, dailyDatestList);
+    }
+
+    @Description("Set Bill to repeat yearly FI-T16")
+    @Test(priority = 3)
+    public void testSetBillToRepeatYearlyAndCheckNextExpectedMatch() {
+        List<String> currentDate = TestUtils.getCurrentDateList();
+
+        List<String> nextExpectedMatch = new HomePage(getDriver())
+                .goBill()
+                .clickPencil(BILLS_NAME)
+                .setRepeatsYearly()
+                .clickSubmit()
+                .getNextExpectedMatch(BILLS_NAME);
+
+        Assert.assertEquals(nextExpectedMatch, currentDate);
     }
 }
