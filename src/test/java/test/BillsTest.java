@@ -41,7 +41,7 @@ public class BillsTest extends BaseTest {
         Assert.assertEquals(nextExpectedMatch, currentDate);
     }
 
-    @Description("Set Bill to repeat weekly FI-T14")
+    @Description("Set Bill to repeat weekly And check next expected match FI-T14")
     @Test(priority = 3)
     public void testSetBillToRepeatWeeklyAndCheckNextExpectedMatch() {
         List<String> weeklyDatesList = TestUtils.getWeeklyDatesList();
@@ -56,7 +56,7 @@ public class BillsTest extends BaseTest {
         Assert.assertEquals(nextExpectedMatch, weeklyDatesList);
     }
 
-    @Description("Set Bill to repeat daily FI-T15")
+    @Description("Set Bill to repeat daily And check next expected match FI-T15")
     @Test(priority = 3)
     public void testSetBillToRepeatDailyAndCheckNextExpectedMatch() {
         List<String> dailyDatestList = TestUtils.getDailyDatesList();
@@ -71,7 +71,7 @@ public class BillsTest extends BaseTest {
         Assert.assertEquals(nextExpectedMatch, dailyDatestList);
     }
 
-    @Description("Set Bill to repeat yearly FI-T16")
+    @Description("Set Bill to repeat yearly And check next expected match FI-T16")
     @Test(priority = 3)
     public void testSetBillToRepeatYearlyAndCheckNextExpectedMatch() {
         List<String> currentDate = TestUtils.getCurrentDateList();
@@ -80,6 +80,21 @@ public class BillsTest extends BaseTest {
                 .goBill()
                 .clickPencil(BILLS_NAME)
                 .setRepeatsYearly()
+                .clickSubmit()
+                .getNextExpectedMatch(BILLS_NAME);
+
+        Assert.assertEquals(nextExpectedMatch, currentDate);
+    }
+
+    @Description("Set Bill to repeat every half-year And check next expected match FI-T17")
+    @Test(priority = 3)
+    public void testSetBillToRepeatEveryHalfYearAndCheckNextExpectedMatch() {
+        List<String> currentDate = TestUtils.getCurrentDateList();
+
+        List<String> nextExpectedMatch = new HomePage(getDriver())
+                .goBill()
+                .clickPencil(BILLS_NAME)
+                .setRepeatsHalfYear()
                 .clickSubmit()
                 .getNextExpectedMatch(BILLS_NAME);
 

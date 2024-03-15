@@ -35,6 +35,12 @@ public class EditBillPage extends BasePage {
         return this;
     }
 
+    public EditBillPage setRepeatsHalfYear() {
+        new Select(optionsRepeats).selectByValue("half-year");
+
+        return this;
+    }
+
     public BillsPage clickSubmit() {
         submit.click();
 
