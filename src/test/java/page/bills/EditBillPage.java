@@ -29,6 +29,12 @@ public class EditBillPage extends BasePage {
         return this;
     }
 
+    public EditBillPage setRepeatsYearly() {
+        new Select(optionsRepeats).selectByValue("yearly");
+
+        return this;
+    }
+
     public BillsPage clickSubmit() {
         submit.click();
 
