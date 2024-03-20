@@ -1,5 +1,8 @@
 package test;
 
+import io.qameta.allure.Severity;
+import io.qameta.allure.SeverityLevel;
+import io.qameta.allure.Story;
 import jdk.jfr.Description;
 import org.testng.Assert;
 import org.testng.annotations.Test;
@@ -12,6 +15,8 @@ import java.util.List;
 public class BudgetsTest extends BaseTest {
     private static final String NAME_BUDGET = "NewTestBudgets123";
 
+    @Severity(SeverityLevel.CRITICAL)
+    @Story("Budgets")
     @Description("Create Budgets FI-T5")
     @Test(priority = 1)
     public void testCreateFirstBudgets() {

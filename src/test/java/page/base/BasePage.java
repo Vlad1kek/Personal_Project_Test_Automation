@@ -1,5 +1,6 @@
 package page.base;
 
+import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -34,6 +35,7 @@ public class BasePage extends BaseModel {
         return headline.getText();
     }
 
+    @Step("Click")
     public BudgetsPage goBudgets() {
         budgetsSidePanel.click();
 
