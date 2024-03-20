@@ -1,9 +1,7 @@
 package test;
 
-import io.qameta.allure.Severity;
-import io.qameta.allure.SeverityLevel;
-import io.qameta.allure.Story;
-import jdk.jfr.Description;
+import io.qameta.allure.*;
+
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import page.HomePage;
@@ -27,7 +25,9 @@ public class BudgetsTest extends BaseTest {
                 .submit()
                 .getBudgetsNamesText();
 
-        Assert.assertTrue(nameBudget.contains(NAME_BUDGET), "Budget name does not exist");
+        Allure.step("The name '" + NAME_BUDGET + "' of the created Budget is displayed in the Budget list");
+        Assert.assertTrue(nameBudget.contains(NAME_BUDGET),
+                "If FAIL: Budget name '" + NAME_BUDGET + "' does not exist");
     }
 
     @Description("Add budget valid amount FI-T6")

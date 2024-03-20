@@ -1,5 +1,6 @@
 package page.budgets;
 
+import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
@@ -33,6 +34,7 @@ public class BudgetsPage extends BasePage {
         super(driver);
     }
 
+    @Step("Click 'Create Budgets' button in the middle")
     public CreateBudgetsPage clickCreateBudgets(){
         createBudgets.click();
 

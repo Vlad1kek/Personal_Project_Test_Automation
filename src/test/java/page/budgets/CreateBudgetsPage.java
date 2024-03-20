@@ -1,5 +1,6 @@
 package page.budgets;
 
+import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -30,12 +31,14 @@ public class CreateBudgetsPage extends BasePage {
         super(driver);
     }
 
+    @Step("Set Name")
     public CreateBudgetsPage setName(String name) {
         inputName.sendKeys(name);
 
         return this;
     }
 
+    @Step("Click 'Store new budget' button below the input field")
     public BudgetsPage submit() {
         buttonSubmit.click();
 

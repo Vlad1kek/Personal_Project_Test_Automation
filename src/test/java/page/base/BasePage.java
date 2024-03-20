@@ -35,7 +35,7 @@ public class BasePage extends BaseModel {
         return headline.getText();
     }
 
-    @Step("Click")
+    @Step("Click 'Budgets' button on sidebar")
     public BudgetsPage goBudgets() {
         budgetsSidePanel.click();
 
