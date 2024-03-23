@@ -1,5 +1,6 @@
 package page.base;
 
+import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -10,7 +11,7 @@ import page.HomePage;
 
 import java.time.Duration;
 
-public class BasePage extends BaseModel {
+public abstract class BasePage extends BaseModel {
     @FindBy(tagName = "h1")
     private WebElement headline;
 
@@ -34,6 +35,7 @@ public class BasePage extends BaseModel {
         return headline.getText();
     }
 
+    @Step("Click 'Budgets' button on sidebar")
     public BudgetsPage goBudgets() {
         budgetsSidePanel.click();
 

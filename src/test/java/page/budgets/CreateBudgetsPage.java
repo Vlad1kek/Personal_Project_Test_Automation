@@ -1,5 +1,6 @@
 package page.budgets;
 
+import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -30,12 +31,14 @@ public class CreateBudgetsPage extends BasePage {
         super(driver);
     }
 
+    @Step("Set Name")
     public CreateBudgetsPage setName(String name) {
         inputName.sendKeys(name);
 
         return this;
     }
 
+    @Step("Click 'Store new budget' button")
     public BudgetsPage submit() {
         buttonSubmit.click();
 
@@ -47,6 +50,7 @@ public class CreateBudgetsPage extends BasePage {
         return new BudgetsPage(getDriver());
     }
 
+    @Step("In the auto budget selector, select 'Set a fixed amount every period'")
     public CreateBudgetsPage setAFixedAmountEveryPeriod()  {
         Select select = new Select(optionAutoBudget);
         select.selectByValue("1");
@@ -54,6 +58,7 @@ public class CreateBudgetsPage extends BasePage {
         return this;
     }
 
+    @Step("In the auto budget selector, select 'Add an amount every period'")
     public CreateBudgetsPage setAddAnAmountEveryPeriod()  {
         Select select = new Select(optionAutoBudget);
         select.selectByValue("2");
@@ -61,6 +66,7 @@ public class CreateBudgetsPage extends BasePage {
         return this;
     }
 
+    @Step("In the auto budget selector, select 'Add an amount every period and correct for overspending'")
     public CreateBudgetsPage setCorrectForOverspending()  {
         Select select = new Select(optionAutoBudget);
         select.selectByValue("3");
@@ -68,6 +74,7 @@ public class CreateBudgetsPage extends BasePage {
         return this;
     }
 
+    @Step("In the 'Auto-budget amount' field, enter valid numbers,")
     public CreateBudgetsPage setAutoBudgetAmount(String amount) {
         getAction().click(autoBudgetAmount)
                 .sendKeys(amount)

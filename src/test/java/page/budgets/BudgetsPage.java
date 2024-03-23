@@ -1,5 +1,6 @@
 package page.budgets;
 
+import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
@@ -33,6 +34,7 @@ public class BudgetsPage extends BasePage {
         super(driver);
     }
 
+    @Step("Click 'Create Budgets' button in the middle")
     public CreateBudgetsPage clickCreateBudgets(){
         createBudgets.click();
 
@@ -43,6 +45,7 @@ public class BudgetsPage extends BasePage {
         return budgetsList.stream().map(WebElement::getText).toList();
     }
 
+    @Step("Enter the amount in the 'Budgets' column on the created budget line.")
     public BudgetsPage setBudgetAmount(String amountNumber) {
         getAction().click(budgetAmount)
                 .keyDown(Keys.CONTROL)
@@ -52,7 +55,6 @@ public class BudgetsPage extends BasePage {
                 .sendKeys(Keys.ENTER)
                 .pause(500)
                 .perform();
-
 
         return this;
     }

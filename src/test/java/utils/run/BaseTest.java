@@ -1,14 +1,12 @@
 package utils.run;
 
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.support.ui.Wait;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.ITestResult;
 import org.testng.annotations.*;
 import utils.log.ExceptionListener;
 
 import java.lang.reflect.Method;
-import java.time.Duration;
 
 @Listeners({OrderTest.class, ExceptionListener.class,})
 public abstract class BaseTest {

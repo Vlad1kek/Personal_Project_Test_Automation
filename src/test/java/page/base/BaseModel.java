@@ -7,7 +7,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
 
-public class BaseModel {
+abstract class BaseModel {
     private final WebDriver driver;
     private Actions action;
     private WebDriverWait wait;
