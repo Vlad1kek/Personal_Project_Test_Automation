@@ -135,7 +135,7 @@ public class BudgetsTest extends BaseTest {
     @Description("Create Budgets and correct for overspending FI-T11")
     @Test(priority = 4)
     public void testCreateBudgetsAndCorrectForOverspending() {
-        final String expectedMessage = "Add an amount every period and correct for overspending";
+        final String expectedMessage = "The budget amount will increase periodically and will correct for overspending";
 
         String calendarAttribute = new HomePage(getDriver())
                 .goBudgets()
