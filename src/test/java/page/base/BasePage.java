@@ -11,7 +11,7 @@ import page.HomePage;
 
 import java.time.Duration;
 
-public class BasePage extends BaseModel {
+public abstract class BasePage extends BaseModel {
     @FindBy(tagName = "h1")
     private WebElement headline;
 

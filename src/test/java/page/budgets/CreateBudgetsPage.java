@@ -38,7 +38,7 @@ public class CreateBudgetsPage extends BasePage {
         return this;
     }
 
-    @Step("Click 'Store new budget' button below the input field")
+    @Step("Click 'Store new budget' button")
     public BudgetsPage submit() {
         buttonSubmit.click();
 
@@ -50,6 +50,7 @@ public class CreateBudgetsPage extends BasePage {
         return new BudgetsPage(getDriver());
     }
 
+    @Step("In the auto budget selector, select 'Set a fixed amount every period'")
     public CreateBudgetsPage setAFixedAmountEveryPeriod()  {
         Select select = new Select(optionAutoBudget);
         select.selectByValue("1");
@@ -57,6 +58,7 @@ public class CreateBudgetsPage extends BasePage {
         return this;
     }
 
+    @Step("In the auto budget selector, select 'Add an amount every period'")
     public CreateBudgetsPage setAddAnAmountEveryPeriod()  {
         Select select = new Select(optionAutoBudget);
         select.selectByValue("2");
@@ -64,6 +66,7 @@ public class CreateBudgetsPage extends BasePage {
         return this;
     }
 
+    @Step("In the auto budget selector, select 'Add an amount every period and correct for overspending'")
     public CreateBudgetsPage setCorrectForOverspending()  {
         Select select = new Select(optionAutoBudget);
         select.selectByValue("3");
@@ -71,6 +74,7 @@ public class CreateBudgetsPage extends BasePage {
         return this;
     }
 
+    @Step("In the 'Auto-budget amount' field, enter valid numbers,")
     public CreateBudgetsPage setAutoBudgetAmount(String amount) {
         getAction().click(autoBudgetAmount)
                 .sendKeys(amount)

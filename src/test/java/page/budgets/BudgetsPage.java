@@ -45,6 +45,7 @@ public class BudgetsPage extends BasePage {
         return budgetsList.stream().map(WebElement::getText).toList();
     }
 
+    @Step("Enter the amount in the 'Budgets' column on the created budget line.")
     public BudgetsPage setBudgetAmount(String amountNumber) {
         getAction().click(budgetAmount)
                 .keyDown(Keys.CONTROL)
@@ -54,7 +55,6 @@ public class BudgetsPage extends BasePage {
                 .sendKeys(Keys.ENTER)
                 .pause(500)
                 .perform();
-
 
         return this;
     }
