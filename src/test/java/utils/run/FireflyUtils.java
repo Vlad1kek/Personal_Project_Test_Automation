@@ -4,7 +4,6 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
 import java.time.Duration;
-import java.util.Random;
 
 public class FireflyUtils {
     public static String Token;
@@ -49,7 +48,7 @@ public class FireflyUtils {
         driver.findElement(By.cssSelector("a[href='#oauth']")).click();
         driver.findElement(By.xpath("//div[@id='oauth']/div/div[3]/div/div/div/div/div/a")).click();
         driver.findElement(By.id("create-token-name")).sendKeys("token");
-        driver.findElement(By.xpath("//button[@type='token']")).click();
+        driver.findElement(By.xpath("//div[@id='modal-create-token']/div/div/div[@class='modal-footer']/button[2]")).click();
         Token = driver.findElement(By.cssSelector("textarea[readonly]")).getText();
         driver.findElement(By.xpath("//div[@id='modal-access-token']/div/div/div[@class='modal-footer']/button")).click();
     }
