@@ -22,7 +22,7 @@ public class BaseUtils {
     }
 
     public static void get(WebDriver driver) {
-        driver.get(ProjectProperties.getUrl());
+        driver.get("http://localhost");
     }
 
     static File captureScreenFile(WebDriver driver, String methodName, String className) {
