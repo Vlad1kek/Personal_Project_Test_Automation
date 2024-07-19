@@ -41,7 +41,6 @@ public class ClearData {
                 String billId = billNode.get("id").asText();
                 listId.add(billId);
             }
-            System.out.println(listId);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -58,7 +57,6 @@ public class ClearData {
                     .delete("http://localhost:80/api/v1/{endpoint}/{id}");
             }
             listId.clear();
-            System.out.println(listId + "clear");
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
