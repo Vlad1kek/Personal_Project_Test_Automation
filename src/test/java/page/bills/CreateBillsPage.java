@@ -28,14 +28,14 @@ public class CreateBillsPage extends BasePage {
         return this;
     }
 
-    public CreateBillsPage setMinimumAmount(Integer amount) {
-        minimumAmountInput.sendKeys(amount.toString());
+    public CreateBillsPage setMinimumAmount(String amount) {
+        minimumAmountInput.sendKeys(amount);
 
         return this;
     }
 
-    public CreateBillsPage setMaximumAmount(Integer amount) {
-        maximumAmountInput.sendKeys(amount.toString());
+    public CreateBillsPage setMaximumAmount(String amount) {
+        maximumAmountInput.sendKeys(amount);
 
         return this;
     }

@@ -6,13 +6,14 @@ import org.testng.annotations.Test;
 import page.HomePage;
 import utils.run.BaseTest;
 import utils.run.TestUtils;
+import utils.run.TimeUtils;
 
 import java.util.List;
 
 public class BillsTest extends BaseTest {
     private static final String BILLS_NAME = "NewTestBills22";
-    private static final int MINIMUM_AMOUNT = 300;
-    private static final int MAXIMUM_AMOUNT = 500;
+    private static final String MINIMUM_AMOUNT = "300";
+    private static final String MAXIMUM_AMOUNT = "500";
 
     @Description("Create new bills FI-T12")
     @Test(priority = 1)
@@ -33,7 +34,8 @@ public class BillsTest extends BaseTest {
     @Description("Checking the date Bills repeats monthly FI-T13")
     @Test(priority = 2)
     public void testCheckingTheDateBillsRepeatsMonthlyAndCheckNextExpectedMatch() {
-        List<String> currentDate = TestUtils.getCurrentDateList();
+        List<String> currentDate = TimeUtils.getCurrentDateList();
+        TestUtils.createBill(this, BILLS_NAME, MINIMUM_AMOUNT, MAXIMUM_AMOUNT, true);
 
         List<String> nextExpectedMatch = new HomePage(getDriver())
                 .goBill()
@@ -43,9 +45,10 @@ public class BillsTest extends BaseTest {
     }
 
     @Description("Set Bill to repeat weekly And check next expected match FI-T14")
-    @Test(priority = 3)
+    @Test(priority = 2)
     public void testSetBillToRepeatWeeklyAndCheckNextExpectedMatch() {
-        List<String> weeklyDatesList = TestUtils.getWeeklyDatesList();
+        List<String> weeklyDatesList = TimeUtils.getWeeklyDatesList();
+        TestUtils.createBill(this, BILLS_NAME, MINIMUM_AMOUNT, MAXIMUM_AMOUNT, true);
 
         List<String> nextExpectedMatch = new HomePage(getDriver())
                 .goBill()
@@ -58,9 +61,10 @@ public class BillsTest extends BaseTest {
     }
 
     @Description("Set Bill to repeat daily And check next expected match FI-T15")
-    @Test(priority = 3)
+    @Test(priority = 2)
     public void testSetBillToRepeatDailyAndCheckNextExpectedMatch() {
-        List<String> dailyDatestList = TestUtils.getDailyDatesList();
+        List<String> dailyDatestList = TimeUtils.getDailyDatesList();
+        TestUtils.createBill(this, BILLS_NAME, MINIMUM_AMOUNT, MAXIMUM_AMOUNT, true);
 
         List<String> nextExpectedMatch = new HomePage(getDriver())
                 .goBill()
@@ -73,9 +77,10 @@ public class BillsTest extends BaseTest {
     }
 
     @Description("Set Bill to repeat yearly And check next expected match FI-T16")
-    @Test(priority = 3)
+    @Test(priority = 2)
     public void testSetBillToRepeatYearlyAndCheckNextExpectedMatch() {
-        List<String> currentDate = TestUtils.getCurrentDateList();
+        List<String> currentDate = TimeUtils.getCurrentDateList();
+        TestUtils.createBill(this, BILLS_NAME, MINIMUM_AMOUNT, MAXIMUM_AMOUNT, true);
 
         List<String> nextExpectedMatch = new HomePage(getDriver())
                 .goBill()
@@ -88,9 +93,10 @@ public class BillsTest extends BaseTest {
     }
 
     @Description("Set Bill to repeat every half-year And check next expected match FI-T17")
-    @Test(priority = 3)
+    @Test(priority = 2)
     public void testSetBillToRepeatEveryHalfYearAndCheckNextExpectedMatch() {
-        List<String> currentDate = TestUtils.getCurrentDateList();
+        List<String> currentDate = TimeUtils.getCurrentDateList();
+        TestUtils.createBill(this, BILLS_NAME, MINIMUM_AMOUNT, MAXIMUM_AMOUNT, true);
 
         List<String> nextExpectedMatch = new HomePage(getDriver())
                 .goBill()
@@ -103,9 +109,10 @@ public class BillsTest extends BaseTest {
     }
 
     @Description("Set Bill to repeat quarterly And check next expected match FI-T18")
-    @Test(priority = 3)
+    @Test(priority = 2)
     public void testSetBillToRepeatQuarterlyAndCheckNextExpectedMatch() {
-        List<String> currentDate = TestUtils.getCurrentDateList();
+        List<String> currentDate = TimeUtils.getCurrentDateList();
+        TestUtils.createBill(this, BILLS_NAME, MINIMUM_AMOUNT, MAXIMUM_AMOUNT, true);
 
         List<String> nextExpectedMatch = new HomePage(getDriver())
                 .goBill()
@@ -118,9 +125,10 @@ public class BillsTest extends BaseTest {
     }
 
     @Description("Set Bill to repeat yearly And check expected monthly costs FI-T19")
-    @Test(priority = 3)
+    @Test(priority = 2)
     public void testSetBillToRepeatYearlyAndCheckExpectedMonthlyCosts() {
-        String expectedMonthlyCosts = TestUtils.getExpectedMonthlyCostsYearly(MINIMUM_AMOUNT, MAXIMUM_AMOUNT);
+        String expectedMonthlyCosts = TimeUtils.getExpectedMonthlyCostsYearly(MINIMUM_AMOUNT, MAXIMUM_AMOUNT);
+        TestUtils.createBill(this, BILLS_NAME, MINIMUM_AMOUNT, MAXIMUM_AMOUNT, true);
 
         String monthlyCosts = new HomePage(getDriver())
                 .goBill()
@@ -133,9 +141,10 @@ public class BillsTest extends BaseTest {
     }
 
     @Description("Set Bill to repeat half-year And check expected monthly costs FI-T20")
-    @Test(priority = 3)
+    @Test(priority = 2)
     public void testSetBillToRepeatHalfYearAndCheckExpectedMonthlyCosts() {
-        String expectedHalfYear = TestUtils.getExpectedMonthlyCostsHalfYear(MINIMUM_AMOUNT, MAXIMUM_AMOUNT);
+        String expectedHalfYear = TimeUtils.getExpectedMonthlyCostsHalfYear(MINIMUM_AMOUNT, MAXIMUM_AMOUNT);
+        TestUtils.createBill(this, BILLS_NAME, MINIMUM_AMOUNT, MAXIMUM_AMOUNT, true);
 
         String monthlyCosts = new HomePage(getDriver())
                 .goBill()

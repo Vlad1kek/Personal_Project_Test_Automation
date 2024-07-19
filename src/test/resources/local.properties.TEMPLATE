@@ -1,4 +1,5 @@
 default.admin.username=<>
 default.admin.password=<>
 default.browser_options=--window-size=1920,1080
-
+default.host=localhost
+default.token=<>

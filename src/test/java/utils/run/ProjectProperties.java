@@ -18,6 +18,8 @@ public final class ProjectProperties {
     private static final String ENV_BROWSER_OPTIONS = "BROWSER_OPTIONS";
     private static final String ENV_WEB_OPTIONS = "WEB_OPTIONS";
     private static final String PROP_BROWSER_OPTIONS = PREFIX_PROP + ENV_BROWSER_OPTIONS.toLowerCase();
+    private static final String PROP_HOST = PREFIX_PROP + "host";
+    private static final String PROP_TOKEN = PREFIX_PROP + "token";
 
     private static Properties properties;
 
@@ -76,5 +78,14 @@ public final class ProjectProperties {
 
     static String getPassword() {
         return properties.getProperty(PROP_ADMIN_PAS);
+    }
+
+    static String getPropToken() {
+        return properties.getProperty(PROP_TOKEN);
+    }
+
+    static String getUrl() {
+        return String.format("http://%s/",
+                properties.getProperty(PROP_HOST));
     }
 }

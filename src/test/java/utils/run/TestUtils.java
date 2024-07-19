@@ -1,89 +1,35 @@
 package utils.run;
 
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.util.*;
+import org.openqa.selenium.By;
+
+import java.time.Duration;
 
 public class TestUtils {
 
-    public static String getMonthYear() {
-        LocalDate currentDate = LocalDate.now();
-        String month = String.valueOf(currentDate.getMonth());
-        month = month.substring(0, 1).toUpperCase() + month.substring(1).toLowerCase();
-
-        String year = Integer.toString(currentDate.getYear());
-
-        return month + " " + year;
-    }
-
-    private static String getDayOfMonthSuffix(final int n) {
-        if (n < 1 || n > 31) return "Invalid date";
-        if (n >= 11 && n <= 13) return "th";
-
-        return switch (n % 10) {
-            case 1 -> "st";
-            case 2 -> "nd";
-            case 3 -> "rd";
-            default -> "th";
-        };
-    }
-
-    private static String getDate(Calendar calendar) {
-        SimpleDateFormat sdf = new SimpleDateFormat("MMMM", new Locale("en"));
-        SimpleDateFormat dayFormat = new SimpleDateFormat("dd", new Locale("en"));
-        SimpleDateFormat yearFormat = new SimpleDateFormat("yyyy", new Locale("en"));
-
-        String date = sdf.format(calendar.getTime())
-                + " "
-                + dayFormat.format(calendar.getTime())
-                + getDayOfMonthSuffix(calendar.get(Calendar.DAY_OF_MONTH))
-                + ", "
-                + yearFormat.format(calendar.getTime());
-
-        return date;
-    }
-
-    public static List<String> getCurrentDateList() {
-        return List.of(getDate(Calendar.getInstance()));
-    }
-
-    public static List<String> getWeeklyDatesList() {
-        Calendar calendar = Calendar.getInstance();
-        List<String> dates = new ArrayList<>();
-
-        int currentMonth = calendar.get(Calendar.MONTH);
-        while (calendar.get(Calendar.MONTH) == currentMonth) {
-            dates.add(getDate(calendar));
-            calendar.add(Calendar.WEEK_OF_YEAR, 1);
+    private static void goToHomePage(BaseTest baseTest, boolean goToHomePage) {
+        if (goToHomePage) {
+            baseTest.getDriver().findElement(By.className("logo-lg")).click();
         }
-
-        return Collections.singletonList(String.join("\n", dates));
     }
 
-    public static List<String> getDailyDatesList() {
-        Calendar calendar = Calendar.getInstance();
-        List<String> dates = new ArrayList<>();
+    public static void createBill(BaseTest baseTest, String name, String minAmount, String maxAmount, boolean goToHomePage) {
+        baseTest.getDriver().findElement(By.cssSelector("a[href$='/bills']")).click();
+        baseTest.getDriver().manage().timeouts().implicitlyWait(Duration.ofSeconds(2));
+        baseTest.getDriver().findElement(By.cssSelector("a[class$='btn-success']")).click();
+        baseTest.getDriver().findElement(By.name("name")).sendKeys(name);
+        baseTest.getDriver().findElement(By.name("amount_min")).sendKeys(minAmount);
+        baseTest.getDriver().findElement(By.name("amount_max")).sendKeys(maxAmount);
+        baseTest.getDriver().findElement(By.className("btn-success")).click();
 
-        int currentMonth = calendar.get(Calendar.MONTH);
-        while (calendar.get(Calendar.MONTH) == currentMonth && dates.size() < 13) {
-            dates.add(getDate(calendar));
-            calendar.add(Calendar.DAY_OF_MONTH, 1);
-        }
-
-        return Collections.singletonList(String.join("\n", dates));
+        goToHomePage(baseTest, goToHomePage);
     }
 
-    public static String getExpectedMonthlyCostsYearly(int min, int max) {
-        double sum;
-        sum = (double) (min + max) / 2 / 12;
+    public static void createBudget(BaseTest baseTest, String name, boolean goToHomePage) {
+        baseTest.getDriver().findElement(By.cssSelector("li[id='budget-menu")).click();
+        baseTest.getDriver().findElement(By.cssSelector("a[class$='btn-success']")).click();
+        baseTest.getDriver().findElement(By.name("name")).sendKeys(name);
+        baseTest.getDriver().findElement(By.className("btn-success")).click();
 
-        return "€" + String.format("%.2f", sum);
-    }
-
-    public static String getExpectedMonthlyCostsHalfYear(int min, int max) {
-        double sum;
-        sum = (double) (min + max) / 2 / 6;
-
-        return "€" + String.format("%.2f", sum);
+        goToHomePage(baseTest, goToHomePage);
     }
 }
