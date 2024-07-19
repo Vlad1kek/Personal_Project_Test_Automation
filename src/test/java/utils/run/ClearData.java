@@ -37,9 +37,11 @@ public class ClearData {
             JsonNode rootNode = objectMapper.readTree(jsonString);
 
             JsonNode dataNode = rootNode.get("data");
-            for (JsonNode billNode : dataNode) {
-                String billId = billNode.get("id").asText();
-                listId.add(billId);
+            if (dataNode != null && dataNode.has("id")) {
+                for (JsonNode billNode : dataNode) {
+                    String billId = billNode.get("id").asText();
+                    listId.add(billId);
+                }
             }
         } catch (Exception e) {
             throw new RuntimeException(e);
@@ -48,15 +50,17 @@ public class ClearData {
 
     public static void deleteHttp(String endpoint) {
         try {
-            for (String id : listId) {
-                given()
-                    .headers(HttpHeaders.AUTHORIZATION, "Bearer " + Token)
-                    .pathParam("endpoint", endpoint)
-                    .pathParam("id", id)
-                    .when()
-                    .delete("http://localhost:80/api/v1/{endpoint}/{id}");
+            if (!listId.isEmpty()) {
+                for (String id : listId) {
+                    given()
+                            .headers(HttpHeaders.AUTHORIZATION, "Bearer " + Token)
+                            .pathParam("endpoint", endpoint)
+                            .pathParam("id", id)
+                            .when()
+                            .delete("http://localhost:80/api/v1/{endpoint}/{id}");
+                }
+                listId.clear();
             }
-            listId.clear();
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
