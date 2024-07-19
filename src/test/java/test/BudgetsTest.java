@@ -7,6 +7,7 @@ import org.testng.annotations.Test;
 import page.HomePage;
 import utils.run.BaseTest;
 import utils.run.TestUtils;
+import utils.run.TimeUtils;
 
 import java.util.List;
 
@@ -36,6 +37,7 @@ public class BudgetsTest extends BaseTest {
     @Test(priority = 2)
     public void testAddBudgetValidAmount() {
         final String amount = "222.33";
+        TestUtils.createBudget(this, NAME_BUDGET, true);
 
         String actualAmount = new HomePage(getDriver())
                 .goBudgets()
@@ -50,9 +52,10 @@ public class BudgetsTest extends BaseTest {
     @Severity(SeverityLevel.NORMAL)
     @Story("Budgets")
     @Description("Add budget invalid amount FI-T7")
-    @Test(priority = 3)
+    @Test(priority = 2)
     public void testAddBudgetInvalidAmount() {
         final String amount = "abCD";
+        TestUtils.createBudget(this, NAME_BUDGET, true);
 
         String actualAmount = new HomePage(getDriver())
                 .goBudgets()
@@ -70,7 +73,8 @@ public class BudgetsTest extends BaseTest {
     @Description("Budgets correct month and year FI-T8")
     @Test(priority = 2)
     public void testBudgetsCorrectMonthAndYear() {
-        final String localDate = TestUtils.getMonthYear();
+        final String localDate = TimeUtils.getMonthYear();
+        TestUtils.createBudget(this, NAME_BUDGET, true);
 
         String budgetsPageDate = new HomePage(getDriver())
                 .goBudgets()
@@ -86,9 +90,10 @@ public class BudgetsTest extends BaseTest {
     @Severity(SeverityLevel.NORMAL)
     @Story("Budgets")
     @Description("Create Budgets with fixed amount FI-T9")
-    @Test(priority = 4)
+    @Test(priority = 2)
     public void testCreateBudgetsWithFixedAmount() {
         final String expectedMessage = "This budget will be set periodically";
+        TestUtils.createBudget(this, NAME_BUDGET, true);
 
         String calendarAttribute = new HomePage(getDriver())
                 .goBudgets()
@@ -109,9 +114,10 @@ public class BudgetsTest extends BaseTest {
     @Severity(SeverityLevel.NORMAL)
     @Step("Budgets")
     @Description("Create Budgets add an amount every period FI-T10")
-    @Test(priority = 4)
+    @Test(priority = 2)
     public void testCreateBudgetsAddAnAmountEveryPeriod() {
         final String expectedMessage = "The budget amount will increase periodically";
+        TestUtils.createBudget(this, NAME_BUDGET, true);
 
         String calendarAttribute = new HomePage(getDriver())
                 .goBudgets()
@@ -133,9 +139,10 @@ public class BudgetsTest extends BaseTest {
     @Severity(SeverityLevel.NORMAL)
     @Step("Budgets")
     @Description("Create Budgets and correct for overspending FI-T11")
-    @Test(priority = 4)
+    @Test(priority = 2)
     public void testCreateBudgetsAndCorrectForOverspending() {
         final String expectedMessage = "The budget amount will increase periodically and will correct for overspending";
+        TestUtils.createBudget(this, NAME_BUDGET, true);
 
         String calendarAttribute = new HomePage(getDriver())
                 .goBudgets()

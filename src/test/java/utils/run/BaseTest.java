@@ -44,6 +44,17 @@ public abstract class BaseTest {
         FireflyUtils.createBank(driver);
     }
 
+    private void createToken() {
+        BaseUtils.log("Personal Access Token create");
+        FireflyUtils.createToken(driver);
+    }
+
+    private void clearData() {
+        BaseUtils.log("Clear data");
+        ClearData.Token();
+        ClearData.clearData();
+    }
+
     @BeforeSuite
     protected void setUp() {
         if (ProjectProperties.isServerRun()) {
@@ -51,6 +62,7 @@ public abstract class BaseTest {
             getPage();
             firstLogin();
             createBank();
+            createToken();
             stopDriver();
         }
     }
@@ -60,6 +72,7 @@ public abstract class BaseTest {
         BaseUtils.logf("Run %s.%s", this.getClass().getName(), method.getName());
         try {
             if (method.getAnnotation(Test.class).dependsOnMethods().length == 0) {
+                clearData();
                 startDriver();
                 getPage();
                 loginPage();
