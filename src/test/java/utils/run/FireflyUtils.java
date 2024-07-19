@@ -48,8 +48,8 @@ public class FireflyUtils {
         driver.findElement(By.cssSelector("a[href='http://localhost/profile']")).click();
         driver.findElement(By.cssSelector("a[href='#oauth']")).click();
         driver.findElement(By.xpath("//div[@id='oauth']/div/div[3]/div/div/div/div/div/a")).click();
-        driver.findElement(By.id("create-token-name")).sendKeys(ProjectProperties.getUserName());
-        driver.findElement(By.xpath("//button[@type='" + ProjectProperties.getUserName() + "']")).click();
+        driver.findElement(By.id("create-token-name")).sendKeys("token");
+        driver.findElement(By.xpath("//button[@type='token']")).click();
         Token = driver.findElement(By.cssSelector("textarea[readonly]")).getText();
         driver.findElement(By.xpath("//div[@id='modal-access-token']/div/div/div[@class='modal-footer']/button")).click();
     }
