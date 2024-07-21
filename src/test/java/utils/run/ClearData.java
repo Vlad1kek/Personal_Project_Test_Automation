@@ -1,10 +1,10 @@
 package utils.run;
 
+
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.net.HttpHeaders;
 import io.restassured.response.Response;
-import org.openqa.selenium.WebDriver;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,10 +15,10 @@ public class ClearData {
     private static String token;
     private static final List<String> listId = new ArrayList<>();
 
-    public static void Token(WebDriver driver) {
+    public static void Token() {
         if (token == null || token.isEmpty()) {
             if (ProjectProperties.isServerRun()) {
-               token = FireflyUtils.createToken(driver);
+                token = FireflyUtils.token;
             } else {
                 token = ProjectProperties.getPropToken();
             }

@@ -7,6 +7,8 @@ import org.openqa.selenium.WebDriver;
 import java.time.Duration;
 
 public class FireflyUtils {
+    public static String token;
+
     static void login(WebDriver driver) {
         namePassword(driver);
         submit(driver);
@@ -41,8 +43,7 @@ public class FireflyUtils {
         driver.findElement(By.cssSelector("a[class$='introjs-skipbutton']")).click();
     }
 
-    static String createToken(WebDriver driver) {
-        String token = "";
+    static void createToken(WebDriver driver) {
         try {
             driver.findElement(By.id("option-menu")).click();
             driver.findElement(By.cssSelector("a[href='http://localhost/profile']")).click();
@@ -60,7 +61,5 @@ public class FireflyUtils {
             System.err.println("Error during token creation: " + e.getMessage());
             e.printStackTrace();
         }
-
-        return token;
     }
 }
