@@ -11,16 +11,15 @@ import java.util.List;
 import static io.restassured.RestAssured.given;
 
 public class ClearData {
-    private static String Token;
+    private static String token;
     private static final List<String> listId = new ArrayList<>();
 
     public static void Token() {
-        if (Token == null) {
+        if (token == null) {
             if (ProjectProperties.isServerRun()) {
-                Token = FireflyUtils.Token;
-            }
-            else {
-                Token = ProjectProperties.getPropToken();
+                token = FireflyUtils.token;
+            } else {
+                token = ProjectProperties.getPropToken();
             }
         }
     }
@@ -28,7 +27,7 @@ public class ClearData {
     public static void getHttp(String endpoint) {
         try {
             Response response = given()
-                    .headers(HttpHeaders.AUTHORIZATION, "Bearer " + Token)
+                    .headers(HttpHeaders.AUTHORIZATION, "Bearer " + token)
                     .pathParam("endpoint", endpoint)
                     .when()
                     .get("http://localhost:80/api/v1/{endpoint}");
@@ -45,7 +44,7 @@ public class ClearData {
                 }
             }
             if (response.statusCode() == 401) {
-                throw new RuntimeException("Authorization does not work with token:" + Token);
+                throw new RuntimeException("Authorization does not work with token:" + token);
             } else if (response.statusCode() != 200) {
                 throw new RuntimeException("Something went wrong while clearing data" + response.then().log().all());
             }
@@ -59,7 +58,7 @@ public class ClearData {
             if (!listId.isEmpty()) {
                 for (String id : listId) {
                     Response response = given()
-                            .headers(HttpHeaders.AUTHORIZATION, "Bearer " + Token)
+                            .headers(HttpHeaders.AUTHORIZATION, "Bearer " + token)
                             .pathParam("endpoint", endpoint)
                             .pathParam("id", id)
                             .when()
