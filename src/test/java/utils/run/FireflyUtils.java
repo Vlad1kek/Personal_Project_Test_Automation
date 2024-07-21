@@ -1,13 +1,12 @@
 package utils.run;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 
 import java.time.Duration;
 
 public class FireflyUtils {
-    public static String token;
-
     static void login(WebDriver driver) {
         namePassword(driver);
         submit(driver);
@@ -42,15 +41,26 @@ public class FireflyUtils {
         driver.findElement(By.cssSelector("a[class$='introjs-skipbutton']")).click();
     }
 
-    static void createToken(WebDriver driver) {
-        driver.findElement(By.id("option-menu")).click();
-        driver.findElement(By.cssSelector("a[href='http://localhost/profile']")).click();
-        driver.findElement(By.cssSelector("a[href='#oauth']")).click();
-        driver.findElement(By.xpath("//div[@id='oauth']/div/div[3]/div/div/div/div/div/a")).click();
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(2));
-        driver.findElement(By.id("create-token-name")).sendKeys("token");
-        driver.findElement(By.xpath("//div[@id='modal-create-token']/div/div/div[@class='modal-footer']/button[2]")).click();
-        token = driver.findElement(By.cssSelector("textarea[readonly]")).getText();
-        driver.findElement(By.xpath("//div[@id='modal-access-token']/div/div/div[@class='modal-footer']/button")).click();
+    static String createToken(WebDriver driver) {
+        String token = "";
+        try {
+            driver.findElement(By.id("option-menu")).click();
+            driver.findElement(By.cssSelector("a[href='http://localhost/profile']")).click();
+            driver.findElement(By.cssSelector("a[href='#oauth']")).click();
+            driver.findElement(By.xpath("//div[@id='oauth']/div/div[3]/div/div/div/div/div/a")).click();
+            driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(2));
+            driver.findElement(By.id("create-token-name")).sendKeys("token");
+            driver.findElement(By.xpath("//div[@id='modal-create-token']/div/div/div[@class='modal-footer']/button[2]")).click();
+            token = driver.findElement(By.cssSelector("textarea[readonly]")).getText();
+            driver.findElement(By.xpath("//div[@id='modal-access-token']/div/div/div[@class='modal-footer']/button")).click();
+        } catch (NoSuchElementException e) {
+            System.err.println("Error: Element not found during token creation.");
+            e.printStackTrace();
+        } catch (Exception e) {
+            System.err.println("Error during token creation: " + e.getMessage());
+            e.printStackTrace();
+        }
+
+        return token;
     }
 }

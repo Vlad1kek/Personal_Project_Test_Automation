@@ -44,14 +44,9 @@ public abstract class BaseTest {
         FireflyUtils.createBank(driver);
     }
 
-    private void createToken() {
-        BaseUtils.log("Personal Access Token create");
-        FireflyUtils.createToken(driver);
-    }
-
     private void clearData() {
         BaseUtils.log("Clear data");
-        ClearData.Token();
+        ClearData.Token(driver);
         ClearData.clearData();
     }
 
@@ -62,7 +57,6 @@ public abstract class BaseTest {
             getPage();
             firstLogin();
             createBank();
-            createToken();
             stopDriver();
         }
     }
