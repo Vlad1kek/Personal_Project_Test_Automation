@@ -6,23 +6,12 @@ import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import page.base.BasePage;
+import page.base.BaseDetailsPage;
+import page.bills.BillsEditPage;
 
-import java.util.List;
-
-public class BudgetsPage extends BasePage {
-
-    @FindBy(className = "btn-success")
-    private WebElement createBudgets;
-
-    @FindBy(xpath = "//a[starts-with(@href,'http://localhost/budgets/show/')]")
-    private List<WebElement> budgetsList;
-
+public class BudgetsDetailsPage extends BaseDetailsPage<BudgetsEditPage, BudgetsDetailsPage>{
     @FindBy(xpath = "//input[@type='number']")
     private WebElement budgetAmount;
-
-    @FindBy(xpath = "//a[contains(text(), 'NewTestBudgets123')]")
-    private WebElement budgetLink;
 
     @FindBy(css = "span[class$='budgeted_amount']")
     private WebElement budgetedAmountText;
@@ -30,23 +19,17 @@ public class BudgetsPage extends BasePage {
     @FindBy(xpath = "//div[starts-with(@class, 'col-lg-8')]/div/a[2]")
     private WebElement valueBudgetsMonthYear;
 
-    public BudgetsPage(WebDriver driver) {
+    public BudgetsDetailsPage(WebDriver driver) {
         super(driver);
     }
 
-    @Step("Click 'Create Budgets' button in the middle")
-    public CreateBudgetsPage clickCreateBudgets(){
-        createBudgets.click();
-
-        return new CreateBudgetsPage(getDriver());
-    }
-
-    public List<String> getBudgetsNamesText() {
-        return budgetsList.stream().map(WebElement::getText).toList();
+    @Override
+    protected BudgetsEditPage createEditPage() {
+        return new BudgetsEditPage(getDriver());
     }
 
     @Step("Enter the amount in the 'Budgets' column on the created budget line.")
-    public BudgetsPage setBudgetAmount(String amountNumber) {
+    public BudgetsDetailsPage setBudgetAmount(String amountNumber) {
         getAction().click(budgetAmount)
                 .keyDown(Keys.CONTROL)
                 .sendKeys("a")
@@ -76,5 +59,11 @@ public class BudgetsPage extends BasePage {
     public String getCalendarCheckTitle(String nameBudget) {
        return getDriver().findElement(By.xpath("//td[contains(@data-value,'" + nameBudget + "')]/span"))
                 .getAttribute("title");
+    }
+
+    public BudgetsEditPage clickPencil(String name) {
+        getDriver().findElement(By.xpath(" //td[contains(@data-value, '" + name + "')]/parent::tr/td/div/a[2]")).click();
+
+        return new BudgetsEditPage(getDriver());
     }
 }

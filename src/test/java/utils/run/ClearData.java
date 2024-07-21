@@ -1,4 +1,5 @@
 package utils.run;
+
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.net.HttpHeaders;
@@ -37,11 +38,16 @@ public class ClearData {
             JsonNode rootNode = objectMapper.readTree(jsonString);
 
             JsonNode dataNode = rootNode.get("data");
-            if (dataNode != null && dataNode.has("id")) {
+            if (dataNode != null && dataNode.isArray()) {
                 for (JsonNode billNode : dataNode) {
                     String billId = billNode.get("id").asText();
                     listId.add(billId);
                 }
+            }
+            if (response.statusCode() == 401) {
+                throw new RuntimeException("Authorization does not work with token:" + ProjectProperties.getPropToken());
+            } else if (response.statusCode() != 200) {
+                throw new RuntimeException("Something went wrong while clearing data" + response.then().log().all());
             }
         } catch (Exception e) {
             throw new RuntimeException(e);
@@ -52,18 +58,22 @@ public class ClearData {
         try {
             if (!listId.isEmpty()) {
                 for (String id : listId) {
-                    given()
+                    Response response = given()
                             .headers(HttpHeaders.AUTHORIZATION, "Bearer " + Token)
                             .pathParam("endpoint", endpoint)
                             .pathParam("id", id)
                             .when()
                             .delete("http://localhost:80/api/v1/{endpoint}/{id}");
+
+                    if (response.statusCode() != 204) {
+                        throw new RuntimeException("Something went wrong while clearing data" + response.then().log().all());
+                    }
                 }
-                listId.clear();
             }
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+        listId.clear();
     }
 
     public static void deleteBills() {
@@ -75,7 +85,6 @@ public class ClearData {
         getHttp("budgets");
         deleteHttp("budgets");
     }
-
 
     public static void deleteAccounts() {
         getHttp("accounts");
