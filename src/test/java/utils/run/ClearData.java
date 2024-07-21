@@ -45,7 +45,7 @@ public class ClearData {
                 }
             }
             if (response.statusCode() == 401) {
-                throw new RuntimeException("Authorization does not work with token:" + ProjectProperties.getPropToken());
+                throw new RuntimeException("Authorization does not work with token:" + Token);
             } else if (response.statusCode() != 200) {
                 throw new RuntimeException("Something went wrong while clearing data" + response.then().log().all());
             }
