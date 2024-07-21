@@ -15,7 +15,7 @@ public class ClearData {
     private static final List<String> listId = new ArrayList<>();
 
     public static void Token() {
-        if (token == null) {
+        if (token == null || token.isEmpty()) {
             if (ProjectProperties.isServerRun()) {
                 token = FireflyUtils.token;
             } else {

@@ -26,7 +26,7 @@ public abstract class BaseTest {
 
     private void getPage() {
         BaseUtils.log("Open Web page");
-        BaseUtils.get(driver);
+        BaseUtils.getUrl(driver);
     }
 
     private void loginPage() {

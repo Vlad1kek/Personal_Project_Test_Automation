@@ -29,7 +29,7 @@ public class FireflyUtils {
     }
 
     static void logout(WebDriver driver) {
-        BaseUtils.get(driver);
+        BaseUtils.getUrl(driver);
 
         driver.findElement(By.className("logout-link")).click();
     }
