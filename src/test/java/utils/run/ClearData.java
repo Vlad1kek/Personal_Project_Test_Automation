@@ -1,6 +1,5 @@
 package utils.run;
 
-
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.net.HttpHeaders;
@@ -15,7 +14,7 @@ public class ClearData {
     private static String token;
     private static final List<String> listId = new ArrayList<>();
 
-    public static void Token() {
+    public static void getToken() {
         if (token == null || token.isEmpty()) {
             if (ProjectProperties.isServerRun()) {
                 token = FireflyUtils.token;

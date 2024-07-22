@@ -7,7 +7,6 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import page.base.BaseDetailsPage;
-import page.bills.BillsEditPage;
 
 public class BudgetsDetailsPage extends BaseDetailsPage<BudgetsEditPage, BudgetsDetailsPage>{
     @FindBy(xpath = "//input[@type='number']")

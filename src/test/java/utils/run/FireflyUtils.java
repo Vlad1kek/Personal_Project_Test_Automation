@@ -3,6 +3,8 @@ package utils.run;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
 
@@ -43,7 +45,7 @@ public class FireflyUtils {
         driver.findElement(By.cssSelector("a[class$='introjs-skipbutton']")).click();
     }
 
-    static void createToken(WebDriver driver) {
+    static void createToken(WebDriver driver, WebDriverWait wait) {
         try {
             driver.findElement(By.id("option-menu")).click();
             driver.findElement(By.cssSelector("a[href='http://localhost/profile']")).click();
@@ -52,6 +54,8 @@ public class FireflyUtils {
             driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(2));
             driver.findElement(By.id("create-token-name")).sendKeys("token");
             driver.findElement(By.xpath("//div[@id='modal-create-token']/div/div/div[@class='modal-footer']/button[2]")).click();
+
+            wait.until(ExpectedConditions.visibilityOf(driver.findElement(By.cssSelector("textarea[readonly]")))).isEnabled();
             token = driver.findElement(By.cssSelector("textarea[readonly]")).getText();
             driver.findElement(By.xpath("//div[@id='modal-access-token']/div/div/div[@class='modal-footer']/button")).click();
         } catch (NoSuchElementException e) {
