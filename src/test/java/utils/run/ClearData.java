@@ -46,7 +46,7 @@ public class ClearData {
             if (response.statusCode() == 401) {
                 throw new RuntimeException("Authorization does not work with token:" + token);
             } else if (response.statusCode() != 200) {
-                throw new RuntimeException("Something went wrong while clearing data" + response.then().log().all());
+                throw new RuntimeException("Something went wrong while get data" + response.then().log().all());
             }
         } catch (Exception e) {
             throw new RuntimeException(e);
