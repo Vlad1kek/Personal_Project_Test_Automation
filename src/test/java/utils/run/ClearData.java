@@ -32,7 +32,7 @@ public class ClearData {
                     .queryParam("limit", 10)
                     .queryParam("page", 1)
                     .when()
-                    .get("http://127.0.0.1:80/api/v1/{endpoint}");
+                    .get("http://app:8080/api/v1/{endpoint}");
 
             String jsonString = response.asString();
             ObjectMapper objectMapper = new ObjectMapper();
@@ -64,7 +64,7 @@ public class ClearData {
                             .pathParam("endpoint", endpoint)
                             .pathParam("id", id)
                             .when()
-                            .delete("http://127.0.0.1:80/api/v1/{endpoint}/{id}");
+                            .delete("http://app:8080/api/v1/{endpoint}/{id}");
 
                     if (response.statusCode() != 204) {
                         throw new RuntimeException("Something went wrong while clearing data " + response.then().log().all());
