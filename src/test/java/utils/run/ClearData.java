@@ -106,7 +106,9 @@ public class ClearData {
         getHttp("http://localhost/api/v1/accounts");
         if (!listId.isEmpty()) {
             for (String id : listId) {
-                deleteHttp(String.format("http://localhost/api/v1/accounts/%s", id));
+                if (Integer.parseInt(id) > 4) {
+                    deleteHttp(String.format("http://localhost/api/v1/accounts/%s", id));
+                }
             }
             listId.clear();
         }
