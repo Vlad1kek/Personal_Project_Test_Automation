@@ -29,6 +29,8 @@ public class ClearData {
             Response response = given()
                     .headers(HttpHeaders.AUTHORIZATION, "Bearer " + token)
                     .pathParam("endpoint", endpoint)
+                    .queryParam("limit", 10)
+                    .queryParam("page", 1)
                     .when()
                     .get("http://localhost:80/api/v1/{endpoint}");
 
