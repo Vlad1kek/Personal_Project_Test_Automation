@@ -3,12 +3,14 @@ package utils.run;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.net.HttpHeaders;
-import io.restassured.response.Response;
+import java.net.URI;
 
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
 import java.util.ArrayList;
 import java.util.List;
 
-import static io.restassured.RestAssured.given;
 
 public class ClearData {
     private static String token;
@@ -24,17 +26,19 @@ public class ClearData {
         }
     }
 
-    public static void getHttp(String endpoint) {
+    public static void getHttp(String url) {
         try {
-            Response response = given()
+            HttpClient client = HttpClient.newHttpClient();
+            HttpRequest request = HttpRequest.newBuilder()
+                    .uri(URI.create(url))
                     .headers(HttpHeaders.AUTHORIZATION, "Bearer " + token)
-                    .pathParam("endpoint", endpoint)
-                    .queryParam("limit", 10)
-                    .queryParam("page", 1)
-                    .when()
-                    .get("http://app:8080/api/v1/{endpoint}");
+                    .GET()
+                    .build();
 
-            String jsonString = response.asString();
+            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+            String jsonString = response.body();
+
+            // Обработка JSON-ответа
             ObjectMapper objectMapper = new ObjectMapper();
             JsonNode rootNode = objectMapper.readTree(jsonString);
 
@@ -45,56 +49,77 @@ public class ClearData {
                     listId.add(billId);
                 }
             }
+
             if (response.statusCode() == 401) {
                 throw new RuntimeException("Authorization does not work with token:" + token);
             } else if (response.statusCode() != 200) {
-                throw new RuntimeException("Something went wrong while get data " + response.then().log().all());
+                throw new RuntimeException("Something went wrong while get data " + response.statusCode());
             }
+            System.out.println("Response: " + jsonString);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }
 
-    public static void deleteHttp(String endpoint) {
+    public static void deleteHttp(String url) {
         try {
             if (!listId.isEmpty()) {
-                for (String id : listId) {
-                    Response response = given()
-                            .headers(HttpHeaders.AUTHORIZATION, "Bearer " + token)
-                            .pathParam("endpoint", endpoint)
-                            .pathParam("id", id)
-                            .when()
-                            .delete("http://app:8080/api/v1/{endpoint}/{id}");
+                HttpClient client = HttpClient.newHttpClient();
+                HttpRequest request = HttpRequest.newBuilder()
+                        .uri(URI.create(url))
+                        .headers(HttpHeaders.AUTHORIZATION, "Bearer " + token)
+                        .DELETE()
+                        .build();
 
-                    if (response.statusCode() != 204) {
-                        throw new RuntimeException("Something went wrong while clearing data " + response.then().log().all());
-                    }
+                HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+
+                if (response.statusCode() != 204) {
+                    throw new RuntimeException("Something went wrong while clearing data " + response.statusCode());
                 }
             }
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-        listId.clear();
     }
 
     public static void deleteBills() {
-        getHttp("bills");
-        deleteHttp("bills");
+        getHttp("http://localhost/api/v1/bills");
+        if (!listId.isEmpty()) {
+            for (String id : listId) {
+                deleteHttp(String.format("http://localhost/api/v1/bills/%s", id));
+            }
+            listId.clear();
+        }
     }
 
     public static void deleteBudgets() {
-        getHttp("budgets");
-        deleteHttp("budgets");
+        getHttp("http://localhost/api/v1/budgets");
+        if (!listId.isEmpty()) {
+            for (String id : listId) {
+                deleteHttp(String.format("http://localhost/api/v1/budgets/%s", id));
+            }
+            listId.clear();
+        }
     }
 
     public static void deleteAccounts() {
-        getHttp("accounts");
-        deleteHttp("accounts");
+        getHttp("http://localhost/api/v1/accounts");
+        if (!listId.isEmpty()) {
+            for (String id : listId) {
+                deleteHttp(String.format("http://localhost/api/v1/accounts/%s", id));
+            }
+            listId.clear();
+        }
     }
 
     public static void deletePiggyBanks() {
-        getHttp("piggy-banks");
-        deleteHttp("piggy-banks");
+        getHttp("http://localhost/api/v1/piggy-banks");
+        if (!listId.isEmpty()) {
+            for (String id : listId) {
+                deleteHttp(String.format("http://localhost/api/v1/piggy-banks/%s", id));
+            }
+            listId.clear();
+        }
     }
 
     public static void clearData() {
