@@ -32,7 +32,7 @@ public class ClearData {
                     .queryParam("limit", 10)
                     .queryParam("page", 1)
                     .when()
-                    .get("http://localhost:80/api/v1/{endpoint}");
+                    .get("http://127.0.0.1:80/api/v1/{endpoint}");
 
             String jsonString = response.asString();
             ObjectMapper objectMapper = new ObjectMapper();
@@ -48,7 +48,7 @@ public class ClearData {
             if (response.statusCode() == 401) {
                 throw new RuntimeException("Authorization does not work with token:" + token);
             } else if (response.statusCode() != 200) {
-                throw new RuntimeException("Something went wrong while get data" + response.then().log().all());
+                throw new RuntimeException("Something went wrong while get data " + response.then().log().all());
             }
         } catch (Exception e) {
             throw new RuntimeException(e);
@@ -64,10 +64,10 @@ public class ClearData {
                             .pathParam("endpoint", endpoint)
                             .pathParam("id", id)
                             .when()
-                            .delete("http://localhost:80/api/v1/{endpoint}/{id}");
+                            .delete("http://127.0.0.1:80/api/v1/{endpoint}/{id}");
 
                     if (response.statusCode() != 204) {
-                        throw new RuntimeException("Something went wrong while clearing data" + response.then().log().all());
+                        throw new RuntimeException("Something went wrong while clearing data " + response.then().log().all());
                     }
                 }
             }
