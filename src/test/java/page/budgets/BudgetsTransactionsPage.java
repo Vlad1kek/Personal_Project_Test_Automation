@@ -6,8 +6,7 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import page.base.BasePage;
 
-public class BudgetsTransactionsPage extends BasePage {
-
+public class BudgetsTransactionsPage extends BasePage<BudgetsTransactionsPage> {
     @FindBy(className = "money-positive")
     private WebElement amountText;
 

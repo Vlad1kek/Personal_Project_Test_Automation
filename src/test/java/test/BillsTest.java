@@ -4,6 +4,7 @@ import jdk.jfr.Description;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import page.HomePage;
+import page.bills.BillsDetailsPage;
 import utils.run.BaseTest;
 import utils.run.TestUtils;
 import utils.run.TimeUtils;
@@ -20,13 +21,15 @@ public class BillsTest extends BaseTest {
     public void testCreateNewBills() {
         List<String> nameBill = new HomePage(getDriver())
                 .goBill()
-                .clickCreateBill()
+                .clickCreateButton()
+                .skipTutorial()
                 .setName(BILLS_NAME)
                 .setMinimumAmount(MINIMUM_AMOUNT)
                 .setMaximumAmount(MAXIMUM_AMOUNT)
-                .submit()
+                .clickStoreNew(new BillsDetailsPage(getDriver()))
                 .goBill()
-                .getBillsNamesList();
+                .skipTutorial()
+                .getNamesList();
 
         Assert.assertTrue(nameBill.contains(BILLS_NAME));
     }

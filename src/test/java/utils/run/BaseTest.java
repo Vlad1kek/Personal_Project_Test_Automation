@@ -7,10 +7,10 @@ import org.testng.annotations.*;
 import utils.log.ExceptionListener;
 
 import java.lang.reflect.Method;
+import java.time.Duration;
 
 @Listeners({OrderTest.class, ExceptionListener.class,})
 public abstract class BaseTest {
-
     private WebDriver driver;
     private WebDriverWait wait;
 
@@ -20,13 +20,12 @@ public abstract class BaseTest {
 
     private void startDriver() {
         BaseUtils.log("Browser open");
-
         driver = ProjectProperties.createDriver();
     }
 
     private void getPage() {
         BaseUtils.log("Open Web page");
-        BaseUtils.get(driver);
+        BaseUtils.getUrl(driver);
     }
 
     private void loginPage() {
@@ -46,12 +45,12 @@ public abstract class BaseTest {
 
     private void createToken() {
         BaseUtils.log("Personal Access Token create");
-        FireflyUtils.createToken(driver);
+        FireflyUtils.createToken(driver, getWait());
     }
 
     private void clearData() {
         BaseUtils.log("Clear data");
-        ClearData.Token();
+        ClearData.getToken();
         ClearData.clearData();
     }
 
@@ -93,6 +92,14 @@ public abstract class BaseTest {
             wait = null;
             BaseUtils.log("Browser closed");
         }
+    }
+
+    protected WebDriverWait getWait() {
+        if (wait == null) {
+            wait = new WebDriverWait(getDriver(), Duration.ofSeconds(2));
+        }
+
+        return wait;
     }
 
     private void stopDriver() {

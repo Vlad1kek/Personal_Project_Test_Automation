@@ -5,13 +5,13 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import page.bills.BillsPage;
-import page.budgets.BudgetsPage;
+import page.bills.BillsDetailsPage;
+import page.budgets.BudgetsDetailsPage;
 import page.HomePage;
 
 import java.time.Duration;
 
-public abstract class BasePage extends BaseModel {
+public abstract class BasePage<Self extends BasePage<?>> extends BaseModel {
     @FindBy(tagName = "h1")
     private WebElement headline;
 
@@ -27,6 +27,9 @@ public abstract class BasePage extends BaseModel {
     @FindBy(className = "introjs-skipbutton")
     private WebElement buttonSkip;
 
+    @FindBy(className = "btn-success")
+    private WebElement submit;
+
     public BasePage(WebDriver driver) {
         super(driver);
     }
@@ -36,10 +39,10 @@ public abstract class BasePage extends BaseModel {
     }
 
     @Step("Click 'Budgets' button on sidebar")
-    public BudgetsPage goBudgets() {
+    public BudgetsDetailsPage goBudgets() {
         budgetsSidePanel.click();
 
-        return new BudgetsPage(getDriver());
+        return new BudgetsDetailsPage(getDriver());
     }
 
     public HomePage goHomePage() {
@@ -48,14 +51,25 @@ public abstract class BasePage extends BaseModel {
         return new HomePage(getDriver());
     }
 
-    public BillsPage goBill() {
+    public BillsDetailsPage goBill() {
         billsSidePanel.click();
 
+        return new BillsDetailsPage(getDriver());
+    }
+
+    public BillsDetailsPage clickSubmit() {
+        submit.click();
+
+        return new BillsDetailsPage(getDriver());
+    }
+
+    public Self skipTutorial() {
         getDriver().manage().timeouts().implicitlyWait(Duration.ofSeconds(2));
         if (getDriver().findElements(By.className("introjs-overlay")).size() > 0) {
             buttonSkip.click();
         }
 
-        return new BillsPage(getDriver());
+        return (Self)this;
     }
+
 }

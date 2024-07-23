@@ -21,7 +21,7 @@ public class BaseUtils {
         System.out.println();
     }
 
-    public static void get(WebDriver driver) {
+    public static void getUrl(WebDriver driver) {
         driver.get("http://localhost");
     }
 

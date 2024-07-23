@@ -5,6 +5,7 @@ import io.qameta.allure.*;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import page.HomePage;
+import page.budgets.BudgetsDetailsPage;
 import utils.run.BaseTest;
 import utils.run.TestUtils;
 import utils.run.TimeUtils;
@@ -21,11 +22,13 @@ public class BudgetsTest extends BaseTest {
     public void testCreateFirstBudgets() {
         List<String> nameBudget = new HomePage(getDriver())
                 .goBudgets()
-                .clickCreateBudgets()
+                .clickCreateButton()
                 .setName(NAME_BUDGET)
-                .submit()
-                .getBudgetsNamesText();
+                .clickStoreNew(new BudgetsDetailsPage(getDriver()))
+                .skipTutorial()
+                .getNamesList();
 
+        System.out.println(nameBudget);
         Allure.step("The name '" + NAME_BUDGET + "' of the created Budget is displayed in the Budgets list");
         Assert.assertTrue(nameBudget.contains(NAME_BUDGET),
                 "If FAIL: Budget name '" + NAME_BUDGET + "' does not exist");
@@ -46,7 +49,7 @@ public class BudgetsTest extends BaseTest {
 
         Allure.step("The entry 'Budgeted: €" + amount + "' will appear above the progress bar");
         Assert.assertEquals(actualAmount, "€" + amount,
-                "If FAIL: Budgeted: €'" + amount + "' does NOT equals expected quantity:");
+                "If FAIL: Budgeted: €'" + actualAmount + "' does NOT equals expected quantity:");
     }
 
     @Severity(SeverityLevel.NORMAL)
@@ -84,12 +87,12 @@ public class BudgetsTest extends BaseTest {
                 "example: " + localDate);
         Assert.assertEquals(budgetsPageDate, localDate,
                 "If FAIL: The date is written incorrectly or does not correspond to local date example:"
-                        + localDate);
+                        + budgetsPageDate);
     }
 
     @Severity(SeverityLevel.NORMAL)
     @Story("Budgets")
-    @Description("Create Budgets with fixed amount FI-T9")
+    @Description("Change budgets to a fixed amount FI-T9")
     @Test(priority = 2)
     public void testCreateBudgetsWithFixedAmount() {
         final String expectedMessage = "This budget will be set periodically";
@@ -97,15 +100,14 @@ public class BudgetsTest extends BaseTest {
 
         String calendarAttribute = new HomePage(getDriver())
                 .goBudgets()
-                .clickCreateBudgets()
-                .setName(NAME_BUDGET + "1")
+                .clickPencil(NAME_BUDGET)
                 .setAFixedAmountEveryPeriod()
                 .setAutoBudgetAmount("789")
-                .submit()
-                .getCalendarCheckTitle(NAME_BUDGET + "1");
+                .clickStoreNew(new BudgetsDetailsPage(getDriver()))
+                .getCalendarCheckTitle(NAME_BUDGET);
 
         Allure.step("To the right of the name budget there is an icon, when you hover it, " +
-                "the inscription appears: " + expectedMessage);
+                "the inscription appears: " + calendarAttribute);
         Assert.assertEquals(calendarAttribute, expectedMessage,
                 "If FAIL: There is NO icon to the right of the budget name, or when you hover over it, " +
                         "NO or NOT a message appears: " + expectedMessage);
@@ -117,16 +119,15 @@ public class BudgetsTest extends BaseTest {
     @Test(priority = 2)
     public void testCreateBudgetsAddAnAmountEveryPeriod() {
         final String expectedMessage = "The budget amount will increase periodically";
-        TestUtils.createBudget(this, NAME_BUDGET, true);
 
         String calendarAttribute = new HomePage(getDriver())
                 .goBudgets()
-                .clickCreateBudgets()
-                .setName(NAME_BUDGET + "2")
+                .clickCreateButton()
+                .setName(NAME_BUDGET)
                 .setAddAnAmountEveryPeriod()
                 .setAutoBudgetAmount("333")
-                .submit()
-                .getCalendarCheckTitle(NAME_BUDGET + "2");
+                .clickStoreNew(new BudgetsDetailsPage(getDriver()))
+                .getCalendarCheckTitle(NAME_BUDGET);
 
         Allure.step("To the right of the name budget there is an icon, when you hover it, " +
                 "the inscription appears: " + expectedMessage);
@@ -142,16 +143,15 @@ public class BudgetsTest extends BaseTest {
     @Test(priority = 2)
     public void testCreateBudgetsAndCorrectForOverspending() {
         final String expectedMessage = "The budget amount will increase periodically and will correct for overspending";
-        TestUtils.createBudget(this, NAME_BUDGET, true);
 
         String calendarAttribute = new HomePage(getDriver())
                 .goBudgets()
-                .clickCreateBudgets()
-                .setName(NAME_BUDGET + "3")
+                .clickCreateButton()
+                .setName(NAME_BUDGET)
                 .setCorrectForOverspending()
                 .setAutoBudgetAmount("42")
-                .submit()
-                .getCalendarCheckTitle(NAME_BUDGET + "3");
+                .clickStoreNew(new BudgetsDetailsPage(getDriver()))
+                .getCalendarCheckTitle(NAME_BUDGET);
 
         Allure.step("To the right of the name budget there is an icon, when you hover it, " +
                 "the inscription appears: " + expectedMessage);
