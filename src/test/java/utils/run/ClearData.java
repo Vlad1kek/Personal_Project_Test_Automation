@@ -55,7 +55,6 @@ public class ClearData {
             } else if (response.statusCode() != 200) {
                 throw new RuntimeException("Something went wrong while get data " + response.statusCode());
             }
-            System.out.println("Response: " + jsonString);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -72,7 +71,6 @@ public class ClearData {
                         .build();
 
                 HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-
                 if (response.statusCode() != 204) {
                     throw new RuntimeException("Something went wrong while clearing data " + response.statusCode());
                 }

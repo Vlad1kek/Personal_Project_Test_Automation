@@ -33,14 +33,12 @@ public class TimeUtils {
         SimpleDateFormat dayFormat = new SimpleDateFormat("dd", new Locale("en"));
         SimpleDateFormat yearFormat = new SimpleDateFormat("yyyy", new Locale("en"));
 
-        String date = sdf.format(calendar.getTime())
+        return sdf.format(calendar.getTime())
                 + " "
                 + dayFormat.format(calendar.getTime())
                 + getDayOfMonthSuffix(calendar.get(Calendar.DAY_OF_MONTH))
                 + ", "
                 + yearFormat.format(calendar.getTime());
-
-        return date;
     }
 
     public static List<String> getCurrentDateList() {

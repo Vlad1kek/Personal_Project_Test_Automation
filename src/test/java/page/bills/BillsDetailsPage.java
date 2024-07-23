@@ -38,7 +38,7 @@ public class BillsDetailsPage extends BaseDetailsPage<BillsEditPage, BillsDetail
     }
 
     public BillsEditPage clickPencil(String name) {
-        getDriver().findElement(By.xpath("//tr[@data-name='" + name + "']/td[2]/div/a[1]")).click();
+        getDriver().findElement(By.xpath("//tr[@data-name='" + name + "']/td[2]/div/a[1]/span")).click();
 
         return new BillsEditPage(getDriver());
     }
