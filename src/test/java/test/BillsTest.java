@@ -21,15 +21,14 @@ public class BillsTest extends BaseTest {
     public void testCreateNewBills() {
         List<String> nameBill = new HomePage(getDriver())
                 .goBill()
-                .skipTutorial()
                 .clickCreateButton()
                 .skipTutorial()
                 .setName(BILLS_NAME)
                 .setMinimumAmount(MINIMUM_AMOUNT)
                 .setMaximumAmount(MAXIMUM_AMOUNT)
                 .clickStoreNew(new BillsDetailsPage(getDriver()))
-                .skipTutorial()
                 .goBill()
+                .skipTutorial()
                 .getNamesList();
 
         Assert.assertTrue(nameBill.contains(BILLS_NAME));
