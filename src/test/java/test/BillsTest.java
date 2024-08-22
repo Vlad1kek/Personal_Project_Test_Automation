@@ -1,16 +1,18 @@
 package test;
 
+import io.qameta.allure.Epic;
 import jdk.jfr.Description;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import page.HomePage;
-import page.bills.BillsDetailsPage;
+import page.bills.BillsRulesPage;
 import utils.run.BaseTest;
 import utils.run.TestUtils;
 import utils.run.TimeUtils;
 
 import java.util.List;
 
+@Epic("Bill")
 public class BillsTest extends BaseTest {
     private static final String BILLS_NAME = "NewTestBills22";
     private static final String MINIMUM_AMOUNT = "300";
@@ -26,7 +28,7 @@ public class BillsTest extends BaseTest {
                 .setName(BILLS_NAME)
                 .setMinimumAmount(MINIMUM_AMOUNT)
                 .setMaximumAmount(MAXIMUM_AMOUNT)
-                .clickStoreNew(new BillsDetailsPage(getDriver()))
+                .clickSubmit(new BillsRulesPage(getDriver()))
                 .goBill()
                 .skipTutorial()
                 .getNamesList();

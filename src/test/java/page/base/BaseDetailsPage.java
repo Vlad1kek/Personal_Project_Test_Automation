@@ -25,12 +25,13 @@ public abstract class BaseDetailsPage<ProjectEditPage extends BaseEditPage<?>, S
 
     protected abstract ProjectEditPage createEditPage();
 
-    @Step("Click 'Create' button in the middle")
+    @Step("Click on 'Create' button in the middle")
     public ProjectEditPage clickCreateButton() {
         createButton.click();
 
         return createEditPage();
     }
+
     public List<String> getNamesList() {
         if (this instanceof BillsDetailsPage) {
             return billsList.stream().map(WebElement::getText).toList();

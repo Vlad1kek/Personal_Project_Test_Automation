@@ -4,8 +4,8 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 public final class LogUtils {
-    private static final String ERROR = "❌\n";
-    private static final String SUCCESS = "✅\n";
+    private static final String ERROR = "❌";
+    private static final String SUCCESS = "✅";
     private static final String WARNING = "⚠️";
     private static final String EXCEPTION = "❗";
 
@@ -13,6 +13,10 @@ public final class LogUtils {
 
     public static void logInfo(String message) {
         logger.info(message);
+    }
+
+    public static void logf(String str, Object... arr) {
+       logInfo(String.format(str, arr));
     }
 
     public static void logError(String message) {
