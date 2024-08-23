@@ -5,6 +5,7 @@ import jdk.jfr.Description;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import page.HomePage;
+import page.bills.BillsDetailsPage;
 import page.bills.BillsRulesPage;
 import utils.run.BaseTest;
 import utils.run.TestUtils;
@@ -59,7 +60,7 @@ public class BillsTest extends BaseTest {
                 .goBill()
                 .clickPencil(BILLS_NAME)
                 .setRepeatsWeekly()
-                .clickSubmit()
+                .clickSubmit(new BillsDetailsPage(getDriver()))
                 .getNextExpectedMatch(BILLS_NAME);
 
         Assert.assertEquals(nextExpectedMatch, weeklyDatesList);
@@ -75,7 +76,7 @@ public class BillsTest extends BaseTest {
                 .goBill()
                 .clickPencil(BILLS_NAME)
                 .setRepeatsDaily()
-                .clickSubmit()
+                .clickSubmit(new BillsDetailsPage(getDriver()))
                 .getNextExpectedMatch(BILLS_NAME);
 
         Assert.assertEquals(nextExpectedMatch, dailyDatestList);
@@ -91,7 +92,7 @@ public class BillsTest extends BaseTest {
                 .goBill()
                 .clickPencil(BILLS_NAME)
                 .setRepeatsYearly()
-                .clickSubmit()
+                .clickSubmit(new BillsDetailsPage(getDriver()))
                 .getNextExpectedMatch(BILLS_NAME);
 
         Assert.assertEquals(nextExpectedMatch, currentDate);
@@ -107,7 +108,7 @@ public class BillsTest extends BaseTest {
                 .goBill()
                 .clickPencil(BILLS_NAME)
                 .setRepeatsHalfYear()
-                .clickSubmit()
+                .clickSubmit(new BillsDetailsPage(getDriver()))
                 .getNextExpectedMatch(BILLS_NAME);
 
         Assert.assertEquals(nextExpectedMatch, currentDate);
@@ -123,7 +124,7 @@ public class BillsTest extends BaseTest {
                 .goBill()
                 .clickPencil(BILLS_NAME)
                 .setRepeatsQuarterly()
-                .clickSubmit()
+                .clickSubmit(new BillsDetailsPage(getDriver()))
                 .getNextExpectedMatch(BILLS_NAME);
 
         Assert.assertEquals(nextExpectedMatch, currentDate);
@@ -139,7 +140,7 @@ public class BillsTest extends BaseTest {
                 .goBill()
                 .clickPencil(BILLS_NAME)
                 .setRepeatsYearly()
-                .clickSubmit()
+                .clickSubmit(new BillsDetailsPage(getDriver()))
                 .getMonthlyCosts();
 
         Assert.assertEquals(monthlyCosts, expectedMonthlyCosts);
@@ -154,7 +155,7 @@ public class BillsTest extends BaseTest {
                 .goBill()
                 .clickPencil(BILLS_NAME)
                 .setRepeatsHalfYear()
-                .clickSubmit()
+                .clickSubmit(new BillsDetailsPage(getDriver()))
                 .getMonthlyCosts();
 
         Assert.assertEquals(monthlyCosts, expectedHalfYear);

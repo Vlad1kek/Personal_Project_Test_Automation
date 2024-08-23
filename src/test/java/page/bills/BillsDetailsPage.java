@@ -23,6 +23,9 @@ public class BillsDetailsPage extends BaseDetailsPage<BillsEditPage, BillsDetail
     }
 
     public List<String> getNextExpectedMatch(String name) {
+        if (!headline().contains("Bills")) {
+            goBill();
+        }
         List<WebElement> list = getDriver().findElements(By.xpath("//tr[@data-name='" + name + "']/td[7]"))
                 .stream().toList();
 
