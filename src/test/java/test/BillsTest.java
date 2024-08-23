@@ -146,10 +146,9 @@ public class BillsTest extends BaseTest {
     }
 
     @Description("Set Bill to repeat half-year And check expected monthly costs FI-T20")
-    @Test(priority = 2)
+    @Test(priority = 2, dependsOnMethods = "testSetBillToRepeatYearlyAndCheckExpectedMonthlyCosts")
     public void testSetBillToRepeatHalfYearAndCheckExpectedMonthlyCosts() {
         String expectedHalfYear = TimeUtils.getExpectedMonthlyCostsHalfYear(MINIMUM_AMOUNT, MAXIMUM_AMOUNT);
-        TestUtils.createBill(this, BILLS_NAME, MINIMUM_AMOUNT, MAXIMUM_AMOUNT, true);
 
         String monthlyCosts = new HomePage(getDriver())
                 .goBill()

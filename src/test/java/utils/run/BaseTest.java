@@ -85,7 +85,7 @@ public abstract class BaseTest {
                 getPage();
             }
         } catch (Exception e) {
-            stopDriver();
+            closeDriver();
             throw e;
         }
     }
@@ -120,23 +120,21 @@ public abstract class BaseTest {
     protected void afterMethod(Method method, ITestResult testResult) {
         if (ProjectProperties.isServerRun() && !testResult.isSuccess()) {
             BaseUtils.captureScreenFile(driver, method.getName(), this.getClass().getName());
-        }
 
-        if (!testResult.isSuccess()) {
             Allure.addAttachment(
                     "screenshot.png",
                     "image/png",
                     new ByteArrayInputStream(((TakesScreenshot) getDriver()).getScreenshotAs(OutputType.BYTES)),
                     "png");
-
-            LogUtils.logError("Test was completed with an ERROR");
         }
 
         if (testResult.isSuccess()) {
             LogUtils.logSuccess("Test was success");
         }
 
-        stopDriver();
+        if (method.getAnnotation(Test.class).dependsOnMethods().length != 0 && !(!ProjectProperties.isServerRun() && !testResult.isSuccess())) {
+            stopDriver();
+        }
 
         LogUtils.logf("Execution time is %.3f sec\n\n", (testResult.getEndMillis() - testResult.getStartMillis()) / 1000.0);
     }
