@@ -12,14 +12,6 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public class BaseUtils {
-    public static void log(String str) {
-        System.out.println(str);
-    }
-
-    public static void logf(String str, Object... arr) {
-        System.out.printf(str, arr);
-        System.out.println();
-    }
 
     public static void getUrl(WebDriver driver) {
         driver.get("http://localhost");

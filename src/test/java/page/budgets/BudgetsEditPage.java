@@ -24,7 +24,7 @@ public class BudgetsEditPage extends BaseEditPage<BudgetsEditPage> {
         super(driver);
     }
 
-    @Step("In the auto budget selector, select 'Set a fixed amount every period'")
+    @Step("In the 'Auto-budget' selector, select 'Set a fixed amount every period'")
     public BudgetsEditPage setAFixedAmountEveryPeriod()  {
         Select select = new Select(optionAutoBudget);
         select.selectByValue("1");
@@ -32,7 +32,7 @@ public class BudgetsEditPage extends BaseEditPage<BudgetsEditPage> {
         return this;
     }
 
-    @Step("In the auto budget selector, select 'Add an amount every period'")
+    @Step("In the 'Auto-budget' selector, select: 'Add an amount every period'")
     public BudgetsEditPage setAddAnAmountEveryPeriod()  {
         Select select = new Select(optionAutoBudget);
         select.selectByValue("2");
@@ -40,7 +40,7 @@ public class BudgetsEditPage extends BaseEditPage<BudgetsEditPage> {
         return this;
     }
 
-    @Step("In the auto budget selector, select 'Add an amount every period and correct for overspending'")
+    @Step("In the 'Auto-budget' selector, select 'Add an amount every period and correct for overspending'")
     public BudgetsEditPage setCorrectForOverspending()  {
         Select select = new Select(optionAutoBudget);
         select.selectByValue("3");
@@ -48,7 +48,7 @@ public class BudgetsEditPage extends BaseEditPage<BudgetsEditPage> {
         return this;
     }
 
-    @Step("In the 'Auto-budget amount' field, enter valid numbers,")
+    @Step("Enter new valid numbers into the 'Auto-budget amount' field")
     public BudgetsEditPage setAutoBudgetAmount(String amount) {
         getAction().click(autoBudgetAmount)
                 .sendKeys(amount)

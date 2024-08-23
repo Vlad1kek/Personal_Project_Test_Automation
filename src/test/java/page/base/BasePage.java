@@ -38,7 +38,7 @@ public abstract class BasePage<Self extends BasePage<?>> extends BaseModel {
         return headline.getText();
     }
 
-    @Step("Click 'Budgets' button on sidebar")
+    @Step("Click on 'Budgets' button on sidebar")
     public BudgetsDetailsPage goBudgets() {
         budgetsSidePanel.click();
 
@@ -63,6 +63,7 @@ public abstract class BasePage<Self extends BasePage<?>> extends BaseModel {
         return new BillsDetailsPage(getDriver());
     }
 
+    @Step("Skip tutorial.")
     public Self skipTutorial() {
         getDriver().manage().timeouts().implicitlyWait(Duration.ofSeconds(2));
         if (getDriver().findElements(By.className("introjs-overlay")).size() > 0) {

@@ -16,14 +16,14 @@ public abstract class BaseEditPage<Self extends BaseEditPage<?>> extends BasePag
         super(driver);
     }
 
-    @Step("Click 'Store new' button")
-    public <T> T clickStoreNew(T page) {
+    @Step("Click on Submit button")
+    public <T> T clickSubmit(T page) {
         submit.click();
 
         return page;
     }
 
-    @Step("Set Name")
+    @Step("Enter new valid name into the 'Name' field")
     public Self setName(String name) {
         nameInput.sendKeys(name);
 

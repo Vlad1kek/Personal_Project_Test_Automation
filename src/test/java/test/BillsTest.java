@@ -1,16 +1,19 @@
 package test;
 
+import io.qameta.allure.Epic;
 import jdk.jfr.Description;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import page.HomePage;
 import page.bills.BillsDetailsPage;
+import page.bills.BillsRulesPage;
 import utils.run.BaseTest;
 import utils.run.TestUtils;
 import utils.run.TimeUtils;
 
 import java.util.List;
 
+@Epic("Bill")
 public class BillsTest extends BaseTest {
     private static final String BILLS_NAME = "NewTestBills22";
     private static final String MINIMUM_AMOUNT = "300";
@@ -26,7 +29,7 @@ public class BillsTest extends BaseTest {
                 .setName(BILLS_NAME)
                 .setMinimumAmount(MINIMUM_AMOUNT)
                 .setMaximumAmount(MAXIMUM_AMOUNT)
-                .clickStoreNew(new BillsDetailsPage(getDriver()))
+                .clickSubmit(new BillsRulesPage(getDriver()))
                 .goBill()
                 .skipTutorial()
                 .getNamesList();
@@ -57,7 +60,7 @@ public class BillsTest extends BaseTest {
                 .goBill()
                 .clickPencil(BILLS_NAME)
                 .setRepeatsWeekly()
-                .clickSubmit()
+                .clickSubmit(new BillsDetailsPage(getDriver()))
                 .getNextExpectedMatch(BILLS_NAME);
 
         Assert.assertEquals(nextExpectedMatch, weeklyDatesList);
@@ -73,7 +76,7 @@ public class BillsTest extends BaseTest {
                 .goBill()
                 .clickPencil(BILLS_NAME)
                 .setRepeatsDaily()
-                .clickSubmit()
+                .clickSubmit(new BillsDetailsPage(getDriver()))
                 .getNextExpectedMatch(BILLS_NAME);
 
         Assert.assertEquals(nextExpectedMatch, dailyDatestList);
@@ -89,7 +92,7 @@ public class BillsTest extends BaseTest {
                 .goBill()
                 .clickPencil(BILLS_NAME)
                 .setRepeatsYearly()
-                .clickSubmit()
+                .clickSubmit(new BillsDetailsPage(getDriver()))
                 .getNextExpectedMatch(BILLS_NAME);
 
         Assert.assertEquals(nextExpectedMatch, currentDate);
@@ -105,7 +108,7 @@ public class BillsTest extends BaseTest {
                 .goBill()
                 .clickPencil(BILLS_NAME)
                 .setRepeatsHalfYear()
-                .clickSubmit()
+                .clickSubmit(new BillsDetailsPage(getDriver()))
                 .getNextExpectedMatch(BILLS_NAME);
 
         Assert.assertEquals(nextExpectedMatch, currentDate);
@@ -121,7 +124,7 @@ public class BillsTest extends BaseTest {
                 .goBill()
                 .clickPencil(BILLS_NAME)
                 .setRepeatsQuarterly()
-                .clickSubmit()
+                .clickSubmit(new BillsDetailsPage(getDriver()))
                 .getNextExpectedMatch(BILLS_NAME);
 
         Assert.assertEquals(nextExpectedMatch, currentDate);
@@ -137,23 +140,22 @@ public class BillsTest extends BaseTest {
                 .goBill()
                 .clickPencil(BILLS_NAME)
                 .setRepeatsYearly()
-                .clickSubmit()
+                .clickSubmit(new BillsDetailsPage(getDriver()))
                 .getMonthlyCosts();
 
         Assert.assertEquals(monthlyCosts, expectedMonthlyCosts);
     }
 
     @Description("Set Bill to repeat half-year And check expected monthly costs FI-T20")
-    @Test(priority = 2)
+    @Test(priority = 2, dependsOnMethods = "testSetBillToRepeatYearlyAndCheckExpectedMonthlyCosts")
     public void testSetBillToRepeatHalfYearAndCheckExpectedMonthlyCosts() {
         String expectedHalfYear = TimeUtils.getExpectedMonthlyCostsHalfYear(MINIMUM_AMOUNT, MAXIMUM_AMOUNT);
-        TestUtils.createBill(this, BILLS_NAME, MINIMUM_AMOUNT, MAXIMUM_AMOUNT, true);
 
         String monthlyCosts = new HomePage(getDriver())
                 .goBill()
                 .clickPencil(BILLS_NAME)
                 .setRepeatsHalfYear()
-                .clickSubmit()
+                .clickSubmit(new BillsDetailsPage(getDriver()))
                 .getMonthlyCosts();
 
         Assert.assertEquals(monthlyCosts, expectedHalfYear);

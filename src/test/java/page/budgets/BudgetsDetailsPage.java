@@ -27,7 +27,7 @@ public class BudgetsDetailsPage extends BaseDetailsPage<BudgetsEditPage, Budgets
         return new BudgetsEditPage(getDriver());
     }
 
-    @Step("Enter the amount in the 'Budgets' column on the created budget line.")
+    @Step("Enter the amount: {amountNumber} in the 'Budgets' column on the created budget line")
     public BudgetsDetailsPage setBudgetAmount(String amountNumber) {
         getAction().click(budgetAmount)
                 .keyDown(Keys.CONTROL)
@@ -60,6 +60,8 @@ public class BudgetsDetailsPage extends BaseDetailsPage<BudgetsEditPage, Budgets
                 .getAttribute("title");
     }
 
+    //duplication method from BillsDetailsPage
+    @Step("Click on 'Pencil' icon next to the budget name")
     public BudgetsEditPage clickPencil(String name) {
         getDriver().findElement(By.xpath(" //td[contains(@data-value, '" + name + "')]/parent::tr/td/div/a[2]")).click();
 

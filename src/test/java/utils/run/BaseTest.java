@@ -1,11 +1,16 @@
 package utils.run;
 
+import io.qameta.allure.Allure;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.ITestResult;
 import org.testng.annotations.*;
 import utils.log.ExceptionListener;
+import utils.log.LogUtils;
 
+import java.io.ByteArrayInputStream;
 import java.lang.reflect.Method;
 import java.time.Duration;
 
@@ -19,37 +24,37 @@ public abstract class BaseTest {
     }
 
     private void startDriver() {
-        BaseUtils.log("Browser open");
+        LogUtils.logInfo("Open Browser");
         driver = ProjectProperties.createDriver();
     }
 
     private void getPage() {
-        BaseUtils.log("Open Web page");
+        LogUtils.logInfo("Open Web page");
         BaseUtils.getUrl(driver);
     }
 
     private void loginPage() {
-        BaseUtils.log("Login successful");
+        LogUtils.logInfo("Login successful");
         FireflyUtils.login(driver);
     }
 
     private void firstLogin() {
-        BaseUtils.log("Register successful");
+        LogUtils.logInfo("Register successful");
         FireflyUtils.firstLogin(driver);
     }
 
     private void createBank() {
-        BaseUtils.log("Getting started");
+        LogUtils.logInfo("Personal Bank Create");
         FireflyUtils.createBank(driver);
     }
 
     private void createToken() {
-        BaseUtils.log("Personal Access Token create");
+        LogUtils.logInfo("Personal Access Token create");
         FireflyUtils.createToken(driver, getWait());
     }
 
     private void clearData() {
-        BaseUtils.log("Clear data");
+        LogUtils.logInfo("Clear data");
         ClearData.getToken();
         ClearData.clearData();
     }
@@ -68,18 +73,19 @@ public abstract class BaseTest {
 
     @BeforeMethod
     protected void beforeMethod(Method method) {
-        BaseUtils.logf("Run %s.%s", this.getClass().getName(), method.getName());
+        LogUtils.logf("Run %s.%s", this.getClass().getName(), method.getName());
         try {
             if (method.getAnnotation(Test.class).dependsOnMethods().length == 0) {
                 clearData();
                 startDriver();
                 getPage();
                 loginPage();
+                LogUtils.logInfo("Start run test");
             } else {
                 getPage();
             }
         } catch (Exception e) {
-            stopDriver();
+            closeDriver();
             throw e;
         }
     }
@@ -90,7 +96,7 @@ public abstract class BaseTest {
 
             driver = null;
             wait = null;
-            BaseUtils.log("Browser closed");
+            LogUtils.logInfo("Browser closed");
         }
     }
 
@@ -114,9 +120,22 @@ public abstract class BaseTest {
     protected void afterMethod(Method method, ITestResult testResult) {
         if (ProjectProperties.isServerRun() && !testResult.isSuccess()) {
             BaseUtils.captureScreenFile(driver, method.getName(), this.getClass().getName());
-        }
-            stopDriver();
 
-        BaseUtils.logf("Execution time is %o sec\n\n", (testResult.getEndMillis() - testResult.getStartMillis()) / 1000);
+            Allure.addAttachment(
+                    "screenshot.png",
+                    "image/png",
+                    new ByteArrayInputStream(((TakesScreenshot) getDriver()).getScreenshotAs(OutputType.BYTES)),
+                    "png");
+        }
+
+        if (testResult.isSuccess()) {
+            LogUtils.logSuccess("Test was success");
+        }
+
+        if (method.getAnnotation(Test.class).dependsOnMethods().length != 0 && !(!ProjectProperties.isServerRun() && !testResult.isSuccess())) {
+            stopDriver();
+        }
+
+        LogUtils.logf("Execution time is %.3f sec\n\n", (testResult.getEndMillis() - testResult.getStartMillis()) / 1000.0);
     }
 }

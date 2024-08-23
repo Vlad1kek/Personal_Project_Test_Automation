@@ -8,6 +8,7 @@ import utils.log.LogUtils;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.time.Duration;
 import java.util.Properties;
 
 
@@ -69,7 +70,10 @@ public final class ProjectProperties {
     }
 
     static WebDriver createDriver() {
-        return new ChromeDriver(chromeOptions);
+        WebDriver driver = new ChromeDriver(ProjectProperties.chromeOptions);
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+
+        return driver;
     }
 
     static String getUserName() {
