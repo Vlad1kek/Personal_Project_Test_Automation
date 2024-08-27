@@ -6,6 +6,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
 import page.base.BaseDetailsPage;
+import utils.log.LogUtils;
 
 import java.util.List;
 
@@ -24,8 +25,11 @@ public class BillsDetailsPage extends BaseDetailsPage<BillsEditPage, BillsDetail
 
     public List<String> getNextExpectedMatch(String name) {
         if (!headline().contains("Bills")) {
+            LogUtils.logException("Expected page Bill Page but was redirected to Home Page");
             goBill();
+            LogUtils.logWarning("Redirect to Bill Page completed");
         }
+
         List<WebElement> list = getDriver().findElements(By.xpath("//tr[@data-name='" + name + "']/td[7]"))
                 .stream().toList();
 
@@ -33,6 +37,12 @@ public class BillsDetailsPage extends BaseDetailsPage<BillsEditPage, BillsDetail
     }
 
     public String getMonthlyCosts() {
+        if (!headline().contains("Bills")) {
+            LogUtils.logException("Expected page Bill Page but was redirected to Home Page");
+            goBill();
+            LogUtils.logWarning("Redirect to Bill Page completed");
+        }
+
         return expectedMonthlyCosts.getText();
     }
 
