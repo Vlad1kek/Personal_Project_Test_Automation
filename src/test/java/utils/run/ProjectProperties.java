@@ -71,16 +71,15 @@ public final class ProjectProperties {
 
     static WebDriver createDriver() {
         WebDriver driver = new ChromeDriver(ProjectProperties.chromeOptions);
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
 
         return driver;
     }
 
-    static String getUserName() {
+    public static String getUserName() {
         return properties.getProperty(PROP_ADMIN_USERNAME);
     }
 
-    static String getPassword() {
+    public static String getPassword() {
         return properties.getProperty(PROP_ADMIN_PAS);
     }
 

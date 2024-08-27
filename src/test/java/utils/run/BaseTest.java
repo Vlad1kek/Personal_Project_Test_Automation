@@ -85,7 +85,10 @@ public abstract class BaseTest {
             }
             startDriver();
             getPage();
-            loginPage();
+
+            if (!getClass().getName().contains("LoggingIn")) {
+                loginPage();
+            }
             LogUtils.logInfo("Start run test");
         } catch (Exception e) {
             closeDriver();
@@ -131,11 +134,11 @@ public abstract class BaseTest {
                     "png");
         }
 
+        stopDriver();
+
         if (result.isSuccess()) {
             LogUtils.logSuccess("Test was success");
         }
-        stopDriver();
-
         LogUtils.logf("Execution time is %.3f sec\n\n", (result.getEndMillis() - result.getStartMillis()) / 1000.0);
     }
 }
