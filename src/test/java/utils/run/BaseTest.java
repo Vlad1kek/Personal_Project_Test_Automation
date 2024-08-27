@@ -14,7 +14,7 @@ import java.io.ByteArrayInputStream;
 import java.lang.reflect.Method;
 import java.time.Duration;
 
-@Listeners({OrderTest.class, ExceptionListener.class,})
+@Listeners(ExceptionListener.class)
 public abstract class BaseTest {
     private WebDriver driver;
     private WebDriverWait wait;
@@ -61,12 +61,17 @@ public abstract class BaseTest {
 
     @BeforeSuite
     protected void setUp() {
-        if (ProjectProperties.isServerRun()) {
-            startDriver();
-            getPage();
-            firstLogin();
-            createBank();
-            createToken();
+        try {
+            if (ProjectProperties.isServerRun()) {
+                startDriver();
+                getPage();
+                firstLogin();
+                createBank();
+                createToken();
+            }
+        } catch (Exception e) {
+            LogUtils.logFatal(e.getMessage());
+        } finally {
             stopDriver();
         }
     }
@@ -77,13 +82,11 @@ public abstract class BaseTest {
         try {
             if (method.getAnnotation(Test.class).dependsOnMethods().length == 0) {
                 clearData();
-                startDriver();
-                getPage();
-                loginPage();
-                LogUtils.logInfo("Start run test");
-            } else {
-                getPage();
             }
+            startDriver();
+            getPage();
+            loginPage();
+            LogUtils.logInfo("Start run test");
         } catch (Exception e) {
             closeDriver();
             throw e;
@@ -117,8 +120,8 @@ public abstract class BaseTest {
     }
 
     @AfterMethod
-    protected void afterMethod(Method method, ITestResult testResult) {
-        if (ProjectProperties.isServerRun() && !testResult.isSuccess()) {
+    protected void afterMethod(Method method, ITestResult result) {
+        if (ProjectProperties.isServerRun() && !result.isSuccess()) {
             BaseUtils.captureScreenFile(driver, method.getName(), this.getClass().getName());
 
             Allure.addAttachment(
@@ -128,14 +131,11 @@ public abstract class BaseTest {
                     "png");
         }
 
-        if (testResult.isSuccess()) {
+        if (result.isSuccess()) {
             LogUtils.logSuccess("Test was success");
         }
+        stopDriver();
 
-        if (method.getAnnotation(Test.class).dependsOnMethods().length != 0 && !(!ProjectProperties.isServerRun() && !testResult.isSuccess())) {
-            stopDriver();
-        }
-
-        LogUtils.logf("Execution time is %.3f sec\n\n", (testResult.getEndMillis() - testResult.getStartMillis()) / 1000.0);
+        LogUtils.logf("Execution time is %.3f sec\n\n", (result.getEndMillis() - result.getStartMillis()) / 1000.0);
     }
 }
