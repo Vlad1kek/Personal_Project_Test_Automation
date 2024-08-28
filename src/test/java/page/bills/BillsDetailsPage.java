@@ -24,7 +24,7 @@ public class BillsDetailsPage extends BaseDetailsPage<BillsEditPage, BillsDetail
     }
 
     public List<String> getNextExpectedMatch(String name) {
-        if (!headline().contains("Bills")) {
+        if (!getHeadline().contains("Bills")) {
             LogUtils.logException("Expected page Bill Page but was redirected to Home Page");
             goBill();
             LogUtils.logWarning("Redirect to Bill Page completed");
@@ -37,7 +37,7 @@ public class BillsDetailsPage extends BaseDetailsPage<BillsEditPage, BillsDetail
     }
 
     public String getMonthlyCosts() {
-        if (!headline().contains("Bills")) {
+        if (!getHeadline().contains("Bills")) {
             LogUtils.logException("Expected page Bill Page but was redirected to Home Page");
             goBill();
             LogUtils.logWarning("Redirect to Bill Page completed");

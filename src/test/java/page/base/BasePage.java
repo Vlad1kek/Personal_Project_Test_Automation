@@ -34,7 +34,7 @@ public abstract class BasePage<Self extends BasePage<?>> extends BaseModel {
         super(driver);
     }
 
-    public String headline() {
+    public String getHeadline() {
         return headline.getText();
     }
 
@@ -71,6 +71,13 @@ public abstract class BasePage<Self extends BasePage<?>> extends BaseModel {
         }
 
         return (Self)this;
+    }
+
+    @Step("Close and reopen the browser")
+    public HomePage closeDriverAndOpenURL() {
+        getDriver().get("http://localhost");
+
+        return new HomePage(getDriver());
     }
 
 }
