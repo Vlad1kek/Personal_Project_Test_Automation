@@ -23,6 +23,7 @@ public class BillsDetailsPage extends BaseDetailsPage<BillsEditPage, BillsDetail
         return new BillsEditPage(getDriver());
     }
 
+    //BugReport
     public List<String> getNextExpectedMatch(String name) {
         if (!getHeadline().contains("Bills")) {
             LogUtils.logException("Expected page Bill Page but was redirected to Home Page");
@@ -36,7 +37,9 @@ public class BillsDetailsPage extends BaseDetailsPage<BillsEditPage, BillsDetail
         return list.stream().map(WebElement::getText).toList();
     }
 
+    //BugReport
     public String getMonthlyCosts() {
+        //BugReport
         if (!getHeadline().contains("Bills")) {
             LogUtils.logException("Expected page Bill Page but was redirected to Home Page");
             goBill();
