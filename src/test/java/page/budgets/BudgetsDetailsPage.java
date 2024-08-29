@@ -7,6 +7,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import page.base.BaseDetailsPage;
+import utils.log.LogUtils;
 
 public class BudgetsDetailsPage extends BaseDetailsPage<BudgetsEditPage, BudgetsDetailsPage>{
     @FindBy(xpath = "//input[@type='number']")
@@ -55,7 +56,13 @@ public class BudgetsDetailsPage extends BaseDetailsPage<BudgetsEditPage, Budgets
         return valueBudgetsMonthYear.getText();
     }
 
+    //BugReport
     public String getCalendarCheckTitle(String nameBudget) {
+        if (!getHeadline().contains("Budgets")) {
+            LogUtils.logException("Expected page Bill Page but was redirected to Home Page");
+            goBill();
+            LogUtils.logWarning("Redirect to Bill Page completed");
+        }
        return getDriver().findElement(By.xpath("//td[contains(@data-value,'" + nameBudget + "')]/span"))
                 .getAttribute("title");
     }
