@@ -81,7 +81,8 @@ public class LoginPage extends BaseLoginPage {
             "2. Press 'Tab' keyboard key to move the control to password text field and enter the valid password" +
             "3. Press 'Tab' keyboard key until the control comes 'Sign in' button and press 'Enter' key to submit")
     public HomePage loggingIntoUsingKeyboard(String email, String password) {
-        getAction().sendKeys(email)
+        getAction()
+                .sendKeys(email)
                 .sendKeys(Keys.TAB)
                 .sendKeys(password)
                 .sendKeys(Keys.TAB)
@@ -90,5 +91,28 @@ public class LoginPage extends BaseLoginPage {
                 .perform();
 
         return new HomePage(getDriver());
+    }
+
+    public String getEmailPlaceholder() {
+        return emailField.getAttribute("placeholder");
+    }
+
+    public String getPasswordPlaceholder() {
+        return passwordField.getAttribute("placeholder");
+    }
+
+    public String getPasswordField() {
+       return passwordField.getAttribute("value");
+    }
+
+    public LoginPage copyPassword() {
+        getAction()
+                .doubleClick(passwordField)
+                .keyDown(Keys.CONTROL)
+                .sendKeys("c")
+                .keyDown(Keys.CONTROL)
+                .perform();
+
+        return this;
     }
 }
