@@ -3,6 +3,8 @@ package utils.run;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.net.HttpHeaders;
+import utils.log.LogUtils;
+
 import java.net.URI;
 
 import java.net.http.HttpClient;
@@ -10,7 +12,6 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.util.ArrayList;
 import java.util.List;
-
 
 public class ClearData {
     private static String token;
@@ -44,6 +45,7 @@ public class ClearData {
 
             JsonNode dataNode = rootNode.get("data");
             if (dataNode != null && dataNode.isArray()) {
+                listId.clear();
                 for (JsonNode billNode : dataNode) {
                     String billId = billNode.get("id").asText();
                     listId.add(billId);
@@ -53,79 +55,46 @@ public class ClearData {
             if (response.statusCode() == 401) {
                 throw new RuntimeException("Authorization does not work with token:" + token);
             } else if (response.statusCode() != 200) {
-                throw new RuntimeException("Something went wrong while get data " + response.statusCode());
+                throw new RuntimeException("Something went wrong while getting data. Status code: " + response.statusCode());
             }
         } catch (Exception e) {
+            LogUtils.logFatal("Error occurred while sending GET request: " + e.getMessage());
             throw new RuntimeException(e);
         }
     }
 
     public static void deleteHttp(String url) {
         try {
-            if (!listId.isEmpty()) {
-                HttpClient client = HttpClient.newHttpClient();
-                HttpRequest request = HttpRequest.newBuilder()
-                        .uri(URI.create(url))
-                        .headers(HttpHeaders.AUTHORIZATION, "Bearer " + token)
-                        .DELETE()
-                        .build();
+            HttpClient client = HttpClient.newHttpClient();
+            HttpRequest request = HttpRequest.newBuilder()
+                    .uri(URI.create(url))
+                    .headers(HttpHeaders.AUTHORIZATION, "Bearer " + token)
+                    .DELETE()
+                    .build();
 
-                HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-                if (response.statusCode() != 204) {
-                    throw new RuntimeException("Something went wrong while clearing data " + response.statusCode());
-                }
+            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+            if (response.statusCode() != 204) {
+                LogUtils.logWarning("Failed to delete resource at: " + url + " Status code: " + response.statusCode());
+                throw new RuntimeException("Failed to delete resource. Status code: " + response.statusCode());
             }
         } catch (Exception e) {
+            LogUtils.logFatal("Error occurred while sending DELETE request: " + e.getMessage());
             throw new RuntimeException(e);
         }
     }
 
-    public static void deleteBills() {
-        getHttp("http://localhost/api/v1/bills");
+    public static void deleteResource(String resourceType) {
+        getHttp(String.format("http://localhost/api/v1/%s", resourceType));
         if (!listId.isEmpty()) {
             for (String id : listId) {
-                deleteHttp(String.format("http://localhost/api/v1/bills/%s", id));
-            }
-            listId.clear();
-        }
-    }
-
-    public static void deleteBudgets() {
-        getHttp("http://localhost/api/v1/budgets");
-        if (!listId.isEmpty()) {
-            for (String id : listId) {
-                deleteHttp(String.format("http://localhost/api/v1/budgets/%s", id));
-            }
-            listId.clear();
-        }
-    }
-
-    public static void deleteAccounts() {
-        getHttp("http://localhost/api/v1/accounts");
-        if (!listId.isEmpty()) {
-            for (String id : listId) {
-                if (Integer.parseInt(id) > 4) {
-                    deleteHttp(String.format("http://localhost/api/v1/accounts/%s", id));
-                }
-            }
-            listId.clear();
-        }
-    }
-
-    public static void deletePiggyBanks() {
-        getHttp("http://localhost/api/v1/piggy-banks");
-        if (!listId.isEmpty()) {
-            for (String id : listId) {
-                deleteHttp(String.format("http://localhost/api/v1/piggy-banks/%s", id));
+                deleteHttp(String.format("http://localhost/api/v1/%s/%s", resourceType, id));
             }
             listId.clear();
         }
     }
 
     public static void clearData() {
-        deleteBills();
-        deleteBudgets();
-        deleteAccounts();
-        deletePiggyBanks();
+        deleteResource("bills");
+        deleteResource("budgets");
     }
 }

@@ -21,4 +21,8 @@ public abstract class BaseLoginPage extends BaseModel {
 
         return page;
     }
+
+    public String getUrlAddress() {
+        return getDriver().getCurrentUrl();
+    }
 }

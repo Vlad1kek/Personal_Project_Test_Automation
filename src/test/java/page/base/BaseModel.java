@@ -42,4 +42,4 @@ abstract class BaseModel {
 
         return action;
     }
-    }
+}
