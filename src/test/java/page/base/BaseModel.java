@@ -42,22 +42,4 @@ abstract class BaseModel {
 
         return action;
     }
-
-    public static void clearClipboard() {
-        // Получаем доступ к системному буферу обмена
-        Toolkit toolkit = Toolkit.getDefaultToolkit();
-        Clipboard clipboard = toolkit.getSystemClipboard();
-
-        // Создаем пустую строку и устанавливаем ее в буфер обмена
-        StringSelection emptySelection = new StringSelection("");
-        clipboard.setContents(emptySelection, null);
     }
-
-    // Метод для получения текста из буфера обмена
-     public String getClipboardText() throws UnsupportedFlavorException, IOException {
-        clearClipboard();
-        Toolkit toolkit = Toolkit.getDefaultToolkit();
-        java.awt.datatransfer.Clipboard clipboard = toolkit.getSystemClipboard();
-        return (String) clipboard.getData(DataFlavor.stringFlavor);
-    }
-}

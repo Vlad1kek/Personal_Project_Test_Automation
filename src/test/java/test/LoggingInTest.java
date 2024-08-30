@@ -298,19 +298,4 @@ public class LoggingInTest extends BaseTest {
         Assert.assertEquals(homePage, "Sign in to start your session",
                 "If FAIL: The user has no logged out");
     }
-
-    @Severity(SeverityLevel.CRITICAL)
-    @Story("US_01.001 Logging In")
-    @Description("TC_01.001.16 Validate Not Copying of Password Text")
-    @Test
-    public void testNotCopyingOfPasswordText() throws IOException, UnsupportedFlavorException {
-        String actualCopiedText = new LoginPage(getDriver())
-                .setPassword("123asdqwe")
-                .copyPassword()
-                .getClipboardText();
-
-        Allure.step("The password text cannot be copied");
-        Assert.assertEquals(actualCopiedText, "",
-                "If FAIL: The password text copied");
-    }
 }

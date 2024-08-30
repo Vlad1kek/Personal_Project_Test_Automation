@@ -100,19 +100,4 @@ public class LoginPage extends BaseLoginPage {
     public String getPasswordPlaceholder() {
         return passwordField.getAttribute("placeholder");
     }
-
-    public String getPasswordField() {
-       return passwordField.getAttribute("value");
-    }
-
-    public LoginPage copyPassword() {
-        getAction()
-                .doubleClick(passwordField)
-                .keyDown(Keys.CONTROL)
-                .sendKeys("c")
-                .keyDown(Keys.CONTROL)
-                .perform();
-
-        return this;
-    }
 }
