@@ -10,6 +10,9 @@ import utils.log.LogUtils;
 import utils.run.BaseTest;
 import utils.run.ProjectProperties;
 
+import java.awt.datatransfer.UnsupportedFlavorException;
+import java.io.IOException;
+
 @Epic("User Account Management")
 public class LoggingInTest extends BaseTest {
 
@@ -227,5 +230,72 @@ public class LoggingInTest extends BaseTest {
         Allure.step("The user should be to log into the application");
         Assert.assertEquals(homePage, "Firefly III What's playing?",
                 "If FAIL: User is not logged in");
+    }
+
+    @Severity(SeverityLevel.CRITICAL)
+    @Story("US_01.001 Logging In")
+    @Description("TC_01.001.12 Validate Placeholder Email Text")
+    @Test
+    public void testPlaceholderEmailText() {
+        String expectedEmailPlaceholder = "Email address";
+
+        String actualEmailPlaceholder = new LoginPage(getDriver())
+                .getEmailPlaceholder();
+
+        Allure.step(String.format("Check the Email placeholder text: '%s' inside the text boxes", expectedEmailPlaceholder));
+        Assert.assertEquals(actualEmailPlaceholder, expectedEmailPlaceholder,
+                "If FAIL: Incorrect Email placeholder text displayed inside as: " + actualEmailPlaceholder);
+    }
+
+    @Severity(SeverityLevel.CRITICAL)
+    @Story("US_01.001 Logging In")
+    @Description("TC_01.001.13 Validate Placeholder Password Text")
+    @Test
+    public void testPlaceholderPasswordText() {
+        String expectedPasswordPlaceholder = "Password";
+
+        String actualPasswordPlaceholder = new LoginPage(getDriver())
+                .getPasswordPlaceholder();
+
+        Allure.step(String.format("Check the Password placeholder text: '%s' inside the text boxes", expectedPasswordPlaceholder));
+        Assert.assertEquals(actualPasswordPlaceholder, expectedPasswordPlaceholder,
+                "If FAIL: Incorrect Password placeholder text displayed inside as: " + actualPasswordPlaceholder);
+    }
+
+    @Severity(SeverityLevel.CRITICAL)
+    @Story("US_01.001 Logging In")
+    @Description("TC_01.001.14 Validate Browser Back Button in Login")
+    @Test
+    public void testBrowserBackButtonInLogin() {
+        String homePage = new LoginPage(getDriver())
+                .setEmail(EMAIL_BASE)
+                .setPassword(PASSWORD_BASE)
+                .clickSignIn(new HomePage(getDriver()))
+                .clickBackBrowserButton(new HomePage(getDriver()))
+                .refreshPage(new HomePage(getDriver()))
+                .getHeadline();
+
+        Allure.step("The user is should not logged out, he will remain on the main page");
+        Assert.assertEquals(homePage, "Firefly III What's playing?",
+                "If FAIL: The user has logged out");
+    }
+
+    @Severity(SeverityLevel.CRITICAL)
+    @Story("US_01.001 Logging In")
+    @Description("TC_01.001.15 Validate Browser Back Button in Logout")
+    @Test
+    public void testBrowserBackButtonInLogout() {
+        String homePage = new LoginPage(getDriver())
+                .setEmail(EMAIL_BASE)
+                .setPassword(PASSWORD_BASE)
+                .clickSignIn(new HomePage(getDriver()))
+                .clickLogout()
+                .clickBackBrowserButton(new HomePage(getDriver()))
+                .refreshPage(new HomePage(getDriver()))
+                .getLoginBoxMsg();
+
+        Allure.step("User should not get logged in again, he will be returned to the login page");
+        Assert.assertEquals(homePage, "Sign in to start your session",
+                "If FAIL: The user has no logged out");
     }
 }

@@ -8,6 +8,7 @@ import org.openqa.selenium.support.FindBy;
 import page.bills.BillsDetailsPage;
 import page.budgets.BudgetsDetailsPage;
 import page.HomePage;
+import page.login.LoginPage;
 
 import java.time.Duration;
 
@@ -29,6 +30,12 @@ public abstract class BasePage<Self extends BasePage<?>> extends BaseModel {
 
     @FindBy(className = "btn-success")
     private WebElement submit;
+
+    @FindBy(css = "a[href$='logout']")
+    private WebElement logout;
+
+    @FindBy(className = "login-box-msg")
+    private WebElement loginBoxMsg;
 
     public BasePage(WebDriver driver) {
         super(driver);
@@ -75,9 +82,33 @@ public abstract class BasePage<Self extends BasePage<?>> extends BaseModel {
 
     @Step("Close and reopen the browser")
     public HomePage closeDriverAndOpenURL() {
-        getDriver().get("http://localhost");
+        getDriver().navigate().to("http://localhost");
 
         return new HomePage(getDriver());
     }
 
+    @Step("Click on Browser back button")
+    public <T> T clickBackBrowserButton(T page) {
+        getDriver().navigate().back();
+
+        return page;
+    }
+
+    @Step("Refresh page")
+    public <T> T refreshPage(T page) {
+        getDriver().navigate().refresh();
+
+        return page;
+    }
+
+    @Step("Click on the 'Logout' on the sidebar")
+    public LoginPage clickLogout() {
+        logout.click();
+
+        return new LoginPage(getDriver());
+    }
+
+    public String getLoginBoxMsg() {
+        return loginBoxMsg.getText();
+    }
 }
