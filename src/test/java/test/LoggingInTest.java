@@ -154,12 +154,9 @@ public class LoggingInTest extends BaseTest {
             if (actualMessage.contains(expectedMessage)) {
                 // Неудачная попытка, продолжаем цикл
                 LogUtils.logInfo("Attempt #" + attempt + ": Failed");
-            } else {
-                // Успешная попытка, завершаем цикл
-                LogUtils.logInfo("Attempt #" + attempt + ": Succeeded");
-                break;
             }
         }
+
         loginPage.setEmail(EMAIL_BASE);
         loginPage.setPassword(PASSWORD_BASE);
         loginPage.clickSignIn(loginPage);
@@ -297,5 +294,18 @@ public class LoggingInTest extends BaseTest {
         Allure.step("User should not get logged in again, he will be returned to the login page");
         Assert.assertEquals(homePage, "Sign in to start your session",
                 "If FAIL: The user has no logged out");
+    }
+
+    @Ignore
+    @Severity(SeverityLevel.CRITICAL)
+    @Story("US_01.001 Logging In")
+    @Description("TC_01.001.22 Validate Secure Connection (HTTPS)")
+    @Test
+    public void testSecureConnectionHTTPS() {
+        String loginPageURL = new LoginPage(getDriver())
+                .getUrlAddress();
+
+        Assert.assertTrue(loginPageURL.startsWith("https://"),
+                "If FAIL: Connection is not secure");
     }
 }
