@@ -5,6 +5,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import page.ProfilePage;
 import page.bills.BillsDetailsPage;
 import page.budgets.BudgetsDetailsPage;
 import page.HomePage;
@@ -28,14 +29,17 @@ public abstract class BasePage<Self extends BasePage<?>> extends BaseModel {
     @FindBy(className = "introjs-skipbutton")
     private WebElement buttonSkip;
 
-    @FindBy(className = "btn-success")
-    private WebElement submit;
-
     @FindBy(css = "a[href$='logout']")
     private WebElement logout;
 
     @FindBy(className = "login-box-msg")
     private WebElement loginBoxMsg;
+
+    @FindBy(id = "option-menu")
+    private WebElement buttonOption;
+
+    @FindBy(css = "a[href$='profile']")
+    private WebElement buttonProfile;
 
     public BasePage(WebDriver driver) {
         super(driver);
@@ -60,12 +64,6 @@ public abstract class BasePage<Self extends BasePage<?>> extends BaseModel {
 
     public BillsDetailsPage goBill() {
         billsSidePanel.click();
-
-        return new BillsDetailsPage(getDriver());
-    }
-
-    public BillsDetailsPage clickSubmit() {
-        submit.click();
 
         return new BillsDetailsPage(getDriver());
     }
@@ -110,5 +108,19 @@ public abstract class BasePage<Self extends BasePage<?>> extends BaseModel {
 
     public String getLoginBoxMsg() {
         return loginBoxMsg.getText();
+    }
+
+    @Step("Click on the 'Options' in sidebar")
+    public Self clickOption() {
+        buttonOption.click();
+
+        return (Self)this;
+    }
+
+    @Step("Click on the 'Profile' button that appears")
+    public ProfilePage clickProfile() {
+        buttonProfile.click();
+
+        return new ProfilePage(getDriver());
     }
 }

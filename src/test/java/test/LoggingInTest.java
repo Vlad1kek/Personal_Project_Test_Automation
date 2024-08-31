@@ -10,14 +10,14 @@ import utils.log.LogUtils;
 import utils.run.BaseTest;
 import utils.run.ProjectProperties;
 
-import java.awt.datatransfer.UnsupportedFlavorException;
-import java.io.IOException;
-
 @Epic("User Account Management")
 public class LoggingInTest extends BaseTest {
 
     private static final String EMAIL_BASE = ProjectProperties.getUserName();
     private static final String PASSWORD_BASE = ProjectProperties.getPassword();
+    private static final String EMAIL_SECOND = "test2@gmail.com";
+    private static final String PASSWORD_SECOND = "^xk!!(SCjLkhjwvu";
+    private static final String PASSWORD2_SECOND = "8&Vx!V*s9!mg+8Jb";
 
     @Severity(SeverityLevel.BLOCKER)
     @Story("US_01.001 Logging In")
@@ -307,5 +307,59 @@ public class LoggingInTest extends BaseTest {
 
         Assert.assertTrue(loginPageURL.startsWith("https://"),
                 "If FAIL: Connection is not secure");
+    }
+
+    @Severity(SeverityLevel.CRITICAL)
+    @Story("US_01.001 Logging In")
+    @Description("TC_01.001.17 Validate No Logging Old Password After Changing Password")
+    @Test()
+    public void testNoLoggingAfterChangingPassword() {
+        String homePage = new LoginPage(getDriver())
+                .setEmail(EMAIL_SECOND)
+                .setPassword(PASSWORD_SECOND)
+                .clickSignIn(new HomePage(getDriver()))
+                .clickOption()
+                .clickProfile()
+                .clickChangePassword()
+                .setCurrentPassword(PASSWORD_SECOND)
+                .setNewPassword(PASSWORD2_SECOND)
+                .setNewPasswordAgain(PASSWORD2_SECOND)
+                .clickChangeYourPassword()
+                .clickLogout()
+                .setEmail(EMAIL_SECOND)
+                .setPassword(PASSWORD_SECOND)
+                .clickSignIn(new LoginPage(getDriver()))
+                .getErrorMessage();
+
+        Allure.step("User should not be allowed to login");
+        Assert.assertTrue(homePage.contains("Error! These credentials do not match our records."),
+                "If FAIL: The user has logged into the system");
+    }
+
+    @Severity(SeverityLevel.CRITICAL)
+    @Story("US_01.001 Logging In")
+    @Description("TC_01.001.18 Validate Logging New Password After Changing Password")
+    @Test(dependsOnMethods = "testNoLoggingAfterChangingPassword")
+    public void testLoggingNewPasswordAfterChangingPassword() {
+        String homePage = new LoginPage(getDriver())
+                .setEmail(EMAIL_SECOND)
+                .setPassword(PASSWORD2_SECOND)
+                .clickSignIn(new HomePage(getDriver()))
+                .clickOption()
+                .clickProfile()
+                .clickChangePassword()
+                .setCurrentPassword(PASSWORD2_SECOND)
+                .setNewPassword(PASSWORD_SECOND)
+                .setNewPasswordAgain(PASSWORD_SECOND)
+                .clickChangeYourPassword()
+                .clickLogout()
+                .setEmail(EMAIL_SECOND)
+                .setPassword(PASSWORD_SECOND)
+                .clickSignIn(new HomePage(getDriver()))
+                .getHeadline();
+
+        Allure.step("User should be able to login");
+        Assert.assertEquals(homePage, "Welcome to Firefly III!",
+                "If FAIL: The user has NO logged into the system");
     }
 }
