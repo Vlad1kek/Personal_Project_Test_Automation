@@ -5,6 +5,7 @@ import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import utils.log.LogUtils;
 
 import java.time.Duration;
 
@@ -58,11 +59,36 @@ public class FireflyUtils {
             token = driver.findElement(By.cssSelector("textarea[readonly]")).getText();
             driver.findElement(By.xpath("//div[@id='modal-access-token']/div/div/div[@class='modal-footer']/button")).click();
         } catch (NoSuchElementException e) {
-            System.err.println("Error: Element not found during token creation.");
-            e.printStackTrace();
+            LogUtils.logFatal("Element not found during token creation.");
+            throw new RuntimeException(e);
         } catch (Exception e) {
-            System.err.println("Error during token creation: " + e.getMessage());
-            e.printStackTrace();
+            LogUtils.logFatal("Error during token creation: " + e.getMessage());
+            throw new RuntimeException(e);
+        }
+    }
+
+    static void enableUserRegistration(WebDriver driver) {
+        try {
+            driver.navigate().to("http://localhost/admin/configuration");
+            driver.findElement(By.id("ffInput_single_user_mode")).click();
+            driver.findElement(By.className("btn-success")).click();
+        } catch (Exception e){
+            LogUtils.logException("Enable user registration not success" + e.getMessage());
+            throw new RuntimeException(e);
+        }
+    }
+
+    static void createNewUser(WebDriver driver) {
+        try {
+            driver.findElement(By.cssSelector("a[href$='logout'")).click();
+            driver.navigate().to("http://localhost/register");
+            driver.findElement(By.name("email")).sendKeys("test2@gmail.com");
+            driver.findElement(By.name("password")).sendKeys("^xk!!(SCjLkhjwvu");
+            driver.findElement(By.name("password_confirmation")).sendKeys("^xk!!(SCjLkhjwvu");
+            submit(driver);
+        } catch (Exception e) {
+            LogUtils.logException("Create new user not success" + e.getMessage());
+            throw new RuntimeException(e);
         }
     }
 }

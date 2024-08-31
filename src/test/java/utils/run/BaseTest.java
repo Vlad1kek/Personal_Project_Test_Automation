@@ -59,6 +59,16 @@ public abstract class BaseTest {
         ClearData.clearData();
     }
 
+    private void setUserCreate() {
+        LogUtils.logInfo("Enable User Registration");
+        FireflyUtils.enableUserRegistration(driver);
+    }
+
+    private void createSecondUser() {
+        LogUtils.logInfo("Creating Second User");
+        FireflyUtils.createNewUser(driver);
+    }
+
     @BeforeSuite
     protected void setUp() {
         try {
@@ -68,6 +78,8 @@ public abstract class BaseTest {
                 firstLogin();
                 createBank();
                 createToken();
+                setUserCreate();
+                createSecondUser();
             }
         } catch (Exception e) {
             LogUtils.logFatal(e.getMessage());
@@ -83,12 +95,13 @@ public abstract class BaseTest {
             if (method.getAnnotation(Test.class).dependsOnMethods().length == 0) {
                 clearData();
             }
+
             startDriver();
             getPage();
-
             if (!getClass().getName().contains("LoggingIn")) {
                 loginPage();
             }
+
             LogUtils.logInfo("Start run test");
         } catch (Exception e) {
             closeDriver();
@@ -135,10 +148,10 @@ public abstract class BaseTest {
         }
 
         stopDriver();
-
         if (result.isSuccess()) {
             LogUtils.logSuccess("Test was success");
         }
+
         LogUtils.logf("Execution time is %.3f sec\n\n", (result.getEndMillis() - result.getStartMillis()) / 1000.0);
     }
 }
