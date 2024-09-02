@@ -165,9 +165,7 @@ public abstract class BaseTest {
     private void stopDriver() {
         try {
             FireflyUtils.logout(driver);
-        } catch (Exception e) {
-            LogUtils.logWarning("Failed to logout: " + e.getMessage());
-        }
+        } catch (Exception ignore) {}
         closeDriver();
     }
 }
