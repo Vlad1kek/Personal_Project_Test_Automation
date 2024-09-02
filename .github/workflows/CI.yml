@@ -31,9 +31,6 @@ jobs:
       - name: Docker start
         run: docker run --rm --detach -p 80:8080 -v ${{ github.workspace }}/firefly_backup/var/firefly_home:/var/www/html/storage fireflyiii/core:version-6.1.9
 
-      - name: Docker start
-        run: docker compose -f docker-compose.yml up -d --pull=always
-
       - name: Wait for the Firefly
         run: ./.github/wait-for-firefly.sh
 
