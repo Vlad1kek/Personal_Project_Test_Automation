@@ -99,7 +99,7 @@ public final class ProjectProperties {
     }
 
     static String url() {
-        return String.format("http://%s/",
+        return String.format("http://%s",
                 properties.getProperty(PROP_HOST));
     }
 }

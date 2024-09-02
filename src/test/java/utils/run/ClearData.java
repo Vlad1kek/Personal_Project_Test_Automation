@@ -84,13 +84,15 @@ public class ClearData {
     }
 
     public static void deleteResource(String resourceType, int minIdForDeletion) {
-        getHttp(String.format("http://localhost/api/v1/%s", resourceType));
+        getHttp(String.format("%s/api/v1/%s",
+                ProjectProperties.url(), resourceType));
 
         if (!listId.isEmpty()) {
             for (String id : listId) {
                 int intId = Integer.parseInt(id);
                 if (intId > minIdForDeletion) {
-                    deleteHttp(String.format("http://localhost/api/v1/%s/%s", resourceType, id));
+                    deleteHttp(String.format("%s/api/v1/%s/%s",
+                            ProjectProperties.url(), resourceType, id));
                 }
             }
             listId.clear();
@@ -100,6 +102,6 @@ public class ClearData {
     public static void clearData() {
         deleteResource("bills", 0);
         deleteResource("budgets", 0);
-        deleteResource("accounts", 4);
+        deleteResource("users", 2);
     }
 }
