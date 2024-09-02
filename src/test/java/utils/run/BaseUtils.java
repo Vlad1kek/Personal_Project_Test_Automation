@@ -11,7 +11,7 @@ import java.io.IOException;
 public class BaseUtils {
 
     public static void getUrl(WebDriver driver) {
-        driver.get("http://localhost");
+        driver.get(ProjectProperties.url());
     }
 
     static File captureScreenFile(WebDriver driver, String methodName, String className) {
