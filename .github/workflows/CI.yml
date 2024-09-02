@@ -22,8 +22,7 @@ jobs:
 
       - name: Extract Firefly III data and set permissions
         run: |
-          tar -xvf ${{ github.workspace }}/firefly_backup.tar -C ${{ github.workspace }}/firefly_backup
-          chmod -R 755 ${{ github.workspace }}/firefly_backup/var/firefly_home
+          tar -xzvf ./fireflyiii.tar.gz -C ./fireflyiii
 
       - name: Docker login
         run: echo ${{ secrets.DOCKER_PASSWORD }} | docker login --username ${{ secrets.DOCKER_USERNAME }} --password-stdin
