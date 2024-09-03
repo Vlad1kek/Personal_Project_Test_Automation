@@ -30,7 +30,7 @@ public class TimeUtils {
 
     private static String getDate(Calendar calendar) {
         SimpleDateFormat sdf = new SimpleDateFormat("MMMM", new Locale("en"));
-        SimpleDateFormat dayFormat = new SimpleDateFormat("dd", new Locale("en"));
+        SimpleDateFormat dayFormat = new SimpleDateFormat("d", new Locale("en"));
         SimpleDateFormat yearFormat = new SimpleDateFormat("yyyy", new Locale("en"));
 
         return sdf.format(calendar.getTime())

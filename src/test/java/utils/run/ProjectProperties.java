@@ -6,9 +6,9 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import utils.log.LogUtils;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
-import java.time.Duration;
 import java.util.Properties;
 
 
@@ -22,38 +22,53 @@ public final class ProjectProperties {
     private static final String PROP_HOST = PREFIX_PROP + "host";
     private static final String PROP_TOKEN = PREFIX_PROP + "token";
 
-    private static Properties properties;
+    private static final Properties properties = new Properties();
+    private static ChromeOptions chromeOptions;
+
+    static {
+        initProperties();
+        setupChromeOptions();
+        WebDriverManager.chromedriver().setup();
+    }
 
     private static void initProperties() {
-        if (properties == null) {
-            properties = new Properties();
-            if (isServerRun()) {
-                properties.setProperty(PROP_BROWSER_OPTIONS, System.getenv(ENV_BROWSER_OPTIONS));
+        if (isServerRun()) {
+            loadServerProperties();
+        } else {
+            loadLocalProperties();
+        }
+    }
 
-                if (System.getenv(ENV_WEB_OPTIONS) != null) {
-                    for (String option : System.getenv(ENV_WEB_OPTIONS).split(";")) {
-                        String[] optionArr = option.split("=");
-                        properties.setProperty(PREFIX_PROP + optionArr[0], optionArr[1]);
-                    }
-                }
-            } else {
-                try {
-                    InputStream inputStream = BaseUtils.class.getClassLoader().getResourceAsStream("local.properties");
-                    properties.load(inputStream);
-                } catch (IOException ignore) {
-                    LogUtils.logError("ERROR: The \u001B[31mlocal.properties\u001B[0m file not found in src/test/resources/ directory.");
-                    LogUtils.logInfo("You need to create it from local.properties.TEMPLATE file.");
-                    System.exit(1);
+    private static void loadServerProperties() {
+        properties.setProperty(PROP_BROWSER_OPTIONS, System.getenv(ENV_BROWSER_OPTIONS));
+
+        String webOptions = System.getenv(ENV_WEB_OPTIONS);
+        if (webOptions != null) {
+            for (String option : webOptions.split(";")) {
+                String[] optionArr = option.split("=");
+                if (optionArr.length == 2) {
+                    properties.setProperty(PREFIX_PROP + optionArr[0], optionArr[1]);
+                } else {
+                    LogUtils.logWarning("Invalid web option: " + option);
                 }
             }
         }
     }
 
-    private static final ChromeOptions chromeOptions;
+    private static void loadLocalProperties() {
+        try (InputStream inputStream = BaseUtils.class.getClassLoader().getResourceAsStream("local.properties")) {
+            if (inputStream == null) {
+                throw new FileNotFoundException("local.properties file not found in src/test/resources/ directory.");
+            }
+            properties.load(inputStream);
+        } catch (IOException e) {
+            LogUtils.logError("ERROR: " + e.getMessage());
+            LogUtils.logInfo("You need to create it from local.properties.TEMPLATE file.");
+            System.exit(1);
+        }
+    }
 
-    static {
-        initProperties();
-
+    private static void setupChromeOptions() {
         chromeOptions = new ChromeOptions();
         String options = properties.getProperty(PROP_BROWSER_OPTIONS);
         if (options != null) {
@@ -61,18 +76,14 @@ public final class ProjectProperties {
                 chromeOptions.addArguments(argument);
             }
         }
-
-        WebDriverManager.chromedriver().setup();
     }
 
     static boolean isServerRun() {
         return System.getenv("CI_RUN") != null;
     }
 
-    static WebDriver createDriver() {
-        WebDriver driver = new ChromeDriver(ProjectProperties.chromeOptions);
-
-        return driver;
+    public static WebDriver createDriver() {
+        return new ChromeDriver(chromeOptions);
     }
 
     public static String getUserName() {
@@ -87,8 +98,8 @@ public final class ProjectProperties {
         return properties.getProperty(PROP_TOKEN);
     }
 
-    static String getUrl() {
-        return String.format("http://%s/",
+    static String url() {
+        return String.format("http://%s",
                 properties.getProperty(PROP_HOST));
     }
 }

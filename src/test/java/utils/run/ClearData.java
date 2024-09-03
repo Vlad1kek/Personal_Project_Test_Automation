@@ -39,7 +39,7 @@ public class ClearData {
             HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
             String jsonString = response.body();
 
-            // Обработка JSON-ответа
+            // Processing JSON response
             ObjectMapper objectMapper = new ObjectMapper();
             JsonNode rootNode = objectMapper.readTree(jsonString);
 
@@ -83,18 +83,25 @@ public class ClearData {
         }
     }
 
-    public static void deleteResource(String resourceType) {
-        getHttp(String.format("http://localhost/api/v1/%s", resourceType));
+    public static void deleteResource(String resourceType, int minIdForDeletion) {
+        getHttp(String.format("%s/api/v1/%s",
+                ProjectProperties.url(), resourceType));
+
         if (!listId.isEmpty()) {
             for (String id : listId) {
-                deleteHttp(String.format("http://localhost/api/v1/%s/%s", resourceType, id));
+                int intId = Integer.parseInt(id);
+                if (intId > minIdForDeletion) {
+                    deleteHttp(String.format("%s/api/v1/%s/%s",
+                            ProjectProperties.url(), resourceType, id));
+                }
             }
             listId.clear();
         }
     }
 
     public static void clearData() {
-        deleteResource("bills");
-        deleteResource("budgets");
+        deleteResource("bills", 0);
+        deleteResource("budgets", 0);
+        deleteResource("users", 2);
     }
 }
