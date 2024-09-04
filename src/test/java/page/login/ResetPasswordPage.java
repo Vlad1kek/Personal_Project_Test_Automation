@@ -5,7 +5,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import page.base.BaseLoginPage;
 
-public class ResetPasswordPage extends BaseLoginPage {
+public class ResetPasswordPage extends BaseLoginPage<ResetPasswordPage> {
 
     @FindBy(className = "login-box-msg")
     private WebElement headLine;

@@ -9,19 +9,10 @@ import page.HomePage;
 import page.base.BaseLoginPage;
 
 
-public class LoginPage extends BaseLoginPage {
-
-    @FindBy(name = "email")
-    private WebElement emailField;
+public class LoginPage extends BaseLoginPage<LoginPage> {
 
     @FindBy(name = "password")
-    private WebElement passwordField;
-
-    @FindBy(className = "btn-block")
-    private WebElement buttonSignIn;
-
-    @FindBy(className = "alert-danger")
-    private WebElement errorAlert;
+    private WebElement fieldPassword;
 
     @FindBy(id = "remember")
     private WebElement checkboxRememberMe;
@@ -33,33 +24,19 @@ public class LoginPage extends BaseLoginPage {
         super(driver);
     }
 
-    @Step("Enter email address in the email field")
-    public LoginPage setEmail(String email) {
-        emailField.clear();
-        emailField.sendKeys(email);
-
-        return this;
-    }
-
     @Step("Enter password in the password field")
     public LoginPage setPassword(String password) {
-        passwordField.clear();
-        passwordField.sendKeys(password);
+        fieldPassword.clear();
+        fieldPassword.sendKeys(password);
 
         return this;
-    }
-
-    @Step("Click on the 'Sing in' button")
-    public <T> T clickSignIn(T page) {
-        buttonSignIn.click();
-
-        return page;
     }
 
     public String getPasswordFieldType() {
-        return passwordField.getAttribute("type");
+        return fieldPassword.getAttribute("type");
     }
 
+    @Step("Select the 'Remember Me' checkbox")
     public LoginPage setRememberMe() {
         getAction().click(checkboxRememberMe)
                 .perform();
@@ -67,10 +44,7 @@ public class LoginPage extends BaseLoginPage {
         return this;
     }
 
-    public String getErrorMessage() {
-       return errorAlert.getText();
-    }
-
+    @Step("Click on the 'Forgot Password?' link on the login page")
     public ResetPasswordPage clickForgotPassword() {
         buttonForgotPassword.click();
 
@@ -93,11 +67,7 @@ public class LoginPage extends BaseLoginPage {
         return new HomePage(getDriver());
     }
 
-    public String getEmailPlaceholder() {
-        return emailField.getAttribute("placeholder");
-    }
-
     public String getPasswordPlaceholder() {
-        return passwordField.getAttribute("placeholder");
+        return fieldPassword.getAttribute("placeholder");
     }
 }

@@ -13,8 +13,8 @@ import utils.run.ProjectProperties;
 @Epic("User Account Management")
 public class LoggingInTest extends BaseTest {
 
-    private static final String EMAIL_BASE = ProjectProperties.getUserName();
-    private static final String PASSWORD_BASE = ProjectProperties.getPassword();
+    private static final String EMAIL_DEFAULT = ProjectProperties.getUserName();
+    private static final String PASSWORD_DEFAULT = ProjectProperties.getPassword();
     private static final String EMAIL_SECOND = "test2@gmail.com";
     private static final String PASSWORD_SECOND = "^xk!!(SCjLkhjwvu";
     private static final String PASSWORD2_SECOND = "8&Vx!V*s9!mg+8Jb";
@@ -27,9 +27,9 @@ public class LoggingInTest extends BaseTest {
         String expectedHeadLine = "Firefly III What's playing?";
 
         String actualHeadLine = new LoginPage(getDriver())
-                .setEmail(EMAIL_BASE)
-                .setPassword(PASSWORD_BASE)
-                .clickSignIn(new HomePage(getDriver()))
+                .setEmail(EMAIL_DEFAULT)
+                .setPassword(PASSWORD_DEFAULT)
+                .clickSubmit(new HomePage(getDriver()))
                 .getHeadline();
 
         Allure.step("After successful login, the user will be on the main page and will see the inscription on " +
@@ -46,9 +46,9 @@ public class LoggingInTest extends BaseTest {
         String expectedMassage = "Error! These credentials do not match our records.";
 
         String actualMassage = new LoginPage(getDriver())
-                .setEmail(EMAIL_BASE)
+                .setEmail(EMAIL_DEFAULT)
                 .setPassword("00000000")
-                .clickSignIn(new LoginPage(getDriver()))
+                .clickSubmit(new LoginPage(getDriver()))
                 .getErrorMessage();
 
         Allure.step(String.format("An error message is displayed: %s, indicating that the login credentials are " +
@@ -67,7 +67,7 @@ public class LoggingInTest extends BaseTest {
         String actualMassage = new LoginPage(getDriver())
                 .setEmail("any@any.moc")
                 .setPassword("00000000")
-                .clickSignIn(new LoginPage(getDriver()))
+                .clickSubmit(new LoginPage(getDriver()))
                 .getErrorMessage();
 
         Allure.step(String.format("An error message is displayed: '%s', indicating that the email or password is " +
@@ -86,8 +86,8 @@ public class LoggingInTest extends BaseTest {
 
         String actualMassage = new LoginPage(getDriver())
                 .setEmail("")
-                .setPassword(PASSWORD_BASE)
-                .clickSignIn(new LoginPage(getDriver()))
+                .setPassword(PASSWORD_DEFAULT)
+                .clickSubmit(new LoginPage(getDriver()))
                 .getErrorMessage();
 
         Allure.step(String.format("An error message indicating '%s' should appear", expectedMassage));
@@ -104,9 +104,9 @@ public class LoggingInTest extends BaseTest {
         String expectedMassage = "Password is required";
 
         String actualMassage = new LoginPage(getDriver())
-                .setEmail(EMAIL_BASE)
+                .setEmail(EMAIL_DEFAULT)
                 .setPassword("")
-                .clickSignIn(new LoginPage(getDriver()))
+                .clickSubmit(new LoginPage(getDriver()))
                 .getErrorMessage();
 
         Allure.step(String.format("An error message indicating '%s' should appear", expectedMassage));
@@ -125,7 +125,7 @@ public class LoggingInTest extends BaseTest {
         String actualMassage = new LoginPage(getDriver())
                 .setEmail("")
                 .setPassword("")
-                .clickSignIn(new LoginPage(getDriver()))
+                .clickSubmit(new LoginPage(getDriver()))
                 .getErrorMessage();
 
         Allure.step(String.format("An error message indicating '%s' should appear", expectedMassage));
@@ -146,9 +146,9 @@ public class LoggingInTest extends BaseTest {
         LoginPage loginPage = new LoginPage(getDriver());
 
         for (int attempt = 1; attempt <= maxAttempts; attempt++) {
-            loginPage.setEmail(EMAIL_BASE);
+            loginPage.setEmail(EMAIL_DEFAULT);
             loginPage.setPassword("123");
-            loginPage.clickSignIn(loginPage);
+            loginPage.clickSubmit(loginPage);
             String actualMessage = loginPage.getErrorMessage();
 
             if (actualMessage.contains(expectedMessage)) {
@@ -157,9 +157,9 @@ public class LoggingInTest extends BaseTest {
             }
         }
 
-        loginPage.setEmail(EMAIL_BASE);
-        loginPage.setPassword(PASSWORD_BASE);
-        loginPage.clickSignIn(loginPage);
+        loginPage.setEmail(EMAIL_DEFAULT);
+        loginPage.setPassword(PASSWORD_DEFAULT);
+        loginPage.clickSubmit(loginPage);
         String actualError = loginPage.getErrorMessage();
 
         Allure.step(String.format("The account should be temporarily locked, and an appropriate message should be " +
@@ -188,10 +188,10 @@ public class LoggingInTest extends BaseTest {
     @Test
     public void testRememberMeOption() {
         String homePage = new LoginPage(getDriver())
-                .setEmail(EMAIL_BASE)
-                .setPassword(PASSWORD_BASE)
+                .setEmail(EMAIL_DEFAULT)
+                .setPassword(PASSWORD_DEFAULT)
                 .setRememberMe()
-                .clickSignIn(new HomePage(getDriver()))
+                .clickSubmit(new HomePage(getDriver()))
                 .closeDriverAndOpenURL()
                 .getHeadline();
 
@@ -221,7 +221,7 @@ public class LoggingInTest extends BaseTest {
     @Test
     public void testTabAndEnterKeyboardKeys() {
         String homePage = new LoginPage(getDriver())
-                .loggingIntoUsingKeyboard(EMAIL_BASE, PASSWORD_BASE)
+                .loggingIntoUsingKeyboard(EMAIL_DEFAULT, PASSWORD_DEFAULT)
                 .getHeadline();
 
         Allure.step("The user should be to log into the application");
@@ -265,9 +265,9 @@ public class LoggingInTest extends BaseTest {
     @Test
     public void testBrowserBackButtonInLogin() {
         String homePage = new LoginPage(getDriver())
-                .setEmail(EMAIL_BASE)
-                .setPassword(PASSWORD_BASE)
-                .clickSignIn(new HomePage(getDriver()))
+                .setEmail(EMAIL_DEFAULT)
+                .setPassword(PASSWORD_DEFAULT)
+                .clickSubmit(new HomePage(getDriver()))
                 .clickBackBrowserButton(new HomePage(getDriver()))
                 .refreshPage(new HomePage(getDriver()))
                 .getHeadline();
@@ -283,9 +283,9 @@ public class LoggingInTest extends BaseTest {
     @Test
     public void testBrowserBackButtonInLogout() {
         String homePage = new LoginPage(getDriver())
-                .setEmail(EMAIL_BASE)
-                .setPassword(PASSWORD_BASE)
-                .clickSignIn(new HomePage(getDriver()))
+                .setEmail(EMAIL_DEFAULT)
+                .setPassword(PASSWORD_DEFAULT)
+                .clickSubmit(new HomePage(getDriver()))
                 .clickLogout()
                 .clickBackBrowserButton(new HomePage(getDriver()))
                 .refreshPage(new HomePage(getDriver()))
@@ -317,7 +317,7 @@ public class LoggingInTest extends BaseTest {
         String homePage = new LoginPage(getDriver())
                 .setEmail(EMAIL_SECOND)
                 .setPassword(PASSWORD_SECOND)
-                .clickSignIn(new HomePage(getDriver()))
+                .clickSubmit(new HomePage(getDriver()))
                 .clickOption()
                 .clickProfile()
                 .clickChangePassword()
@@ -328,7 +328,7 @@ public class LoggingInTest extends BaseTest {
                 .clickLogout()
                 .setEmail(EMAIL_SECOND)
                 .setPassword(PASSWORD_SECOND)
-                .clickSignIn(new LoginPage(getDriver()))
+                .clickSubmit(new LoginPage(getDriver()))
                 .getErrorMessage();
 
         Allure.step("User should not be allowed to login");
@@ -344,7 +344,7 @@ public class LoggingInTest extends BaseTest {
         String homePage = new LoginPage(getDriver())
                 .setEmail(EMAIL_SECOND)
                 .setPassword(PASSWORD2_SECOND)
-                .clickSignIn(new HomePage(getDriver()))
+                .clickSubmit(new HomePage(getDriver()))
                 .clickOption()
                 .clickProfile()
                 .clickChangePassword()
@@ -355,7 +355,7 @@ public class LoggingInTest extends BaseTest {
                 .clickLogout()
                 .setEmail(EMAIL_SECOND)
                 .setPassword(PASSWORD_SECOND)
-                .clickSignIn(new HomePage(getDriver()))
+                .clickSubmit(new HomePage(getDriver()))
                 .getHeadline();
 
         Allure.step("User should be able to login");
