@@ -70,7 +70,7 @@ public abstract class BaseTest {
                 loginToAccount();
             }
 
-            LogUtils.logInfo("Start run test");
+            LogUtils.logInfo("Starting test execution");
         } catch (Exception e) {
             closeDriver();
             throw e;
@@ -114,62 +114,62 @@ public abstract class BaseTest {
     }
 
     private void startDriver() {
-        LogUtils.logInfo("Open Browser");
+        LogUtils.logInfo("Launching browser");
         driver = ProjectProperties.createDriver();
     }
 
     private void getPage() {
-        LogUtils.logInfo("Open Web page");
+        LogUtils.logInfo("Navigating to web page");
         BaseUtils.getUrl(driver);
     }
 
     private void loginToAccount() {
-        LogUtils.logInfo("Login successful");
+        LogUtils.logInfo("Login to account");
         FireflyUtils.login(driver);
     }
 
     private void firstLogin() {
-        LogUtils.logInfo("Register successful");
+        LogUtils.logInfo("Start of user registration");
         FireflyUtils.firstLogin(driver);
     }
 
     private void moveToRegisterPage() {
-        LogUtils.logInfo("Open register page");
+        LogUtils.logInfo("Opening registration page");
         FireflyUtils.moveToRegisterAccount(driver);
     }
 
     private void createBank() {
-        LogUtils.logInfo("Personal Bank Create");
+        LogUtils.logInfo("Creating 'Personal Bank' account");
         FireflyUtils.createBank(driver);
     }
 
     private void createToken() {
-        LogUtils.logInfo("Personal Access Token create");
+        LogUtils.logInfo("Generating personal access token");
         FireflyUtils.createToken(driver, getWait());
     }
 
     private void clearData() {
-        LogUtils.logInfo("Clear data");
+        LogUtils.logInfo("Clearing test data");
         ClearData.getToken();
         ClearData.clearData();
     }
 
     private void setUserCreate() {
-        LogUtils.logInfo("Enable User Registration");
+        LogUtils.logInfo("Enabling user registration feature");
         FireflyUtils.enableUserRegistration(driver);
     }
 
     private void createSecondUser() {
-        LogUtils.logInfo("Creating Second User");
+        LogUtils.logInfo("Creating second user account");
         FireflyUtils.createNewUser(driver);
     }
 
     private void closeDriver() {
         if (driver != null) {
+            LogUtils.logInfo("Closing browser");
             driver.quit();
             driver = null;
             wait = null;
-            LogUtils.logInfo("Browser closed");
         }
     }
 

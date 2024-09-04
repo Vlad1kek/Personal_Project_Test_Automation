@@ -11,7 +11,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
-
 public final class ProjectProperties {
     static final String PREFIX_PROP = "default.";
     private static final String PROP_ADMIN_USERNAME = PREFIX_PROP + "admin.username";
