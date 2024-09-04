@@ -1,0 +1,7 @@
+"Epic","Feature","Story","FAILED","BROKEN","PASSED","SKIPPED","UNKNOWN"
+"User Account Management","","US_01.001 Logging In","0","0","13","0","5"
+"Register an Account","","US_01.001 Basic Account Registration","0","0","9","0","0"
+"Bill","","","0","0","9","0","0"
+"Budget","","TS_06.002 Budget page","0","0","1","0","0"
+"Budget","","TS_06.001 Change Configure Budget","0","0","3","0","0"
+"Budget","","TS_06.000 Create budget","0","0","3","0","0"
