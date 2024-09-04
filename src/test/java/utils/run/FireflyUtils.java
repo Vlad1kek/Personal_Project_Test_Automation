@@ -98,11 +98,11 @@ public class FireflyUtils {
      * @param driver the WebDriver instance used to perform browser interactions
      * @param wait   the WebDriverWait instance used to manage wait conditions
      */
-    public static void createBank(WebDriver driver, WebDriverWait wait) {
+    public static void createBank(WebDriver driver) {
         try {
             enterBankDetails(driver);
             submitForm(driver);
-            waitForAndClickSkipIntro(driver, wait);
+            waitForAndClickSkipIntro(driver);
         } catch (WebDriverException e) {
             LogUtils.logException("Failed to create bank: " + e.getMessage());
             throw new RuntimeException(e);
@@ -125,8 +125,9 @@ public class FireflyUtils {
      * @param driver the WebDriver instance used to perform browser interactions
      * @param wait   the WebDriverWait instance used to manage wait conditions
      */
-    private static void waitForAndClickSkipIntro(WebDriver driver, WebDriverWait wait) {
-        wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("a[class$='introjs-skipbutton']"))).click();
+    private static void waitForAndClickSkipIntro(WebDriver driver) {
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(2));
+        clickElement(driver, By.cssSelector("a[class$='introjs-skipbutton']"));
     }
 
     /**
@@ -176,6 +177,7 @@ public class FireflyUtils {
      * @param driver the WebDriver instance used to perform browser interactions
      */
     private static void inputTokenDetails(WebDriver driver) {
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(2));
         driver.findElement(By.id("create-token-name")).sendKeys("token");
         clickElement(driver, By.xpath("//div[@id='modal-create-token']/div/div/div[@class='modal-footer']/button[2]"));
     }
