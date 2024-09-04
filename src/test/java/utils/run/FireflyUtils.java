@@ -101,7 +101,7 @@ public class FireflyUtils {
     public static void createBank(WebDriver driver) {
         try {
             enterBankDetails(driver);
-            submitForm(driver);
+            clickElement(driver, By.cssSelector("input[type='submit']"));
             waitForAndClickSkipIntro(driver);
         } catch (WebDriverException e) {
             LogUtils.logException("Failed to create bank: " + e.getMessage());
@@ -116,7 +116,7 @@ public class FireflyUtils {
      */
     private static void enterBankDetails(WebDriver driver) {
         driver.findElement(By.id("ffInput_bank_name")).sendKeys("TestBankName123");
-        driver.findElement(By.cssSelector("input[id='bank_balance']")).sendKeys("1000");
+        driver.findElement(By.cssSelector("input[id='bank_balance']")).sendKeys("0");
     }
 
     /**
