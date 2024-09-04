@@ -140,7 +140,7 @@ public abstract class BaseTest {
 
     private void createBank() {
         LogUtils.logInfo("Creating 'Personal Bank' account");
-        FireflyUtils.createBank(driver, wait);
+        FireflyUtils.createBank(driver, getWait());
     }
 
     private void createToken() {
