@@ -152,7 +152,7 @@ public class LoggingInTest extends BaseTest {
             String actualMessage = loginPage.getErrorMessage();
 
             if (actualMessage.contains(expectedMessage)) {
-                // Неудачная попытка, продолжаем цикл
+                // Failed attempt, continue the cycle
                 LogUtils.logInfo("Attempt #" + attempt + ": Failed");
             }
         }
@@ -221,7 +221,12 @@ public class LoggingInTest extends BaseTest {
     @Test
     public void testTabAndEnterKeyboardKeys() {
         String homePage = new LoginPage(getDriver())
-                .loggingIntoUsingKeyboard(EMAIL_DEFAULT, PASSWORD_DEFAULT)
+                .enterText(EMAIL_DEFAULT)
+                .pressTab()
+                .enterText(PASSWORD_DEFAULT)
+                .pressTab()
+                .pressTab()
+                .pressEnter()
                 .getHeadline();
 
         Allure.step("The user should be to log into the application");
