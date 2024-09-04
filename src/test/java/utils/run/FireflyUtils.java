@@ -91,4 +91,8 @@ public class FireflyUtils {
             throw new RuntimeException(e);
         }
     }
+
+    static void moveToRegisterAccount(WebDriver driver) {
+        driver.navigate().to(String.format("%s/register", ProjectProperties.url()));
+    }
 }

@@ -1,5 +1,6 @@
 package utils.run;
 
+import com.github.javafaker.Faker;
 import io.qameta.allure.Allure;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
@@ -18,9 +19,14 @@ import java.time.Duration;
 public abstract class BaseTest {
     private WebDriver driver;
     private WebDriverWait wait;
+    private final Faker faker = new Faker();
 
     protected WebDriver getDriver() {
         return driver;
+    }
+
+    protected Faker getFaker() {
+        return faker;
     }
 
     @BeforeSuite
@@ -57,8 +63,11 @@ public abstract class BaseTest {
 
             startDriver();
             getPage();
-            if (!isLoggingInTest()) {
-                loginPage();
+
+            if (isRegisterAccountTest()) {
+                moveToRegisterPage();
+            } else if (!isLoggingInTest()){
+                loginToAccount();
             }
 
             LogUtils.logInfo("Start run test");
@@ -70,6 +79,10 @@ public abstract class BaseTest {
 
     private boolean isLoggingInTest() {
         return getClass().getName().contains("LoggingIn");
+    }
+
+    private boolean isRegisterAccountTest() {
+        return getClass().getName().contains("RegisterAccount");
     }
 
     @AfterMethod
@@ -110,7 +123,7 @@ public abstract class BaseTest {
         BaseUtils.getUrl(driver);
     }
 
-    private void loginPage() {
+    private void loginToAccount() {
         LogUtils.logInfo("Login successful");
         FireflyUtils.login(driver);
     }
@@ -118,6 +131,11 @@ public abstract class BaseTest {
     private void firstLogin() {
         LogUtils.logInfo("Register successful");
         FireflyUtils.firstLogin(driver);
+    }
+
+    private void moveToRegisterPage() {
+        LogUtils.logInfo("Open register page");
+        FireflyUtils.moveToRegisterAccount(driver);
     }
 
     private void createBank() {
