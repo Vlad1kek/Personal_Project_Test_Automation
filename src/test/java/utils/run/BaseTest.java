@@ -91,7 +91,7 @@ public abstract class BaseTest {
             captureFailureDetails(method);
         }
 
-        stopDriver();
+        closeDriver();
         if (result.isSuccess()) {
             LogUtils.logSuccess("Test was success");
         }
