@@ -9,7 +9,7 @@ import java.time.Duration;
 
 /**
  * Utility class for automating common actions within the Firefly III application using Selenium WebDriver.
- *
+ * <p>
  * This class provides static methods to perform various tasks, including:
  *
  * <ul>
@@ -37,7 +37,7 @@ public class FireflyUtils {
 
     /**
      * The API token used for authenticating requests.
-     *
+     * <p>
      * This static variable is set during the token creation process and can be used for making authenticated API calls.
      */
     public static String token;
@@ -96,7 +96,6 @@ public class FireflyUtils {
      * Creates a new bank account entry within the Firefly III application.
      *
      * @param driver the WebDriver instance used to perform browser interactions
-     * @param wait   the WebDriverWait instance used to manage wait conditions
      */
     public static void createBank(WebDriver driver) {
         try {
@@ -123,7 +122,6 @@ public class FireflyUtils {
      * Waits for the 'Skip Intro' button to become clickable and then clicks it.
      *
      * @param driver the WebDriver instance used to perform browser interactions
-     * @param wait   the WebDriverWait instance used to manage wait conditions
      */
     private static void waitForAndClickSkipIntro(WebDriver driver) {
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(2));
