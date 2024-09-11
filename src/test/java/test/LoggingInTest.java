@@ -24,7 +24,7 @@ public class LoggingInTest extends BaseTest {
     @Description("TC_01.001.01 Validate Successful Login with Correct Credentials")
     @Test
     public void testSuccessfulLoginWithCorrectCredentials() {
-        String expectedHeadLine = "Firefly III What's playing?";
+        final String expectedHeadLine = "Firefly III What's playing?";
 
         String actualHeadLine = new LoginPage(getDriver())
                 .setEmail(EMAIL_DEFAULT)
@@ -43,7 +43,7 @@ public class LoggingInTest extends BaseTest {
     @Description("TC_01.001.02 Validate Error Message for Incorrect Password")
     @Test
     public void testErrorMessageIncorrectPassword() {
-        String expectedMassage = "Error! These credentials do not match our records.";
+        final String expectedMassage = "Error! These credentials do not match our records.";
 
         String actualMassage = new LoginPage(getDriver())
                 .setEmail(EMAIL_DEFAULT)
@@ -62,7 +62,7 @@ public class LoggingInTest extends BaseTest {
     @Description("TC_01.001.03 Validate Error Message for Non-Existent Email")
     @Test
     public void testErrorMessageNonExistentEmail() {
-        String expectedMassage = "Error! These credentials do not match our records.";
+        final String expectedMassage = "Error! These credentials do not match our records.";
 
         String actualMassage = new LoginPage(getDriver())
                 .setEmail("any@any.moc")
@@ -82,7 +82,7 @@ public class LoggingInTest extends BaseTest {
     @Description("TC_01.001.04 Validate Error Message for Empty Email")
     @Test
     public void testErrorMessageEmptyEmail() {
-        String expectedMassage = "Email is required";
+        final String expectedMassage = "Email is required";
 
         String actualMassage = new LoginPage(getDriver())
                 .setEmail("")
@@ -101,7 +101,7 @@ public class LoggingInTest extends BaseTest {
     @Description("TC_01.001.05 Validate Error Message for Empty Password")
     @Test
     public void testErrorMessageEmptyPassword() {
-        String expectedMassage = "Password is required";
+        final String expectedMassage = "Password is required";
 
         String actualMassage = new LoginPage(getDriver())
                 .setEmail(EMAIL_DEFAULT)
@@ -120,7 +120,7 @@ public class LoggingInTest extends BaseTest {
     @Description("TC_01.001.06 Validate Error Message for Empty Email and Password")
     @Test
     public void testErrorMessageEmptyEmailAndPassword() {
-        String expectedMassage = "Email and Password is required";
+        final String expectedMassage = "Email and Password is required";
 
         String actualMassage = new LoginPage(getDriver())
                 .setEmail("")
@@ -139,8 +139,8 @@ public class LoggingInTest extends BaseTest {
     @Description("TC_01.001.07 Validate Account Lockout After Multiple Failed Attempts")
     @Test
     public void testAccountLockoutAfterMultipleFailedAttempts() {
-        String expectedMessage = "Error! These credentials do not match our records.";
-        String expectedError = "Error! Your account it temporarily locked due to multiple failed logins.";
+        final String expectedMessage = "Error! These credentials do not match our records.";
+        final String expectedError = "Error! Your account it temporarily locked due to multiple failed logins.";
         int maxAttempts = 5;
 
         LoginPage loginPage = new LoginPage(getDriver());
@@ -239,7 +239,7 @@ public class LoggingInTest extends BaseTest {
     @Description("TC_01.001.12 Validate Placeholder Email Text")
     @Test
     public void testPlaceholderEmailText() {
-        String expectedEmailPlaceholder = "Email address";
+        final String expectedEmailPlaceholder = "Email address";
 
         String actualEmailPlaceholder = new LoginPage(getDriver())
                 .getEmailPlaceholder();
@@ -254,7 +254,7 @@ public class LoggingInTest extends BaseTest {
     @Description("TC_01.001.13 Validate Placeholder Password Text")
     @Test
     public void testPlaceholderPasswordText() {
-        String expectedPasswordPlaceholder = "Password";
+        final String expectedPasswordPlaceholder = "Password";
 
         String actualPasswordPlaceholder = new LoginPage(getDriver())
                 .getPasswordPlaceholder();
