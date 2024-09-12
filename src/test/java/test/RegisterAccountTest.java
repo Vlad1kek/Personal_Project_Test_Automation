@@ -15,7 +15,7 @@ public class RegisterAccountTest extends BaseTest {
     private static final String PASSWORD_DEFAULT = ProjectProperties.getPassword();
 
     @Severity(SeverityLevel.CRITICAL)
-    @Story("US_01.001 Basic Account Registration")
+    @Story("US_01.001 Successful Account Registration")
     @Description("TC_01.001.01 Validate Successful Account Registration")
     @Test
     public void testSuccessfulAccountRegistration() {
@@ -32,8 +32,8 @@ public class RegisterAccountTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.BLOCKER)
-    @Story("US_01.001 Basic Account Registration")
-    @Description("TC_01.001.02 Validate Registration with Missing Email")
+    @Story("US_01.002 Error Handling for Registration Fields")
+    @Description("TC_01.002.01 Validate Registration with Missing Email")
     @Test
     public void testRegistrationWithMissingEmail() {
         final String exceptedError = """
@@ -54,8 +54,8 @@ public class RegisterAccountTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.BLOCKER)
-    @Story("US_01.001 Basic Account Registration")
-    @Description("TC_01.001.04 Validate Registration with Missing Password")
+    @Story("US_01.002 Error Handling for Registration Fields")
+    @Description("TC_01.002.03 Validate Registration with Missing Password")
     @Test
     public void testRegistrationWithMissingPassword() {
         final String exceptionError = """
@@ -76,8 +76,8 @@ public class RegisterAccountTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.BLOCKER)
-    @Story("US_01.001 Basic Account Registration")
-    @Description("TC_01.001.05 Validate Registration with Missing Password (Again)")
+    @Story("US_01.002 Error Handling for Registration Fields")
+    @Description("TC_01.002.04 Validate Registration with Missing Password (Again)")
     @Test
     public void testRegistrationWithMissingPasswordAgain() {
         final String exceptionError = """
@@ -98,8 +98,8 @@ public class RegisterAccountTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.MINOR)
-    @Story("US_01.001 Basic Account Registration")
-    @Description("TC_01.001.06 Validate Registering Keyboard Keys Use")
+    @Story("US_01.006 Keyboard Accessibility in Registration")
+    @Description("TC_01.006.01 Validate Registering Keyboard Keys Use")
     @Test
     public void testRegisteringKeyboardKeysUse() {
         String homePage = new RegisterAccountPage(getDriver())
@@ -121,8 +121,8 @@ public class RegisterAccountTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.TRIVIAL)
-    @Story("US_01.001 Basic Account Registration")
-    @Description("TC_01.001.07 Validate Placeholder Email Text")
+    @Story("US_01.005 Password Security Features")
+    @Description("TC_01.005.01 Validate Placeholder Email Text")
     @Test
     public void testPlaceholderEmailText() {
         final String expectedEmailPlaceholder = "Email address";
@@ -136,8 +136,8 @@ public class RegisterAccountTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.TRIVIAL)
-    @Story("US_01.001 Basic Account Registration")
-    @Description("TC_01.001.08 Validate Placeholder Password Text")
+    @Story("US_01.005 Password Security Features")
+    @Description("TC_01.005.02 Validate Placeholder Password Text")
     @Test
     public void testPlaceholderPasswordText() {
         final String expectedPasswordPlaceholder = "Password";
@@ -151,8 +151,8 @@ public class RegisterAccountTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.TRIVIAL)
-    @Story("US_01.001 Basic Account Registration")
-    @Description("TC_01.001.09 Validate Placeholder Password Confirm Text")
+    @Story("US_01.005 Password Security Features")
+    @Description("TC_01.005.03 Validate Placeholder Password Confirm Text")
     @Test
     public void testPlaceholderPasswordConfirmText() {
         final String expectedPasswordConfirmPlaceholder = "Password (again)";
@@ -166,8 +166,8 @@ public class RegisterAccountTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.NORMAL)
-    @Story("US_01.001 Basic Account Registration")
-    @Description("TC_01.001.11 Validate Accepting Spaces in Input Fields")
+    @Story("US_01.007 Handling Special Cases in Registration Fields")
+    @Description("TC_01.007.01 Validate Accepting Spaces in Input Fields")
     @Test
     public void testAcceptingSpacesInputFields() {
         final String exceptedError = """
@@ -190,8 +190,8 @@ public class RegisterAccountTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Story("US_01.002 Password Requirements")
-    @Description("TC_01.002.01 Validate Password Too Short")
+    @Story("US_01.003 Password Requirements")
+    @Description("TC_01.003.01 Validate Password Too Short")
     @Test
     public void testPasswordTooShort() {
         final String shortPassword = "^X9zDL(h2J)9yZ&";
@@ -215,8 +215,8 @@ public class RegisterAccountTest extends BaseTest {
 
     @Ignore
     @Severity(SeverityLevel.CRITICAL)
-    @Story("US_01.002 Password Requirements")
-    @Description("TC_01.002.02 Validate Password Missing Special Character")
+    @Story("US_01.003 Password Requirements")
+    @Description("TC_01.003.02 Validate Password Missing Special Character")
     @Test
     public void testPasswordMissingSpecialCharacter() {
         final String passWithoutSpecialChar = "566UB4RQJ7vSeVdx";
@@ -240,8 +240,8 @@ public class RegisterAccountTest extends BaseTest {
 
     @Ignore
     @Severity(SeverityLevel.CRITICAL)
-    @Story("US_01.002 Password Requirements")
-    @Description("TC_01.002.03 Validate Password Missing Number")
+    @Story("US_01.003 Password Requirements")
+    @Description("TC_01.003.03 Validate Password Missing Number")
     @Test
     public void testPasswordMissingNumber() {
         final String passWithoutNumber = "EfaP&qzLyx)ewkf&";
@@ -264,8 +264,8 @@ public class RegisterAccountTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.BLOCKER)
-    @Story("US_01.002 Password Requirements")
-    @Description("TC_01.002.04 Validate Password Meets All Requirements")
+    @Story("US_01.003 Password Requirements")
+    @Description("TC_01.003.04 Validate Password Meets All Requirements")
     @Test
     public void testPasswordMeetsAllRequirements() {
         String homePage = new RegisterAccountPage(getDriver())
@@ -282,8 +282,8 @@ public class RegisterAccountTest extends BaseTest {
 
     @Ignore
     @Severity(SeverityLevel.CRITICAL)
-    @Story("US_01.002 Password Requirements")
-    @Description("TC_01.002.05 Validate Password Missing Uppercase Letter")
+    @Story("US_01.003 Password Requirements")
+    @Description("TC_01.003.05 Validate Password Missing Uppercase Letter")
     @Test
     public void testPasswordMissingUppercaseLetter() {
         final String passWithoutUppercase = "9^gxh+8k#3k^xu(b";
@@ -306,8 +306,8 @@ public class RegisterAccountTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.NORMAL)
-    @Story("US_01.002 Password Requirements")
-    @Description("TC_01.002.06 Validate Password Masking ")
+    @Story("US_01.005 Password Security Features")
+    @Description("TC_01.005.04 Validate Password Masking ")
     @Test
     public void testPasswordMasking() {
         String registerPage = new RegisterAccountPage(getDriver())
@@ -320,8 +320,8 @@ public class RegisterAccountTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Story("US_01.002 Password Requirements")
-    @Description("TC_01.002.07 Validate Different Passwords in Confirmation Field")
+    @Story("US_01.002 Error Handling for Registration Fields")
+    @Description("TC_01.002.05 Validate Different Passwords in Confirmation Field")
     @Test
     public void testDifferentPasswordsInConfirmationField() {
         String exceptedError = """
@@ -343,8 +343,8 @@ public class RegisterAccountTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.NORMAL)
-    @Story("US_01.002 Password Requirements")
-    @Description("TC_01.002.08 Validate the 'Verify the Password Security' Feature")
+    @Story("US_01.004 Password Security Features")
+    @Description("TC_01.004.01 Validate the 'Verify the Password Security' Feature")
     @Test
     public void testPasswordSecurityFeature() {
         String insecurePassword = "aaaaaaaaaaaaaaaa";
@@ -367,8 +367,8 @@ public class RegisterAccountTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.MINOR)
-    @Story("US_01.002 Password Requirements")
-    @Description("TC_01.002.09 Validate 'Verify Password Security' is Selected by Default")
+    @Story("US_01.004 Password Security Features")
+    @Description("TC_01.004.02 Validate 'Verify Password Security' is Selected by Default")
     @Test
     public void testPasswordSecurityIsSelectedByDefault() {
         boolean isCheckboxEnable = new RegisterAccountPage(getDriver())
@@ -380,8 +380,8 @@ public class RegisterAccountTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.TRIVIAL)
-    @Story("US_01.002 Password Requirements")
-    @Description("TC_01.002.10 Validate the Additional Information Button 'Check your password security'")
+    @Story("US_01.004 Password Security Features")
+    @Description("TC_01.004.03 Validate the Additional Information Button 'Check your password security'")
     @Test
     public void testAdditionalInformationButtonCheckYourPasswordSecurity() {
         boolean isTooltipDisplay = new RegisterAccountPage(getDriver())
@@ -395,8 +395,8 @@ public class RegisterAccountTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Story("US_01.003 Error Handling for Duplicate Emails")
-    @Description("TC_01.003.01 Validate Duplicate Email Registration Attempt")
+    @Story("US_01.007 Handling Special Cases in Registration Fields")
+    @Description("TC_01.007.02 Validate Duplicate Email Registration Attempt")
     @Test
     public void testDuplicateEmailRegistrationAttempt() {
         String exceptedError = """
@@ -419,8 +419,8 @@ public class RegisterAccountTest extends BaseTest {
 
     @Ignore
     @Severity(SeverityLevel.NORMAL)
-    @Story("US_01.004 Privacy Agreement")
-    @Description("TC_01.004.01 Validate Attempt to Register Without Agreeing to Terms")
+    @Story("US_01.007 Handling Special Cases in Registration Fields")
+    @Description("TC_01.007.03 Validate Attempt to Register Without Agreeing to Terms")
     @Test
     public void testAttemptRegisterWithoutAgreeingTerms() {
         String exceptedError = """
