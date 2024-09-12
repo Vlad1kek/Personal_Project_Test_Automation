@@ -10,7 +10,7 @@ import utils.log.LogUtils;
 import utils.run.BaseTest;
 import utils.run.ProjectProperties;
 
-@Epic("User Account Management")
+@Epic("Logging In")
 public class LoggingInTest extends BaseTest {
 
     private static final String EMAIL_DEFAULT = ProjectProperties.getUserName();
@@ -20,8 +20,8 @@ public class LoggingInTest extends BaseTest {
     private static final String PASSWORD2_SECOND = "8&Vx!V*s9!mg+8Jb";
 
     @Severity(SeverityLevel.BLOCKER)
-    @Story("US_01.001 Logging In")
-    @Description("TC_01.001.01 Validate Successful Login with Correct Credentials")
+    @Story("US_02.001 Successful Login")
+    @Description("TC_02.001.01 Validate Successful Login with Correct Credentials")
     @Test
     public void testSuccessfulLoginWithCorrectCredentials() {
         final String expectedHeadLine = "Firefly III What's playing?";
@@ -39,8 +39,8 @@ public class LoggingInTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.BLOCKER)
-    @Story("US_01.001 Logging In")
-    @Description("TC_01.001.02 Validate Error Message for Incorrect Password")
+    @Story("US_02.002 Error Handling on Login Failure")
+    @Description("TC_02.002.01 Validate Error Message for Incorrect Password")
     @Test
     public void testErrorMessageIncorrectPassword() {
         final String expectedMassage = "Error! These credentials do not match our records.";
@@ -57,9 +57,9 @@ public class LoggingInTest extends BaseTest {
                 "If FAIL: The error message: '" + actualMassage + "' is not displayed or wrong");
     }
 
-    @Severity(SeverityLevel.CRITICAL)
-    @Story("US_01.001 Logging In")
-    @Description("TC_01.001.03 Validate Error Message for Non-Existent Email")
+    @Severity(SeverityLevel.BLOCKER)
+    @Story("US_02.002 Error Handling on Login Failure")
+    @Description("TC_02.002.02 Validate Error Message for Non-Existent Email")
     @Test
     public void testErrorMessageNonExistentEmail() {
         final String expectedMassage = "Error! These credentials do not match our records.";
@@ -78,8 +78,8 @@ public class LoggingInTest extends BaseTest {
 
     @Ignore
     @Severity(SeverityLevel.CRITICAL)
-    @Story("US_01.001 Logging In")
-    @Description("TC_01.001.04 Validate Error Message for Empty Email")
+    @Story("US_02.002 Error Handling on Login Failure")
+    @Description("TC_02.002.03 Validate Error Message for Empty Email")
     @Test
     public void testErrorMessageEmptyEmail() {
         final String expectedMassage = "Email is required";
@@ -97,8 +97,8 @@ public class LoggingInTest extends BaseTest {
 
     @Ignore
     @Severity(SeverityLevel.CRITICAL)
-    @Story("US_01.001 Logging In")
-    @Description("TC_01.001.05 Validate Error Message for Empty Password")
+    @Story("US_02.002 Error Handling on Login Failure")
+    @Description("TC_02.002.04 Validate Error Message for Empty Password")
     @Test
     public void testErrorMessageEmptyPassword() {
         final String expectedMassage = "Password is required";
@@ -116,8 +116,8 @@ public class LoggingInTest extends BaseTest {
 
     @Ignore
     @Severity(SeverityLevel.CRITICAL)
-    @Story("US_01.001 Logging In")
-    @Description("TC_01.001.06 Validate Error Message for Empty Email and Password")
+    @Story("US_02.002 Error Handling on Login Failure")
+    @Description("TC_02.002.05 Validate Error Message for Empty Email and Password")
     @Test
     public void testErrorMessageEmptyEmailAndPassword() {
         final String expectedMassage = "Email and Password is required";
@@ -134,9 +134,9 @@ public class LoggingInTest extends BaseTest {
     }
 
     @Ignore
-    @Severity(SeverityLevel.CRITICAL)
-    @Story("US_01.001 Logging In")
-    @Description("TC_01.001.07 Validate Account Lockout After Multiple Failed Attempts")
+    @Severity(SeverityLevel.BLOCKER)
+    @Story("US_02.002 Error Handling on Login Failure")
+    @Description("TC_02.002.06 Validate Account Lockout After Multiple Failed Attempts")
     @Test
     public void testAccountLockoutAfterMultipleFailedAttempts() {
         final String expectedMessage = "Error! These credentials do not match our records.";
@@ -169,8 +169,8 @@ public class LoggingInTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Story("US_01.001 Logging In")
-    @Description("TC_01.001.08 Validate Password Toggle Visibility")
+    @Story("US_02.003 Password Management")
+    @Description("TC_02.003.01 Validate Password Toggle Visibility")
     @Test
     public void testPasswordToggleVisibility() {
         String passwordFieldType = new LoginPage(getDriver())
@@ -182,9 +182,9 @@ public class LoggingInTest extends BaseTest {
                 "If FAIL: The password field is not masked");
     }
 
-    @Severity(SeverityLevel.CRITICAL)
-    @Story("US_01.001 Logging In")
-    @Description("TC_01.001.09 Validate 'Remember Me' Option")
+    @Severity(SeverityLevel.BLOCKER)
+    @Story("US_02.001 Successful Login")
+    @Description("TC_02.001.02 Validate 'Remember Me' Option")
     @Test
     public void testRememberMeOption() {
         String homePage = new LoginPage(getDriver())
@@ -201,9 +201,9 @@ public class LoggingInTest extends BaseTest {
                 "If FAIL: User is not logged in");
     }
 
-    @Severity(SeverityLevel.CRITICAL)
-    @Story("US_01.001 Logging In")
-    @Description("TC_01.001.10 Validate 'Forgot Password?' Functionality")
+    @Severity(SeverityLevel.BLOCKER)
+    @Story("US_02.003 Password Management")
+    @Description("TC_02.003.02 Validate 'Forgot Password?' Functionality")
     @Test
     public void testForgotPasswordFunctionality() {
         String forgotPasswordPage = new LoginPage(getDriver())
@@ -215,9 +215,9 @@ public class LoggingInTest extends BaseTest {
                 "If FAIL: The user was not redirected to the 'Forgot your password?' page.");
     }
 
-    @Severity(SeverityLevel.CRITICAL)
-    @Story("US_01.001 Logging In")
-    @Description("TC_01.001.11 Validate Tab and Enter Keyboard Keys")
+    @Severity(SeverityLevel.TRIVIAL)
+    @Story("US_02.004 Keyboard Accessibility")
+    @Description("TC_02.004.01 Validate Tab and Enter Keyboard Keys")
     @Test
     public void testTabAndEnterKeyboardKeys() {
         String homePage = new LoginPage(getDriver())
@@ -234,9 +234,9 @@ public class LoggingInTest extends BaseTest {
                 "If FAIL: User is not logged in");
     }
 
-    @Severity(SeverityLevel.CRITICAL)
-    @Story("US_01.001 Logging In")
-    @Description("TC_01.001.12 Validate Placeholder Email Text")
+    @Severity(SeverityLevel.MINOR)
+    @Story("US_02.005 UI Consistency")
+    @Description("TC_02.005.01 Validate Placeholder Email Text")
     @Test
     public void testPlaceholderEmailText() {
         final String expectedEmailPlaceholder = "Email address";
@@ -249,9 +249,9 @@ public class LoggingInTest extends BaseTest {
                 "If FAIL: Incorrect Email placeholder text displayed inside as: " + actualEmailPlaceholder);
     }
 
-    @Severity(SeverityLevel.CRITICAL)
-    @Story("US_01.001 Logging In")
-    @Description("TC_01.001.13 Validate Placeholder Password Text")
+    @Severity(SeverityLevel.MINOR)
+    @Story("US_02.005 UI Consistency")
+    @Description("TC_02.005.02 Validate Placeholder Password Text")
     @Test
     public void testPlaceholderPasswordText() {
         final String expectedPasswordPlaceholder = "Password";
@@ -264,9 +264,9 @@ public class LoggingInTest extends BaseTest {
                 "If FAIL: Incorrect Password placeholder text displayed inside as: " + actualPasswordPlaceholder);
     }
 
-    @Severity(SeverityLevel.CRITICAL)
-    @Story("US_01.001 Logging In")
-    @Description("TC_01.001.14 Validate Browser Back Button in Login")
+    @Severity(SeverityLevel.MINOR)
+    @Story("US_02.006 Browser Navigation Behavior")
+    @Description("TC_02.006.01 Validate Browser Back Button in Login")
     @Test
     public void testBrowserBackButtonInLogin() {
         String homePage = new LoginPage(getDriver())
@@ -282,9 +282,9 @@ public class LoggingInTest extends BaseTest {
                 "If FAIL: The user has logged out");
     }
 
-    @Severity(SeverityLevel.CRITICAL)
-    @Story("US_01.001 Logging In")
-    @Description("TC_01.001.15 Validate Browser Back Button in Logout")
+    @Severity(SeverityLevel.MINOR)
+    @Story("US_02.006 Browser Navigation Behavior")
+    @Description("TC_02.006.02 Validate Browser Back Button in Logout")
     @Test
     public void testBrowserBackButtonInLogout() {
         String homePage = new LoginPage(getDriver())
@@ -302,9 +302,9 @@ public class LoggingInTest extends BaseTest {
     }
 
     @Ignore
-    @Severity(SeverityLevel.CRITICAL)
-    @Story("US_01.001 Logging In")
-    @Description("TC_01.001.22 Validate Secure Connection (HTTPS)")
+    @Severity(SeverityLevel.BLOCKER)
+    @Story("US_02.007 Logging In")
+    @Description("TC_02.007.02 Validate Secure Connection (HTTPS)")
     @Test
     public void testSecureConnectionHTTPS() {
         String loginPageURL = new LoginPage(getDriver())
@@ -314,9 +314,9 @@ public class LoggingInTest extends BaseTest {
                 "If FAIL: Connection is not secure");
     }
 
-    @Severity(SeverityLevel.CRITICAL)
-    @Story("US_01.001 Logging In")
-    @Description("TC_01.001.17 Validate No Logging Old Password After Changing Password")
+    @Severity(SeverityLevel.NORMAL)
+    @Story("US_02.003 Password Management")
+    @Description("TC_02.003.04 Validate No Logging Old Password After Changing Password")
     @Test()
     public void testNoLoggingAfterChangingPassword() {
         String homePage = new LoginPage(getDriver())
@@ -341,9 +341,9 @@ public class LoggingInTest extends BaseTest {
                 "If FAIL: The user has logged into the system");
     }
 
-    @Severity(SeverityLevel.CRITICAL)
-    @Story("US_01.001 Logging In")
-    @Description("TC_01.001.18 Validate Logging New Password After Changing Password")
+    @Severity(SeverityLevel.NORMAL)
+    @Story("US_02.003 Password Management")
+    @Description("TC_02.003.05 Validate Logging New Password After Changing Password")
     @Test(dependsOnMethods = "testNoLoggingAfterChangingPassword")
     public void testLoggingNewPasswordAfterChangingPassword() {
         String homePage = new LoginPage(getDriver())
