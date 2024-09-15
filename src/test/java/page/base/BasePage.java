@@ -32,9 +32,6 @@ public abstract class BasePage<Self extends BasePage<?>> extends BaseModel {
     @FindBy(css = "a[href$='logout']")
     private WebElement logout;
 
-    @FindBy(className = "login-box-msg")
-    private WebElement loginBoxMsg;
-
     @FindBy(id = "option-menu")
     private WebElement buttonOption;
 
@@ -104,10 +101,6 @@ public abstract class BasePage<Self extends BasePage<?>> extends BaseModel {
         logout.click();
 
         return new LoginPage(getDriver());
-    }
-
-    public String getLoginBoxMsg() {
-        return loginBoxMsg.getText();
     }
 
     @Step("Click on the 'Options' in sidebar")
