@@ -293,7 +293,7 @@ public class LoggingInTest extends BaseTest {
                 .clickSubmit(new HomePage(getDriver()))
                 .clickLogout()
                 .clickBackBrowserButton(new HomePage(getDriver()))
-                .refreshPage(new HomePage(getDriver()))
+                .refreshPage(new LoginPage(getDriver()))
                 .getLoginBoxMsg();
 
         Allure.step("User should not get logged in again, he will be returned to the login page");
