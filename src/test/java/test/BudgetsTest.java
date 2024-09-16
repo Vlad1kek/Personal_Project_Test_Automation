@@ -16,9 +16,9 @@ import java.util.List;
 public class BudgetsTest extends BaseTest {
     private static final String NAME_BUDGET = "NewTestBudgets123";
 
-    @Severity(SeverityLevel.CRITICAL)
-    @Story("TS_06.000 Create budget")
-    @Description("06.000.01 Validate creation of a new budget")
+    @Severity(SeverityLevel.BLOCKER)
+    @Story("US_06.001 Create a New Budget")
+    @Description("TC_06.001.01 Validate Creation of a New Budget")
     @Test(priority = 1)
     public void testCreateValidBudgets() {
         List<String> nameBudget = new HomePage(getDriver())
@@ -34,9 +34,9 @@ public class BudgetsTest extends BaseTest {
                 "If FAIL: Budget name '" + NAME_BUDGET + "' does not exist");
     }
 
-    @Severity(SeverityLevel.NORMAL)
-    @Story("TS_06.001 Change Configure Budget")
-    @Description("06.001.01 Validate add valid amount")
+    @Severity(SeverityLevel.BLOCKER)
+    @Story("US_06.004 Input Validation for Budget Amounts")
+    @Description("TC_06.004.01 Validate add Valid Amount to Budget")
     @Test(priority = 2)
     public void testBudgetAddValidAmount() {
         final String amount = "222.33";
@@ -52,9 +52,9 @@ public class BudgetsTest extends BaseTest {
                 String.format("If FAIL: 'Budgeted: %s' NOT equal to the value entered", actualAmount));
     }
 
-    @Severity(SeverityLevel.NORMAL)
-    @Story("TS_06.001 Change Configure Budget")
-    @Description("06.001.02 Add invalid amount")
+    @Severity(SeverityLevel.BLOCKER)
+    @Story("US_06.004 Input Validation for Budget Amounts")
+    @Description("TC_06.004.02 Validate add Invalid Amount to Budget")
     @Test(priority = 2)
     public void testBudgetAddInvalidAmount() {
         final String amount = "abCD";
@@ -71,8 +71,8 @@ public class BudgetsTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.MINOR)
-    @Story("TS_06.002 Budget page")
-    @Description("TC_06.002.01 Correct month and year")
+    @Story("US_06.001 Create a New Budget")
+    @Description("TC_06.001.02 Validate Budget Page Displays Correct Month and Year")
     @Test(priority = 2)
     public void testBudgetsCorrectMonthAndYear() {
         final String localDate = TimeUtils.getMonthYear();
@@ -88,8 +88,8 @@ public class BudgetsTest extends BaseTest {
     }
 
     @Severity(SeverityLevel.NORMAL)
-    @Story("TS_06.001 Change Configure Budget")
-    @Description("TC_06.001.03 Validate change budget by 'Set a fixed amount every period'")
+    @Story("US_06.002 Set Periodic Budgeting with Fixed Amounts")
+    @Description("TC_06.002.02 Validate Change Budget to Fixed Amount Every Period")
     @Test(priority = 2)
     public void testChangeBudgetByFixedAmount() {
         final String expectedMessage = "This budget will be set periodically";
@@ -109,9 +109,9 @@ public class BudgetsTest extends BaseTest {
                 String.format("If FAIL: received text: '%s' is invalid or could not be found", calendarAttribute));
     }
 
-    @Severity(SeverityLevel.CRITICAL)
-    @Story("TS_06.000 Create budget")
-    @Description("TC_06.000.02 Validate create budget with 'Add an amount every period'")
+    @Severity(SeverityLevel.BLOCKER)
+    @Story("US_06.002 Set Periodic Budgeting with Fixed Amounts")
+    @Description("TC_06.002.01 Validate Create Budget With add Amount Every Period'")
     @Test(priority = 2)
     public void testCreateBudgetByAddAmountEveryPeriod() {
         final String expectedMessage = "The budget amount will increase periodically";
@@ -133,8 +133,8 @@ public class BudgetsTest extends BaseTest {
 
 
     @Severity(SeverityLevel.CRITICAL)
-    @Story("TS_06.000 Create budget")
-    @Description("TC_06.000.03 Validate create budgets with 'Add an amount every period and correct for overspending'")
+    @Story("US_06.003 Correct for Overspending in Budget")
+    @Description("TC_06.003.01 Validate Create Budget With add Amount and Correct for Overspending")
     @Test(priority = 2)
     public void testCreateBudgetsAndCorrectForOverspending() {
         final String expectedMessage = "The budget amount will increase periodically and will correct for overspending";
