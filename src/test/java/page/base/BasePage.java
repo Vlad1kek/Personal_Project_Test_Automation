@@ -59,6 +59,7 @@ public abstract class BasePage<Self extends BasePage<?>> extends BaseModel {
         return new HomePage(getDriver());
     }
 
+    @Step("Click on the Bills option in the main navigation menu")
     public BillsDetailsPage goBill() {
         billsSidePanel.click();
 
