@@ -1,5 +1,6 @@
 package page.bills;
 
+import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -23,8 +24,8 @@ public class BillsDetailsPage extends BaseDetailsPage<BillsEditPage, BillsDetail
         return new BillsEditPage(getDriver());
     }
 
-    //BugReport
     public List<String> getNextExpectedMatch(String name) {
+        //BugReport BUG_011
         if (!getHeadline().contains("Bills")) {
             LogUtils.logException("Expected page Bill Page but was redirected to Home Page");
             goBill();
@@ -39,7 +40,7 @@ public class BillsDetailsPage extends BaseDetailsPage<BillsEditPage, BillsDetail
 
     //BugReport
     public String getMonthlyCosts() {
-        //BugReport
+        //BugReport BUG_011
         if (!getHeadline().contains("Bills")) {
             LogUtils.logException("Expected page Bill Page but was redirected to Home Page");
             goBill();
@@ -53,6 +54,7 @@ public class BillsDetailsPage extends BaseDetailsPage<BillsEditPage, BillsDetail
         return getDriver().findElement(By.xpath("//tr[@data-name='" + name + "']/td[8]")).getText();
     }
 
+    @Step("Click on the pencil icon to the left of bill name")
     public BillsEditPage clickPencil(String name) {
         getDriver().findElement(By.xpath(   "//tr[@data-name='" + name + "']/td[2]/div/a[1]/span")).click();
 

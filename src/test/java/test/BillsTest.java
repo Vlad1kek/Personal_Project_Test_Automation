@@ -1,6 +1,6 @@
 package test;
 
-import io.qameta.allure.Epic;
+import io.qameta.allure.*;
 import jdk.jfr.Description;
 import org.testng.Assert;
 import org.testng.annotations.Test;
@@ -15,18 +15,20 @@ import java.util.List;
 
 @Epic("Bill")
 public class BillsTest extends BaseTest {
-    private static final String BILLS_NAME = "NewTestBills22";
+    private static final String BILL_NAME = "NewTestBills22";
     private static final String MINIMUM_AMOUNT = "300";
     private static final String MAXIMUM_AMOUNT = "500";
 
-    @Description("Create new bills FI-T12")
+    @Severity(SeverityLevel.BLOCKER)
+    @Story("US_05.001 Bill Creation and Recurrence Setup")
+    @Description("TC_07.001.01 Create New Bill")
     @Test(priority = 1)
-    public void testCreateNewBills() {
+    public void testCreateNewBill() {
         List<String> nameBill = new HomePage(getDriver())
                 .goBill()
                 .clickCreateButton()
                 .skipTutorial()
-                .setName(BILLS_NAME)
+                .setName(BILL_NAME)
                 .setMinimumAmount(MINIMUM_AMOUNT)
                 .setMaximumAmount(MAXIMUM_AMOUNT)
                 .clickSubmit(new BillsRulesPage(getDriver()))
@@ -34,130 +36,180 @@ public class BillsTest extends BaseTest {
                 .skipTutorial()
                 .getNamesList();
 
-        Assert.assertTrue(nameBill.contains(BILLS_NAME));
+        Allure.step("The newly created bill should be visible in the Bills List with the correct name");
+        Assert.assertTrue(nameBill.contains(BILL_NAME),
+                "If FAIL: Bill is NOT created or NOT available in the list of bills");
     }
 
-    @Description("Checking the date Bills repeats monthly FI-T13")
+    @Severity(SeverityLevel.NORMAL)
+    @Story("US_05.001 Bill Creation and Recurrence Setup")
+    @Description("TC_07.001.02 Validate The Bill Expected Date 'Repeats Monthly'")
     @Test(priority = 2)
     public void testCheckingTheDateBillsRepeatsMonthlyAndCheckNextExpectedMatch() {
-        List<String> currentDate = TimeUtils.getCurrentDateList();
-        TestUtils.createBill(this, BILLS_NAME, MINIMUM_AMOUNT, MAXIMUM_AMOUNT, true);
+        List<String> currentDateList = TimeUtils.getCurrentDateList();
+        TestUtils.createBill(this, BILL_NAME, MINIMUM_AMOUNT, MAXIMUM_AMOUNT, true);
 
-        List<String> nextExpectedMatch = new HomePage(getDriver())
+        List<String> actualMonthlyDate = new HomePage(getDriver())
                 .goBill()
-                .getNextExpectedMatch(BILLS_NAME);
+                .getNextExpectedMatch(BILL_NAME);
 
-        Assert.assertEquals(nextExpectedMatch, currentDate);
+        Allure.step("The Next Expected Match date should match the current date: " + currentDateList);
+        Assert.assertEquals(actualMonthlyDate, currentDateList,
+                "If FAIL: The newly created bill is Not set to repeat monthly, or the actual date is " +
+                        "incorrect: " + actualMonthlyDate);
     }
 
-    @Description("Set Bill to repeat weekly And check next expected match FI-T14")
+    @Severity(SeverityLevel.NORMAL)
+    @Story("US_05.001 Bill Creation and Recurrence Setup")
+    @Description("TC_07.001.03 Set Bill to 'Repeat Weekly' and Validate Next Expected Match")
     @Test(priority = 2)
     public void testSetBillToRepeatWeeklyAndCheckNextExpectedMatch() {
         List<String> weeklyDatesList = TimeUtils.getWeeklyDatesList();
-        TestUtils.createBill(this, BILLS_NAME, MINIMUM_AMOUNT, MAXIMUM_AMOUNT, true);
+        TestUtils.createBill(this, BILL_NAME, MINIMUM_AMOUNT, MAXIMUM_AMOUNT, true);
 
-        List<String> nextExpectedMatch = new HomePage(getDriver())
+        List<String> actualWeeklyDate = new HomePage(getDriver())
                 .goBill()
-                .clickPencil(BILLS_NAME)
+                .clickPencil(BILL_NAME)
                 .setRepeatsWeekly()
                 .clickSubmit(new BillsDetailsPage(getDriver()))
-                .getNextExpectedMatch(BILLS_NAME);
+                .getNextExpectedMatch(BILL_NAME);
 
-        Assert.assertEquals(nextExpectedMatch, weeklyDatesList);
+        Allure.step("The Next Expected Match date should match the upcoming weekly date: " + weeklyDatesList);
+        Assert.assertEquals(actualWeeklyDate, weeklyDatesList,
+                "If FAIL: The newly created bill is Not set to repeat weekly, or the actual date is " +
+                        "incorrect: " + actualWeeklyDate);
     }
 
-    @Description("Set Bill to repeat daily And check next expected match FI-T15")
+    @Severity(SeverityLevel.NORMAL)
+    @Story("US_05.001 Bill Creation and Recurrence Setup")
+    @Description("TC_07.001.04 Set Bill to 'Repeat Daily' and Validate Next Expected Match")
     @Test(priority = 2)
     public void testSetBillToRepeatDailyAndCheckNextExpectedMatch() {
         List<String> dailyDatestList = TimeUtils.getDailyDatesList();
-        TestUtils.createBill(this, BILLS_NAME, MINIMUM_AMOUNT, MAXIMUM_AMOUNT, true);
+        TestUtils.createBill(this, BILL_NAME, MINIMUM_AMOUNT, MAXIMUM_AMOUNT, true);
 
-        List<String> nextExpectedMatch = new HomePage(getDriver())
+        List<String> actualDailyDate = new HomePage(getDriver())
                 .goBill()
-                .clickPencil(BILLS_NAME)
+                .clickPencil(BILL_NAME)
                 .setRepeatsDaily()
                 .clickSubmit(new BillsDetailsPage(getDriver()))
-                .getNextExpectedMatch(BILLS_NAME);
+                .getNextExpectedMatch(BILL_NAME);
 
-        Assert.assertEquals(nextExpectedMatch, dailyDatestList);
+        Allure.step("The Next Expected Match date should match the next daily date " + dailyDatestList);
+        Assert.assertEquals(actualDailyDate, dailyDatestList,
+                "If FAIL: The newly created bill is Not set to repeat daily, or the actual date is " +
+                        "incorrect: " + actualDailyDate);
     }
 
-    @Description("Set Bill to repeat yearly And check next expected match FI-T16")
+    @Severity(SeverityLevel.NORMAL)
+    @Story("US_05.001 Bill Creation and Recurrence Setup")
+    @Description("TC_07.001.05 Set Bill to Repeat Yearly and Validate Next Expected Match")
     @Test(priority = 2)
     public void testSetBillToRepeatYearlyAndCheckNextExpectedMatch() {
         List<String> currentDate = TimeUtils.getCurrentDateList();
-        TestUtils.createBill(this, BILLS_NAME, MINIMUM_AMOUNT, MAXIMUM_AMOUNT, true);
+        TestUtils.createBill(this, BILL_NAME, MINIMUM_AMOUNT, MAXIMUM_AMOUNT, true);
 
-        List<String> nextExpectedMatch = new HomePage(getDriver())
+        List<String> actualYearlyDate = new HomePage(getDriver())
                 .goBill()
-                .clickPencil(BILLS_NAME)
+                .clickPencil(BILL_NAME)
                 .setRepeatsYearly()
                 .clickSubmit(new BillsDetailsPage(getDriver()))
-                .getNextExpectedMatch(BILLS_NAME);
+                .getNextExpectedMatch(BILL_NAME);
 
-        Assert.assertEquals(nextExpectedMatch, currentDate);
+        Allure.step("The Next Expected Match date should match the next yearly: " + currentDate);
+        Assert.assertEquals(actualYearlyDate, currentDate,
+        "If FAIL: The newly created bill is Not set to repeat yearly, or the actual date is incorrect: "
+                + actualYearlyDate);
     }
 
-    @Description("Set Bill to repeat every half-year And check next expected match FI-T17")
+    @Severity(SeverityLevel.NORMAL)
+    @Story("US_05.001 Bill Creation and Recurrence Setup")
+    @Description("TC_07.001.06 Set Bill to Repeat Every Half-Year and Validate Next Expected")
     @Test(priority = 2)
     public void testSetBillToRepeatEveryHalfYearAndCheckNextExpectedMatch() {
         List<String> currentDate = TimeUtils.getCurrentDateList();
-        TestUtils.createBill(this, BILLS_NAME, MINIMUM_AMOUNT, MAXIMUM_AMOUNT, true);
+        TestUtils.createBill(this, BILL_NAME, MINIMUM_AMOUNT, MAXIMUM_AMOUNT, true);
 
-        List<String> nextExpectedMatch = new HomePage(getDriver())
+        List<String> actualHalfYearDate = new HomePage(getDriver())
                 .goBill()
-                .clickPencil(BILLS_NAME)
+                .clickPencil(BILL_NAME)
                 .setRepeatsHalfYear()
                 .clickSubmit(new BillsDetailsPage(getDriver()))
-                .getNextExpectedMatch(BILLS_NAME);
+                .getNextExpectedMatch(BILL_NAME);
 
-        Assert.assertEquals(nextExpectedMatch, currentDate);
+        Allure.step("The Next Expected Match date should match the half-yearly recurrence date: " + currentDate);
+        Assert.assertEquals(actualHalfYearDate, currentDate,
+                "If FAIL: The newly created bill is Not set to repeat every half-year, or the actual date " +
+                        "is incorrect: " + actualHalfYearDate);
     }
 
-    @Description("Set Bill to repeat quarterly And check next expected match FI-T18")
+    @Severity(SeverityLevel.NORMAL)
+    @Story("US_05.001 Bill Creation and Recurrence Setup")
+    @Description("TC_07.001.07 Set Bill to Repeat Quarterly and Validate Next Expected Match")
     @Test(priority = 2)
     public void testSetBillToRepeatQuarterlyAndCheckNextExpectedMatch() {
         List<String> currentDate = TimeUtils.getCurrentDateList();
-        TestUtils.createBill(this, BILLS_NAME, MINIMUM_AMOUNT, MAXIMUM_AMOUNT, true);
+        TestUtils.createBill(this, BILL_NAME, MINIMUM_AMOUNT, MAXIMUM_AMOUNT, true);
 
-        List<String> nextExpectedMatch = new HomePage(getDriver())
+        List<String> actualQuarterlyDate = new HomePage(getDriver())
                 .goBill()
-                .clickPencil(BILLS_NAME)
+                .clickPencil(BILL_NAME)
                 .setRepeatsQuarterly()
                 .clickSubmit(new BillsDetailsPage(getDriver()))
-                .getNextExpectedMatch(BILLS_NAME);
+                .getNextExpectedMatch(BILL_NAME);
 
-        Assert.assertEquals(nextExpectedMatch, currentDate);
+        Allure.step("The Next Expected Match date should match the quarterly recurrence date: " + currentDate);
+        Assert.assertEquals(actualQuarterlyDate, currentDate,
+                "If FAIL: The newly created bill is Not every three months (quarterly), or the actual date" +
+                        "is incorrect: " + actualQuarterlyDate);
     }
 
-    @Description("Set Bill to repeat yearly And check expected monthly costs FI-T19")
+    @Severity(SeverityLevel.MINOR)
+    @Story("US_05.002 Expected Monthly Costs")
+    @Description("TC_07.002.01 Set Bill to Repeat Yearly and Validate Expected Monthly Costs")
     @Test(priority = 2)
     public void testSetBillToRepeatYearlyAndCheckExpectedMonthlyCosts() {
-        String expectedMonthlyCosts = TimeUtils.getExpectedMonthlyCostsYearly(MINIMUM_AMOUNT, MAXIMUM_AMOUNT);
-        TestUtils.createBill(this, BILLS_NAME, MINIMUM_AMOUNT, MAXIMUM_AMOUNT, true);
+        String minimumAmount = "140";
+        String maximumAmount = "580";
+        String expectedMonthlyCosts = TimeUtils.getExpectedMonthlyCostsYearly(minimumAmount, maximumAmount);
+        TestUtils.createBill(this, BILL_NAME, MINIMUM_AMOUNT, MAXIMUM_AMOUNT, true);
 
-        String monthlyCosts = new HomePage(getDriver())
+        String actualMonthlyCosts = new HomePage(getDriver())
                 .goBill()
-                .clickPencil(BILLS_NAME)
+                .clickPencil(BILL_NAME)
                 .setRepeatsYearly()
+                .setMaximumAmount(maximumAmount)
+                .setMinimumAmount(minimumAmount)
                 .clickSubmit(new BillsDetailsPage(getDriver()))
                 .getMonthlyCosts();
 
-        Assert.assertEquals(monthlyCosts, expectedMonthlyCosts);
+        Allure.step("'Expected monthly costs' should equal the value calculated: " + expectedMonthlyCosts);
+        Assert.assertEquals(actualMonthlyCosts, expectedMonthlyCosts,
+                "If FAIL: The displayed 'Expected monthly cost' is not equal the calculated value: "
+                        + actualMonthlyCosts);
     }
 
-    @Description("Set Bill to repeat half-year And check expected monthly costs FI-T20")
+    @Severity(SeverityLevel.MINOR)
+    @Story("US_05.002 Expected Monthly Costs")
+    @Description("TC_07.002.02 Set Bill to Repeat Half-Yearly and Validate Expected Monthly Costs")
     @Test(priority = 2, dependsOnMethods = "testSetBillToRepeatYearlyAndCheckExpectedMonthlyCosts")
     public void testSetBillToRepeatHalfYearAndCheckExpectedMonthlyCosts() {
-        String expectedHalfYear = TimeUtils.getExpectedMonthlyCostsHalfYear(MINIMUM_AMOUNT, MAXIMUM_AMOUNT);
+        String minimumAmount = "250";
+        String maximumAmount = "270";
+        String expectedHalfYear = TimeUtils.getExpectedMonthlyCostsHalfYear(minimumAmount, maximumAmount);
 
-        String monthlyCosts = new HomePage(getDriver())
+        String actualMonthlyCosts = new HomePage(getDriver())
                 .goBill()
-                .clickPencil(BILLS_NAME)
+                .clickPencil(BILL_NAME)
                 .setRepeatsHalfYear()
+                .setMaximumAmount(maximumAmount)
+                .setMinimumAmount(minimumAmount)
                 .clickSubmit(new BillsDetailsPage(getDriver()))
                 .getMonthlyCosts();
 
-        Assert.assertEquals(monthlyCosts, expectedHalfYear);
+        Allure.step("'Expected Monthly Costs' should equal the value calculated: " + expectedHalfYear);
+        Assert.assertEquals(actualMonthlyCosts, expectedHalfYear,
+                "If FAIL: The displayed 'Expected monthly cost' is not equal the calculated value: "
+                        + actualMonthlyCosts);
     }
 }
