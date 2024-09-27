@@ -11,8 +11,8 @@ import utils.run.ProjectProperties;
 
 @Epic("Register an Account")
 public class RegisterAccountTest extends BaseTest {
-    private static final String EMAIL_DEFAULT = ProjectProperties.getUserName();
-    private static final String PASSWORD_DEFAULT = ProjectProperties.getPassword();
+    private static final String EMAIL_DEFAULT = ProjectProperties.getPropAdminEmail();
+    private static final String PASSWORD_DEFAULT = ProjectProperties.getPropPassword();
 
     @Severity(SeverityLevel.CRITICAL)
     @Story("US_01.001 Successful Account Registration")

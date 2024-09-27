@@ -14,24 +14,24 @@ import java.util.List;
 
 @Epic("Budget")
 public class BudgetsTest extends BaseTest {
-    private static final String NAME_BUDGET = "NewTestBudgets123";
+    private final String nameBudget = getFaker().artist().name();
 
     @Severity(SeverityLevel.BLOCKER)
     @Story("US_06.001 Create a New Budget")
     @Description("TC_06.001.01 Validate Creation of a New Budget")
     @Test(priority = 1)
     public void testCreateValidBudgets() {
-        List<String> nameBudget = new HomePage(getDriver())
+        List<String> nameBudgets = new HomePage(getDriver())
                 .goBudgets()
                 .clickCreateButton()
-                .setName(NAME_BUDGET)
+                .setName(nameBudget)
                 .clickSubmit(new BudgetsDetailsPage(getDriver()))
                 .skipTutorial()
                 .getNamesList();
 
-        Allure.step(String.format("The name '%s' of the created Budget is displayed in the Budgets list", NAME_BUDGET));
-        Assert.assertTrue(nameBudget.contains(NAME_BUDGET),
-                "If FAIL: Budget name '" + NAME_BUDGET + "' does not exist");
+        Allure.step(String.format("The name '%s' of the created Budget is displayed in the Budgets list", nameBudgets));
+        Assert.assertTrue(nameBudgets.contains(nameBudget),
+                "If FAIL: Budget name '" + nameBudget + "' does not exist");
     }
 
     @Severity(SeverityLevel.BLOCKER)
@@ -40,7 +40,7 @@ public class BudgetsTest extends BaseTest {
     @Test(priority = 2)
     public void testBudgetAddValidAmount() {
         final String amount = "222.33";
-        TestUtils.createBudget(this, NAME_BUDGET, true);
+        TestUtils.createBudget(this, nameBudget, true);
 
         String actualAmount = new HomePage(getDriver())
                 .goBudgets()
@@ -58,7 +58,7 @@ public class BudgetsTest extends BaseTest {
     @Test(priority = 2)
     public void testBudgetAddInvalidAmount() {
         final String amount = "abCD";
-        TestUtils.createBudget(this, NAME_BUDGET, true);
+        TestUtils.createBudget(this, nameBudget, true);
 
         String actualAmount = new HomePage(getDriver())
                 .goBudgets()
@@ -93,15 +93,15 @@ public class BudgetsTest extends BaseTest {
     @Test(priority = 2)
     public void testChangeBudgetByFixedAmount() {
         final String expectedMessage = "This budget will be set periodically";
-        TestUtils.createBudget(this, NAME_BUDGET, true);
+        TestUtils.createBudget(this, nameBudget, true);
 
         String calendarAttribute = new HomePage(getDriver())
                 .goBudgets()
-                .clickPencil(NAME_BUDGET)
+                .clickPencil(nameBudget)
                 .setAFixedAmountEveryPeriod()
                 .setAutoBudgetAmount("789")
                 .clickSubmit(new BudgetsDetailsPage(getDriver()))
-                .getCalendarCheckTitle(NAME_BUDGET);
+                .getCalendarCheckTitle(nameBudget);
 
         Allure.step("To the right of the budget name there is a calendar icon, when you hover over it, " +
                 "it the following text appears: " + expectedMessage);
@@ -119,11 +119,11 @@ public class BudgetsTest extends BaseTest {
         String calendarAttribute = new HomePage(getDriver())
                 .goBudgets()
                 .clickCreateButton()
-                .setName(NAME_BUDGET)
+                .setName(nameBudget)
                 .setAddAnAmountEveryPeriod()
                 .setAutoBudgetAmount("333")
                 .clickSubmit(new BudgetsDetailsPage(getDriver()))
-                .getCalendarCheckTitle(NAME_BUDGET);
+                .getCalendarCheckTitle(nameBudget);
 
         Allure.step("To the right of the budget name there is a calendar icon, when you hover over it, " +
                 "it the following text appears: " + expectedMessage);
@@ -142,11 +142,11 @@ public class BudgetsTest extends BaseTest {
         String calendarAttribute = new HomePage(getDriver())
                 .goBudgets()
                 .clickCreateButton()
-                .setName(NAME_BUDGET)
+                .setName(nameBudget)
                 .setCorrectForOverspending()
                 .setAutoBudgetAmount("42")
                 .clickSubmit(new BudgetsDetailsPage(getDriver()))
-                .getCalendarCheckTitle(NAME_BUDGET);
+                .getCalendarCheckTitle(nameBudget);
 
         Allure.step("To the right of the budget name there is a calendar icon, when you hover over it, " +
                 "it the following text appears: " + expectedMessage);

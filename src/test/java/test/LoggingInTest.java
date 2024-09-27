@@ -13,9 +13,9 @@ import utils.run.ProjectProperties;
 @Epic("Logging In")
 public class LoggingInTest extends BaseTest {
 
-    private static final String EMAIL_DEFAULT = ProjectProperties.getUserName();
-    private static final String PASSWORD_DEFAULT = ProjectProperties.getPassword();
-    private static final String EMAIL_SECOND = "test2@gmail.com";
+    private static final String EMAIL_DEFAULT = ProjectProperties.getPropAdminEmail();
+    private static final String PASSWORD_DEFAULT = ProjectProperties.getPropPassword();
+    private static final String EMAIL_SECOND = ProjectProperties.getPropSecondEmail();
     private static final String PASSWORD_SECOND = "^xk!!(SCjLkhjwvu";
     private static final String PASSWORD2_SECOND = "8&Vx!V*s9!mg+8Jb";
 

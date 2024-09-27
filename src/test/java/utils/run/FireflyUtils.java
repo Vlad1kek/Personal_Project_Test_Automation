@@ -40,7 +40,21 @@ public class FireflyUtils {
      * <p>
      * This static variable is set during the token creation process and can be used for making authenticated API calls.
      */
-    public static String token;
+    private static String token;
+
+    /**
+     * Retrieves the API token used for authenticating requests.
+     *
+     * <p>
+     * This method returns the current value of the static {@code token} variable.
+     * If the token has not been set, this method may return {@code null}.
+     * Ensure that the token is set before making any authenticated API calls.
+     *
+     * @return the API token as a {@code String}, or {@code null} if not set.
+     */
+    public static String getToken() {
+        return token;
+    }
 
     /**
      * Logs in to the Firefly III application using stored credentials.
@@ -59,7 +73,7 @@ public class FireflyUtils {
      */
     public static void firstLogin(WebDriver driver) {
         enterCredentials(driver);
-        driver.findElement(By.name("password_confirmation")).sendKeys(ProjectProperties.getPassword());
+        driver.findElement(By.name("password_confirmation")).sendKeys(ProjectProperties.getPropPassword());
         submitForm(driver);
     }
 
@@ -69,8 +83,8 @@ public class FireflyUtils {
      * @param driver the WebDriver instance used to perform browser interactions
      */
     private static void enterCredentials(WebDriver driver) {
-        driver.findElement(By.name("email")).sendKeys(ProjectProperties.getUserName());
-        driver.findElement(By.name("password")).sendKeys(ProjectProperties.getPassword());
+        driver.findElement(By.name("email")).sendKeys(ProjectProperties.getPropAdminEmail());
+        driver.findElement(By.name("password")).sendKeys(ProjectProperties.getPropPassword());
     }
 
     /**
@@ -139,7 +153,7 @@ public class FireflyUtils {
             navigateToProfilePage(driver);
             initiateTokenCreation(driver);
             inputTokenDetails(driver);
-            extractAndSaveToken(driver, wait);
+            setToken(driver, wait);
         } catch (NoSuchElementException e) {
             LogUtils.logFatal("Element not found during token creation.");
             throw new RuntimeException(e);
@@ -186,7 +200,7 @@ public class FireflyUtils {
      * @param driver the WebDriver instance used to perform browser interactions
      * @param wait   the WebDriverWait instance used to manage wait conditions
      */
-    private static void extractAndSaveToken(WebDriver driver, WebDriverWait wait) {
+    private static void setToken(WebDriver driver, WebDriverWait wait) {
         WebElement tokenElement = wait.until(ExpectedConditions.visibilityOf(driver.findElement(By.cssSelector("textarea[readonly]"))));
         token = tokenElement.getText();
         clickElement(driver, By.xpath("//div[@id='modal-access-token']/div/div/div[@class='modal-footer']/button"));
@@ -231,7 +245,7 @@ public class FireflyUtils {
      * @param driver the WebDriver instance used to perform browser interactions
      */
     private static void enterNewUserDetails(WebDriver driver) {
-        driver.findElement(By.name("email")).sendKeys("test2@gmail.com");
+        driver.findElement(By.name("email")).sendKeys(ProjectProperties.getPropSecondEmail());
         driver.findElement(By.name("password")).sendKeys("^xk!!(SCjLkhjwvu");
         driver.findElement(By.name("password_confirmation")).sendKeys("^xk!!(SCjLkhjwvu");
     }

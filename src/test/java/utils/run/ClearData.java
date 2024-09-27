@@ -35,7 +35,7 @@ public class ClearData {
     public static void getToken() {
         if (token == null || token.isEmpty()) {
             if (ProjectProperties.isServerRun()) {
-                token = FireflyUtils.token;
+                token = FireflyUtils.getToken();
             } else {
                 token = ProjectProperties.getPropToken();
             }
