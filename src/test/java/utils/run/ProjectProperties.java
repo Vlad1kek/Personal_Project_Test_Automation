@@ -33,8 +33,9 @@ import java.util.Properties;
  */
 public final class ProjectProperties {
 
-    static final String PREFIX_PROP = "default.";
-    private static final String PROP_ADMIN_USERNAME = PREFIX_PROP + "admin.username";
+    private static final String PREFIX_PROP = "default.";
+    private static final String PROP_ADMIN_EMAIL = PREFIX_PROP + "admin.email";
+    private static final String PROP_SECOND_EMAIL = PROP_ADMIN_EMAIL + ".second";
     private static final String PROP_ADMIN_PAS = PREFIX_PROP + "admin.password";
     private static final String ENV_BROWSER_OPTIONS = "BROWSER_OPTIONS";
     private static final String ENV_WEB_OPTIONS = "WEB_OPTIONS";
@@ -137,12 +138,21 @@ public final class ProjectProperties {
     }
 
     /**
-     * Retrieves the admin username from the properties.
+     * Retrieves the admin email from the properties.
      *
-     * @return the admin username as a String.
+     * @return the admin email as a String.
      */
-    public static String getUserName() {
-        return properties.getProperty(PROP_ADMIN_USERNAME);
+    public static String getPropAdminEmail() {
+        return properties.getProperty(PROP_ADMIN_EMAIL);
+    }
+
+    /**
+     * Retrieves the second email from the properties.
+     *
+     * @return the second email as a String.
+     */
+    public static String getPropSecondEmail() {
+        return properties.getProperty(PROP_SECOND_EMAIL);
     }
 
     /**
@@ -150,7 +160,7 @@ public final class ProjectProperties {
      *
      * @return the admin password as a String.
      */
-    public static String getPassword() {
+    public static String getPropPassword() {
         return properties.getProperty(PROP_ADMIN_PAS);
     }
 

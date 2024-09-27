@@ -15,7 +15,7 @@ import java.util.List;
 
 @Epic("Bill")
 public class BillsTest extends BaseTest {
-    private static final String BILL_NAME = "NewTestBills22";
+    private final String billName = getFaker().harryPotter().character();
     private static final String MINIMUM_AMOUNT = "300";
     private static final String MAXIMUM_AMOUNT = "500";
 
@@ -28,7 +28,7 @@ public class BillsTest extends BaseTest {
                 .goBill()
                 .clickCreateButton()
                 .skipTutorial()
-                .setName(BILL_NAME)
+                .setName(billName)
                 .setMinimumAmount(MINIMUM_AMOUNT)
                 .setMaximumAmount(MAXIMUM_AMOUNT)
                 .clickSubmit(new BillsRulesPage(getDriver()))
@@ -37,7 +37,7 @@ public class BillsTest extends BaseTest {
                 .getNamesList();
 
         Allure.step("The newly created bill should be visible in the Bills List with the correct name");
-        Assert.assertTrue(nameBill.contains(BILL_NAME),
+        Assert.assertTrue(nameBill.contains(billName),
                 "If FAIL: Bill is NOT created or NOT available in the list of bills");
     }
 
@@ -47,11 +47,11 @@ public class BillsTest extends BaseTest {
     @Test(priority = 2)
     public void testCheckingTheDateBillsRepeatsMonthlyAndCheckNextExpectedMatch() {
         List<String> currentDateList = TimeUtils.getCurrentDateList();
-        TestUtils.createBill(this, BILL_NAME, MINIMUM_AMOUNT, MAXIMUM_AMOUNT, true);
+        TestUtils.createBill(this, billName, MINIMUM_AMOUNT, MAXIMUM_AMOUNT, true);
 
         List<String> actualMonthlyDate = new HomePage(getDriver())
                 .goBill()
-                .getNextExpectedMatch(BILL_NAME);
+                .getNextExpectedMatch(billName);
 
         Allure.step("The Next Expected Match date should match the current date: " + currentDateList);
         Assert.assertEquals(actualMonthlyDate, currentDateList,
@@ -65,14 +65,14 @@ public class BillsTest extends BaseTest {
     @Test(priority = 2)
     public void testSetBillToRepeatWeeklyAndCheckNextExpectedMatch() {
         List<String> weeklyDatesList = TimeUtils.getWeeklyDatesList();
-        TestUtils.createBill(this, BILL_NAME, MINIMUM_AMOUNT, MAXIMUM_AMOUNT, true);
+        TestUtils.createBill(this, billName, MINIMUM_AMOUNT, MAXIMUM_AMOUNT, true);
 
         List<String> actualWeeklyDate = new HomePage(getDriver())
                 .goBill()
-                .clickPencil(BILL_NAME)
+                .clickPencil(billName)
                 .setRepeatsWeekly()
                 .clickSubmit(new BillsDetailsPage(getDriver()))
-                .getNextExpectedMatch(BILL_NAME);
+                .getNextExpectedMatch(billName);
 
         Allure.step("The Next Expected Match date should match the upcoming weekly date: " + weeklyDatesList);
         Assert.assertEquals(actualWeeklyDate, weeklyDatesList,
@@ -86,14 +86,14 @@ public class BillsTest extends BaseTest {
     @Test(priority = 2)
     public void testSetBillToRepeatDailyAndCheckNextExpectedMatch() {
         List<String> dailyDatestList = TimeUtils.getDailyDatesList();
-        TestUtils.createBill(this, BILL_NAME, MINIMUM_AMOUNT, MAXIMUM_AMOUNT, true);
+        TestUtils.createBill(this, billName, MINIMUM_AMOUNT, MAXIMUM_AMOUNT, true);
 
         List<String> actualDailyDate = new HomePage(getDriver())
                 .goBill()
-                .clickPencil(BILL_NAME)
+                .clickPencil(billName)
                 .setRepeatsDaily()
                 .clickSubmit(new BillsDetailsPage(getDriver()))
-                .getNextExpectedMatch(BILL_NAME);
+                .getNextExpectedMatch(billName);
 
         Allure.step("The Next Expected Match date should match the next daily date " + dailyDatestList);
         Assert.assertEquals(actualDailyDate, dailyDatestList,
@@ -107,14 +107,14 @@ public class BillsTest extends BaseTest {
     @Test(priority = 2)
     public void testSetBillToRepeatYearlyAndCheckNextExpectedMatch() {
         List<String> currentDate = TimeUtils.getCurrentDateList();
-        TestUtils.createBill(this, BILL_NAME, MINIMUM_AMOUNT, MAXIMUM_AMOUNT, true);
+        TestUtils.createBill(this, billName, MINIMUM_AMOUNT, MAXIMUM_AMOUNT, true);
 
         List<String> actualYearlyDate = new HomePage(getDriver())
                 .goBill()
-                .clickPencil(BILL_NAME)
+                .clickPencil(billName)
                 .setRepeatsYearly()
                 .clickSubmit(new BillsDetailsPage(getDriver()))
-                .getNextExpectedMatch(BILL_NAME);
+                .getNextExpectedMatch(billName);
 
         Allure.step("The Next Expected Match date should match the next yearly: " + currentDate);
         Assert.assertEquals(actualYearlyDate, currentDate,
@@ -128,14 +128,14 @@ public class BillsTest extends BaseTest {
     @Test(priority = 2)
     public void testSetBillToRepeatEveryHalfYearAndCheckNextExpectedMatch() {
         List<String> currentDate = TimeUtils.getCurrentDateList();
-        TestUtils.createBill(this, BILL_NAME, MINIMUM_AMOUNT, MAXIMUM_AMOUNT, true);
+        TestUtils.createBill(this, billName, MINIMUM_AMOUNT, MAXIMUM_AMOUNT, true);
 
         List<String> actualHalfYearDate = new HomePage(getDriver())
                 .goBill()
-                .clickPencil(BILL_NAME)
+                .clickPencil(billName)
                 .setRepeatsHalfYear()
                 .clickSubmit(new BillsDetailsPage(getDriver()))
-                .getNextExpectedMatch(BILL_NAME);
+                .getNextExpectedMatch(billName);
 
         Allure.step("The Next Expected Match date should match the half-yearly recurrence date: " + currentDate);
         Assert.assertEquals(actualHalfYearDate, currentDate,
@@ -149,14 +149,14 @@ public class BillsTest extends BaseTest {
     @Test(priority = 2)
     public void testSetBillToRepeatQuarterlyAndCheckNextExpectedMatch() {
         List<String> currentDate = TimeUtils.getCurrentDateList();
-        TestUtils.createBill(this, BILL_NAME, MINIMUM_AMOUNT, MAXIMUM_AMOUNT, true);
+        TestUtils.createBill(this, billName, MINIMUM_AMOUNT, MAXIMUM_AMOUNT, true);
 
         List<String> actualQuarterlyDate = new HomePage(getDriver())
                 .goBill()
-                .clickPencil(BILL_NAME)
+                .clickPencil(billName)
                 .setRepeatsQuarterly()
                 .clickSubmit(new BillsDetailsPage(getDriver()))
-                .getNextExpectedMatch(BILL_NAME);
+                .getNextExpectedMatch(billName);
 
         Allure.step("The Next Expected Match date should match the quarterly recurrence date: " + currentDate);
         Assert.assertEquals(actualQuarterlyDate, currentDate,
@@ -172,11 +172,11 @@ public class BillsTest extends BaseTest {
         String minimumAmount = "140";
         String maximumAmount = "580";
         String expectedMonthlyCosts = TimeUtils.getExpectedMonthlyCostsYearly(minimumAmount, maximumAmount);
-        TestUtils.createBill(this, BILL_NAME, MINIMUM_AMOUNT, MAXIMUM_AMOUNT, true);
+        TestUtils.createBill(this, billName, MINIMUM_AMOUNT, MAXIMUM_AMOUNT, true);
 
         String actualMonthlyCosts = new HomePage(getDriver())
                 .goBill()
-                .clickPencil(BILL_NAME)
+                .clickPencil(billName)
                 .setRepeatsYearly()
                 .setMaximumAmount(maximumAmount)
                 .setMinimumAmount(minimumAmount)
@@ -200,7 +200,7 @@ public class BillsTest extends BaseTest {
 
         String actualMonthlyCosts = new HomePage(getDriver())
                 .goBill()
-                .clickPencil(BILL_NAME)
+                .clickPencil(billName)
                 .setRepeatsHalfYear()
                 .setMaximumAmount(maximumAmount)
                 .setMinimumAmount(minimumAmount)
