@@ -29,6 +29,7 @@ This repository contains automated test scripts for the [Firefly III](https://gi
 
 All test cases, are documented in a Google Spreadsheet, which can be accessed via the following link:
 [Personal Project Test Cases](https://docs.google.com/spreadsheets/d/1n2DGq9qy5hMVERLKnGjUG3tyZ4ihPxAEQ5bjs6UqRgQ/edit?usp=sharing)
+
 ---
 
 ## Test Automation Scope
@@ -38,6 +39,7 @@ The tests cover the following key scenarios:
 2. **Bills and Budgets:** Creating, updating, and validating recurring bills and budgets.
 3. **Cross-browser Compatibility:** Tests executed on multiple browsers to ensure consistent behavior.
 4. **Error Handling and Validation:** Test cases for invalid data entries and error messages.
+
 ---
 
 ## Technology Stack
@@ -50,28 +52,60 @@ The automation framework leverages the following tools and libraries:
 * **Allure:**  For generating test reports with rich, detailed visual feedback on test results.
 * **Selenium WebDriver:** For interacting with and automating browser actions during tests.
 * **GitHub Actions:** For continuous integration (CI), automating test execution on pushes and pull requests.
+
 ---
 
 ## Project Structure
 
 The project follows a modular structure for organizing test cases, utilities, and configuration files. Below is an overview of the main directories and files:
 
-```bash
+````bash
 Personal_Project_Test_Automation/
 │
+├── .github/                 # GitHub workflows and configurations
 ├── src/
-│   └── test/
+│   ├── test/
 │       ├── java/
-│       │   ├── page/              # Page Object Models (POM) for each Firefly III web page
-│       │   ├── test/              # Test classes for automated tests related to bills, budgets, etc.
-│       │   └── utils/             # Helper classes for common functions such as running tests
-│       └── resources/             # Configuration files like browser properties, log4j2 
-│
-├── test-output/                   # Test output and reports
-├── pom.xml                        # Maven dependencies and project configuration
-├── README.md                      # Project documentation (this file)
-└── .github/workflows/             # GitHub Actions CI workflow configurations
-```
+│       │   ├── page/
+│       │   │   ├── base/
+│       │   │   ├── bills/
+│       │   │   ├── budgets/
+│       │   │   └── login/
+│       │   ├── test/
+│       │   └── utils/
+│       │       ├── log/
+│       │       └── run/
+│       └── resources/
+├── .db.env                  # Environment variables for DB
+├── .env                     # Environment variables for the project
+├── .gitignore               # Git ignore file
+├── docker-compose.yml       # Docker Compose configuration for setting up the environment
+├── LICENSE                  # License information
+├── pom.xml                  # Maven project object model configuration
+└── README.md                # Project README file
+````
+
+### Project Structure Description
+
+**Page Object Classes** (`page`):
+
+* This directory contains all the Page Object Model (POM) classes for different sections of the Firefly III application.
+* The `base` package holds the common base classes shared across other pages.
+* Separate packages exist for bills, budgets, and login functionalities.
+
+**Test Classes** (`test`):
+
+* Contains the core test classes for each feature like Bills, Budgets, Logging in/out, and Account Registration.
+
+**Utility Classes** (`utils`):
+
+* Includes utility classes for logging (`log`), test configuration and setup (`run`), and other test helpers.
+
+**Resources** (`resources`):
+
+* The `allure.properties` and `log4j2.xml` files provide configuration for Allure reporting and logging using Log4j2.
+* The `local.properties.TEMPLATE` file contains a template environment-specific configuration details.
+
 ---
 
 ## Logging
@@ -133,7 +167,7 @@ mvn clean install
 docker compose -f docker-compose.yml up -d --pull=always
 ```
   
-5.  **Setting up and preparing the Firefly III application:**
+5. **Setting up and preparing the Firefly III application:**
 * Create your first account in the local Firefly III application
 * Create a bank
 * Create a second account
@@ -143,7 +177,7 @@ docker compose -f docker-compose.yml up -d --pull=always
    
 The project requires a `local.properties` file to store environment-specific configurations such as database credentials, API endpoints, or other sensitive information. This file is not included in the repository for security reasons but can be created manually using the provided template.
 
-**Steps to Create `local.properties`:**
+### Steps to Create `local.properties`:
 
 1. **Locate the Template:** In the `src/test/resources` directory of the project, you will find a file named `local.properties.TEMPLATE`.
 
@@ -204,6 +238,7 @@ The project is integrated with GitHub Actions to automate the execution of tests
 * Tests run in a clean environment.
 * Runs the tests across different environments.
 * Publishes test results with Allure for review ([last commit report](https://vlad1kek.github.io/Personal_Project_Test_Automation)).
+
 ---
 
 ## License

@@ -59,7 +59,7 @@ public class BudgetsDetailsPage extends BaseDetailsPage<BudgetsEditPage, Budgets
     //BugReport
     public String getCalendarCheckTitle(String nameBudget) {
         if (!getHeadline().contains("Budgets")) {
-            LogUtils.logException("Expected page Bill Page but was redirected to Home Page");
+            LogUtils.logWarning("Expected page Bill Page but was redirected to Home Page");
             goBill();
             LogUtils.logWarning("Redirect to Bill Page completed");
         }
