@@ -15,6 +15,7 @@
 - [Test Data Cleanup](#test-data-cleanup)
 - [Setup and Installation](#setup-and-installation)
 - [Running Tests](#running-tests)
+- [Video Demonstrations](#video-demonstrations)
 - [License](#license)
 
 ---
@@ -238,6 +239,16 @@ The project is integrated with GitHub Actions to automate the execution of tests
 * Tests run in a clean environment.
 * Runs the tests across different environments.
 * Publishes test results with Allure for review ([last commit report](https://vlad1kek.github.io/Personal_Project_Test_Automation)).
+
+---
+
+## Video Demonstrations
+
+Demonstration of the functionality and automation of the project tests:
+
+1. [Maven project showcase](https://youtu.be/Zm4-fngCPas) - This video showcases the execution of the test automation suite.
+2. [GitHub Actions showcase](https://youtu.be/DmggoF8F1y4) - This video showcases execution of the test automation suite in GitHub Actions.
+3. [Allure Report GitHub](https://youtu.be/iPqNznL2fPE) - This video showcases Allure report in GitHub Actions.
 
 ---
 
