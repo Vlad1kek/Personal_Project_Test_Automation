@@ -113,6 +113,7 @@ public abstract class BasePage<Self extends BasePage<?>> extends BaseModel {
 
     @Step("Click on the 'Profile' button that appears")
     public ProfilePage clickProfile() {
+        getWait().until(d -> buttonProfile.isDisplayed());
         buttonProfile.click();
 
         return new ProfilePage(getDriver());
